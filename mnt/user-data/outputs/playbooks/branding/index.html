@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Scheer Branding — Scheer IDS Playbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #3b82f6;
+      --accent-soft: rgba(59, 130, 246, 0.08);
+      --text: #1a1a2e;
+      --text-secondary: #555770;
+      --text-muted: #8890a4;
+      --bg: #fafbfd;
+      --bg-white: #ffffff;
+      --border: #e5e7ed;
+      --border-accent: rgba(59, 130, 246, 0.2);
+      --radius: 8px;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Playbook Header (uniform) ── */
+    .playbook-header {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .playbook-header-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: opacity 0.15s;
+    }
+
+    .playbook-header-back:hover {
+      opacity: 0.7;
+    }
+
+    .playbook-header h1 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .playbook-header-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Content ── */
+    .playbook-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    .playbook-content h2 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 40px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .playbook-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .playbook-content p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+    }
+
+    .playbook-content strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 20px 0 32px;
+    }
+
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-value {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 24px 0;
+      background: var(--accent-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 24px;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Uniform Playbook Header -->
+  <header class="playbook-header">
+    <a href="../../index.html" class="playbook-header-back">← Back to Playbooks</a>
+    <h1>Why Scheer Branding</h1>
+    <div class="playbook-header-subtitle">Positioning and core messages</div>
+  </header>
+
+  <!-- Playbook Content -->
+  <main class="playbook-content">
+
+    <h2>Positioning Statement</h2>
+    <p>Scheer IDS Netherlands is a boutique SAP consulting firm that specializes exclusively in <strong>S/4HANA Cloud Public Edition</strong> for retail and consumer goods companies. We combine deep industry expertise with hands-on implementation experience to deliver fast, predictable go-lives.</p>
+
+    <blockquote>
+      "We don't do everything for everyone. We do one thing — S/4HANA Cloud Public Edition — and we do it better than anyone in the Benelux."
+    </blockquote>
+
+    <h2>Key Differentiators</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Focus</div>
+        <div class="card-value">100% Public Edition</div>
+        <div class="card-desc">No private cloud, no on-premise distractions. Pure focus means deeper expertise.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Track Record</div>
+        <div class="card-value">15 Go-Lives</div>
+        <div class="card-desc">Completed implementations in 2025, with proven methodology and reusable accelerators.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Segment</div>
+        <div class="card-value">Retail & CPG</div>
+        <div class="card-desc">Specialized in Dutch manufacturers and retailers with €50–300M revenue.</div>
+      </div>
+    </div>
+
+    <h2>Core Messages</h2>
+    <p>Use these messages consistently across all channels — website, LinkedIn, sales decks, and outreach emails.</p>
+
+    <div class="tag-row">
+      <span class="tag">Deadline-driven</span>
+      <span class="tag">Industry-specific</span>
+      <span class="tag">Proven methodology</span>
+      <span class="tag">Boutique attention</span>
+    </div>
+
+    <p><strong>Message 1 — Urgency:</strong> SAP ECC end-of-support is 2027. Companies that haven't started their migration are already behind. We help you move fast without cutting corners.</p>
+
+    <p><strong>Message 2 — Expertise:</strong> Most consultancies treat Public Edition as one option among many. For us, it's the only option — and that focus gives our clients a measurable advantage.</p>
+
+    <p><strong>Message 3 — Right-sized:</strong> You won't be lost in a queue at a Big Four firm. With Scheer IDS, you get senior consultants from day one, direct access to decision-makers, and a team that treats your go-live as their own.</p>
+
+    <div class="divider"></div>
+
+    <h2>Usage Guidelines</h2>
+    <p>This playbook is a living document. Reference these messages in every prospect interaction, adapt the proof points to the audience, and always lead with the customer's problem — not our solution. If you have additions or edits, create a PR or flag it in our team channel.</p>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Scheer IDS Playbooks",
+  "short_name": "Playbooks",
+  "description": "Scheer IDS — Sales & Strategy Playbooks",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0f1a",
+  "theme_color": "#0a0f1a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233b82f6' rx='20' width='100' height='100'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Georgia'>S</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
