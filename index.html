@@ -5,43 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scheer IDS — Playbooks</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#05618d">
+  <meta name="theme-color" content="#2996cc">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      /* ── Scheer Brand (leidend) ── */
+      /* ── Scheer Brand (leidend, NIET VERANDEREN) ── */
       --dunkelblau: #05618d;
       --blue: #2996cc;
       --orange: #ef7c00;
+      --secondary: #6c757d;
 
-      /* ── Backgrounds ── */
+      /* ── Status ── */
+      --success: #28a745;
+      --warning: #ff9800;
+
+      /* ── Neutrals (uit style guide) ── */
       --bg: #ffffff;
-      --bg-content: #f8f9fa;
-
-      /* ── Text ── */
+      --bg-light: #f8f9fa;
       --text-dark: #333333;
       --text-muted: #555555;
       --text-light: #6c757d;
-
-      /* ── Borders ── */
       --border: #e0e0e0;
       --border-light: #dee2e6;
 
-      /* ── Nav (dunkelblau als secondary) ── */
-      --nav-bg: var(--dunkelblau);
-      --nav-text: #ffffff;
-      --nav-text-muted: rgba(255, 255, 255, 0.6);
-      --nav-border: rgba(255, 255, 255, 0.12);
-      --nav-hover: rgba(255, 255, 255, 0.08);
-      --nav-active: rgba(255, 255, 255, 0.16);
-
-      /* ── Radii & misc ── */
+      /* ── Radii (uit style guide) ── */
       --radius-sm: 6px;
       --radius-lg: 12px;
-      --transition: 0.2s ease;
+      --transition: 0.3s ease;
     }
 
     html, body {
@@ -62,22 +55,29 @@
     }
 
     /* ════════════════════════════════════════
-       Navigation — Dunkelblau (#05618d)
+       Navigation — Light, secondary color
        ════════════════════════════════════════ */
     .nav-column {
       width: 15%;
       min-width: 220px;
       max-width: 280px;
-      background: var(--nav-bg);
+      background: var(--bg-light);
+      border-right: 1px solid var(--border-light);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       flex-shrink: 0;
     }
 
+    /* Nav header with Scheer gradient */
     .nav-header {
-      padding: 24px 20px 18px;
-      border-bottom: 1px solid var(--nav-border);
+      padding: 0;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--dunkelblau) 100%);
+      color: white;
+    }
+
+    .nav-header-inner {
+      padding: 22px 20px 18px;
     }
 
     .nav-logo {
@@ -104,19 +104,20 @@
     .nav-logo-text {
       font-size: 17px;
       font-weight: 700;
-      color: var(--nav-text);
+      color: #ffffff;
       letter-spacing: -0.01em;
     }
 
     .nav-subtitle {
       font-size: 11px;
-      color: var(--nav-text-muted);
+      color: rgba(255, 255, 255, 0.7);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-top: 10px;
+      margin-top: 8px;
       font-weight: 500;
     }
 
+    /* Nav list — light background, secondary text */
     .nav-list {
       flex: 1;
       overflow-y: auto;
@@ -125,7 +126,7 @@
 
     .nav-list::-webkit-scrollbar { width: 3px; }
     .nav-list::-webkit-scrollbar-track { background: transparent; }
-    .nav-list::-webkit-scrollbar-thumb { background: var(--nav-border); border-radius: 4px; }
+    .nav-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
     .nav-item {
       display: block;
@@ -138,48 +139,49 @@
     }
 
     .nav-item:hover {
-      background: var(--nav-hover);
-      border-color: var(--nav-border);
+      background: var(--bg);
+      border-color: var(--border);
     }
 
     .nav-item.active {
-      background: var(--nav-active);
-      border-color: rgba(255, 255, 255, 0.25);
+      background: var(--bg);
+      border-color: var(--blue);
+      box-shadow: 0 2px 8px rgba(41, 150, 204, 0.12);
     }
 
     .nav-item-title {
       font-size: 13px;
       font-weight: 600;
-      color: var(--nav-text);
+      color: var(--text-dark);
       line-height: 1.3;
+    }
+
+    .nav-item.active .nav-item-title {
+      color: var(--blue);
     }
 
     .nav-item-desc {
       font-size: 11px;
-      color: var(--nav-text-muted);
+      color: var(--text-light);
       margin-top: 2px;
       line-height: 1.4;
     }
 
-    .nav-item.active .nav-item-desc {
-      color: rgba(255, 255, 255, 0.75);
-    }
-
     .nav-footer {
       padding: 14px 20px;
-      border-top: 1px solid var(--nav-border);
+      border-top: 1px solid var(--border-light);
       font-size: 11px;
-      color: var(--nav-text-muted);
+      color: var(--text-light);
     }
 
     .nav-count {
       font-variant-numeric: tabular-nums;
-      color: var(--nav-text);
+      color: var(--blue);
       font-weight: 600;
     }
 
     /* ════════════════════════════════════════
-       Content Area — White (#ffffff)
+       Content Area — White
        ════════════════════════════════════════ */
     .content-area {
       flex: 1;
@@ -189,14 +191,14 @@
       background: var(--bg);
     }
 
-    /* ── Welcome State ── */
+    /* ── Welcome ── */
     .welcome {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 40px;
-      background: var(--bg-content);
+      background: var(--bg);
     }
 
     .welcome-inner {
@@ -219,7 +221,7 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 20px;
-      box-shadow: 0 8px 24px rgba(5, 97, 141, 0.25);
+      box-shadow: 0 8px 24px rgba(5, 97, 141, 0.2);
     }
 
     .welcome-icon svg {
@@ -241,7 +243,7 @@
       line-height: 1.6;
     }
 
-    /* ── Detail View (primary blue accents) ── */
+    /* ── Detail View — primary blue accents ── */
     .detail-view {
       flex: 1;
       display: none;
@@ -281,6 +283,7 @@
       margin-top: 1px;
     }
 
+    /* Button-primary conform style guide */
     .detail-open-btn {
       font-size: 13px;
       font-weight: 600;
@@ -299,8 +302,8 @@
 
     .detail-open-btn:hover {
       background: #1e7aa8;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(41, 150, 204, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(41, 150, 204, 0.4);
     }
 
     .detail-frame-wrap {
@@ -324,8 +327,8 @@
     .spinner {
       width: 22px;
       height: 22px;
-      border: 3px solid rgba(255, 255, 255, 0.15);
-      border-top-color: white;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto 8px;
@@ -335,7 +338,7 @@
 
     .nav-loading-text {
       font-size: 12px;
-      color: var(--nav-text-muted);
+      color: var(--text-light);
     }
 
     .nav-error {
@@ -353,14 +356,16 @@
 </head>
 <body>
   <div class="shell">
-    <!-- Navigation — Dunkelblau -->
+    <!-- Navigation — Light with Scheer gradient header -->
     <aside class="nav-column">
       <div class="nav-header">
-        <div class="nav-logo">
-          <div class="nav-logo-mark">S</div>
-          <span class="nav-logo-text">Scheer IDS</span>
+        <div class="nav-header-inner">
+          <div class="nav-logo">
+            <div class="nav-logo-mark">S</div>
+            <span class="nav-logo-text">Scheer IDS</span>
+          </div>
+          <div class="nav-subtitle">Playbooks</div>
         </div>
-        <div class="nav-subtitle">Playbooks</div>
       </div>
 
       <div class="nav-list" id="navList">
@@ -415,9 +420,6 @@
     (() => {
       'use strict';
 
-      // ── Configuration ──
-      // Add new playbook directory names here.
-      // Each must have a meta.json inside playbooks/<name>/
       const PLAYBOOK_DIRS = [
         'branding',
         'customer-cases',
@@ -436,16 +438,13 @@
       let playbooks = [];
       let activeId  = null;
 
-      // ── Discovery ──
       async function loadMeta(dir) {
         try {
           const res = await fetch(`playbooks/${dir}/meta.json`);
           if (!res.ok) return null;
           const meta = await res.json();
           return meta.status === 'active' ? meta : null;
-        } catch {
-          return null;
-        }
+        } catch { return null; }
       }
 
       async function discover() {
@@ -454,16 +453,13 @@
         render();
       }
 
-      // ── Render Navigation ──
       function render() {
         navList.innerHTML = '';
         navCount.textContent = playbooks.length;
-
         if (playbooks.length === 0) {
           navList.innerHTML = '<div class="nav-error">Geen actieve playbooks gevonden.</div>';
           return;
         }
-
         playbooks.forEach(pb => {
           const el = document.createElement('div');
           el.className = 'nav-item' + (pb.id === activeId ? ' active' : '');
@@ -476,36 +472,29 @@
         });
       }
 
-      // ── Select Playbook ──
       function select(pb) {
         activeId = pb.id;
-
         navList.querySelectorAll('.nav-item').forEach((el, i) => {
           el.classList.toggle('active', playbooks[i].id === activeId);
         });
-
         welcome.style.display = 'none';
         detail.classList.add('visible');
-
         dTitle.textContent = pb.title;
         dDesc.textContent  = pb.description || '';
         dOpenBtn.href      = pb.path;
         dFrame.src         = pb.path;
       }
 
-      // ── Utility ──
       function esc(str) {
         const d = document.createElement('div');
         d.textContent = str;
         return d.innerHTML;
       }
 
-      // ── Service Worker Registration ──
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js').catch(() => {});
       }
 
-      // ── Init ──
       discover();
     })();
   </script>
