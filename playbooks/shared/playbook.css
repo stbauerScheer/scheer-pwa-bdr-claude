@@ -130,9 +130,9 @@ header .sub {
 
 .pb-hero a,
 header a {
-  color: #ffffff;
+  color: #ffffff !important;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   transition: border-color var(--transition);
 }
 
@@ -145,6 +145,11 @@ header a:hover {
 header p {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 8px;
+}
+
+.pb-hero *,
+header * {
+  color: #ffffff;
 }
 
 /* ── Hero Navigation ── */
@@ -252,11 +257,10 @@ strong {
 .label {
   display: block;
   margin-top: 10px;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.01em;
 }
 
 .label:first-of-type {
@@ -266,8 +270,8 @@ strong {
 .val {
   margin: 2px 0 0;
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 400;
+  color: var(--text-muted);
   line-height: 1.45;
 }
 

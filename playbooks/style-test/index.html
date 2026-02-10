@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Style Test â Scheer IDS</title>
+<title>Style Test - Scheer IDS</title>
 <style>
-  /* ââ ONLY playbook-specific styles ââ */
+  /* ONLY playbook-specific styles */
   .filter-row {
     display: flex;
     flex-wrap: wrap;
@@ -58,21 +58,14 @@
     margin-bottom: 14px;
   }
 </style>
-<link rel="stylesheet" href="../shared/playbook.css">
 </head>
 <body>
-<!-- Scheer Playbook Header -->
-<div class="pb-header">
-  <a href="../../index.html" class="pb-header-back">← Back to Playbooks</a>
-  <span class="pb-header-title">Style Test</span>
-</div>
 
-  <!-- âââââââââââ HERO âââââââââââ -->
   <header>
     <div class="wrap">
       <h1>Style Test Playbook</h1>
-      <p>Validate all master CSS components. This header should have white text on the blue gradient.</p>
-      <a href="#">Example link â should also be white</a>
+      <p>Validate all master CSS components. All text in this header should be white.</p>
+      <a href="#">Example link - should also be white</a>
       <nav>
         <ul>
           <li><a href="#stats">Stats</a></li>
@@ -85,7 +78,6 @@
     </div>
   </header>
 
-  <!-- âââââââââââ SEARCH BAR âââââââââââ -->
   <div class="wrap search-filter-wrap">
     <input type="text" id="searchInput" placeholder="Search customers, industries, solutions..." oninput="filterCards()">
     <select id="segmentFilter" onchange="filterCards()">
@@ -99,9 +91,8 @@
   <main>
     <div class="wrap">
 
-      <!-- âââââââââââ SECTION: STATS âââââââââââ -->
       <h2 id="stats">Dashboard Overview</h2>
-      <p class="section-intro">Key metrics at a glance. These stat boxes use playbook-specific styling on top of the master CSS variables.</p>
+      <p class="section-intro">Key metrics at a glance. Stat boxes use playbook-specific styling on top of master CSS variables.</p>
 
       <div class="stat-row">
         <div class="stat">
@@ -117,16 +108,14 @@
           <div class="stat-label">Implementations</div>
         </div>
         <div class="stat">
-          <div class="stat-number">â¬6M</div>
+          <div class="stat-number">EUR 6M</div>
           <div class="stat-label">Revenue Target</div>
         </div>
       </div>
 
-      <!-- âââââââââââ SECTION: CUSTOMERS âââââââââââ -->
       <h2 id="customers">Customer Portfolio</h2>
-      <p class="section-intro">Complete customer overview with labels (regular weight) and values (bold). Filter by segment or search by name.</p>
+      <p class="section-intro">Labels are bold, values are regular weight. Filter by segment or search by name.</p>
 
-      <!-- Filter buttons -->
       <div class="filter-row">
         <button class="filter-btn active" onclick="setSegment('')">All</button>
         <button class="filter-btn" onclick="setSegment('Product Centric')">Product Centric</button>
@@ -144,7 +133,7 @@
           <span class="label">Description</span>
           <p class="val">Technology integration and managed services</p>
           <span class="label">Industry</span>
-          <p class="val">IT & Professional Services</p>
+          <p class="val">IT and Professional Services</p>
           <span class="label">Segment</span>
           <p class="val">Service Centric</p>
           <span class="label">Solution</span>
@@ -207,7 +196,7 @@
           <span class="badge">Live</span>
           <h3>Coty</h3>
           <span class="label">Description</span>
-          <p class="val">Cosmetics & beauty</p>
+          <p class="val">Cosmetics and beauty</p>
           <span class="label">Industry</span>
           <p class="val">Beauty</p>
           <span class="label">Segment</span>
@@ -244,33 +233,28 @@
 
       </div>
 
-      <!-- âââââââââââ SECTION: ALERTS âââââââââââ -->
       <h2 id="alerts">Alert Styles</h2>
       <p class="section-intro">Three alert variants for different message types.</p>
 
       <div class="alert alert-info">
         <strong>Info:</strong> 15 implementations completed in 2025. All customers are on S/4HANA Cloud Public Edition.
       </div>
-
       <div class="alert alert-success">
-        <strong>Success:</strong> Registry updated â 6 playbooks now active in the system.
+        <strong>Success:</strong> Registry updated - 6 playbooks now active in the system.
       </div>
-
       <div class="alert alert-error">
         <strong>Attention:</strong> SAP ECC end-of-support deadline is 2027. Accelerate migration pipeline.
       </div>
 
-      <!-- âââââââââââ SECTION: TAGS âââââââââââ -->
       <h2>Tag Styles</h2>
       <div class="tag-row">
         <span class="tag">S/4HANA Cloud</span>
         <span class="tag">Retail</span>
         <span class="tag">Consumer Goods</span>
         <span class="tag">Dutch Market</span>
-        <span class="tag">â¬50-300M Revenue</span>
+        <span class="tag">EUR 50-300M Revenue</span>
       </div>
 
-      <!-- âââââââââââ SECTION: TABLE âââââââââââ -->
       <h2 id="table">Implementation Overview</h2>
       <p class="section-intro">Table styling with striped rows and hover highlight.</p>
 
@@ -286,7 +270,7 @@
         <tbody>
           <tr>
             <td>Advanced Systems Group</td>
-            <td>IT & Professional Services</td>
+            <td>IT and Professional Services</td>
             <td>SaaS ERP</td>
             <td><span class="badge">Live</span></td>
           </tr>
@@ -311,13 +295,11 @@
         </tbody>
       </table>
 
-      <!-- âââââââââââ SECTION: BLOCKQUOTE âââââââââââ -->
       <h2>Blockquote</h2>
       <blockquote>
         "Scheer IDS delivered our S/4HANA Cloud migration in record time. Their focus on Public Edition meant zero compromises."
       </blockquote>
 
-      <!-- âââââââââââ SECTION: FORMS âââââââââââ -->
       <h2 id="forms">Variable Form</h2>
       <p class="section-intro">Orange-bordered form for editable variables and inputs.</p>
 
@@ -339,7 +321,7 @@
           </div>
           <div>
             <label>Revenue Range</label>
-            <input type="text" placeholder="â¬50M - â¬300M">
+            <input type="text" placeholder="EUR 50M - EUR 300M">
           </div>
           <div>
             <label>Segment</label>
@@ -356,7 +338,6 @@
         </div>
       </div>
 
-      <!-- âââââââââââ SECTION: BUTTONS âââââââââââ -->
       <h2>Button Styles</h2>
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px;">
         <button class="button-primary">Primary (Blue)</button>
@@ -370,35 +351,29 @@
 
 <script>
   function filterCards() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    const segment = document.getElementById('segmentFilter').value;
-    const cards = document.querySelectorAll('#cardGrid .card');
-    let visible = 0;
-
-    cards.forEach(card => {
-      const text = card.textContent.toLowerCase();
-      const seg = card.dataset.segment || '';
-      const matchSearch = !query || text.includes(query);
-      const matchSegment = !segment || seg === segment;
-      const show = matchSearch && matchSegment;
+    var query = document.getElementById('searchInput').value.toLowerCase();
+    var segment = document.getElementById('segmentFilter').value;
+    var cards = document.querySelectorAll('#cardGrid .card');
+    var visible = 0;
+    cards.forEach(function(card) {
+      var text = card.textContent.toLowerCase();
+      var seg = card.dataset.segment || '';
+      var matchSearch = !query || text.indexOf(query) !== -1;
+      var matchSegment = !segment || seg === segment;
+      var show = matchSearch && matchSegment;
       card.style.display = show ? '' : 'none';
       if (show) visible++;
     });
-
-    document.getElementById('cardCount').textContent = `Showing ${visible} customer${visible !== 1 ? 's' : ''}`;
-
-    // Update filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    document.getElementById('cardCount').textContent = 'Showing ' + visible + ' customer' + (visible !== 1 ? 's' : '');
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
       btn.classList.remove('active');
     });
   }
-
   function setSegment(seg) {
     document.getElementById('segmentFilter').value = seg;
     filterCards();
-    // Highlight active button
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      const btnSeg = btn.textContent === 'All' ? '' : btn.textContent;
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      var btnSeg = btn.textContent === 'All' ? '' : btn.textContent;
       btn.classList.toggle('active', btnSeg === seg);
     });
   }
