@@ -156,12 +156,17 @@ section{margin-bottom:40px;}
 .highlight-box{background:rgba(239, 124, 0, 0.08);border-left:3px solid var(--orange);padding:16px;margin-top:16px;border-radius:6px;}
 .highlight-box strong{color:var(--dunkelblau);}
 </style>
+<link rel="stylesheet" href="../shared/playbook.css">
 </head>
 <body>
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+  <a href="../../index.html" class="pb-header-back">← Back to Playbooks</a>
+  <span class="pb-header-title">Why Scheer Branding Playbook</span>
+</div>
 
 <header>
   <div class="wrap">
-    <a href="../../index.html" style="color:#ffffff;opacity:0.8;font-size:13px;text-decoration:none;display:inline-block;margin-bottom:8px;">← Back to Playbooks</a>
     <h1>Scheer IDS - Why Scheer Branding Playbook</h1>
     <div class="sub">
       Seven core messages that position Scheer IDS as the right partner for SAP S/4HANA Cloud Public Edition.<br>
@@ -171,7 +176,7 @@ section{margin-bottom:40px;}
     <nav>
       <ul>
         <li><a href="#overview">Overview</a></li>
-        <li><a href="#bd-prospects">🎯 BD Prospects</a></li>
+        <li><a href="#bd-prospects">ð¯ BD Prospects</a></li>
         <li><a href="#public-edition-focus">100% Public Edition Focus</a></li>
         <li><a href="#core-messages">7 Core Messages</a></li>
         <li><a href="#combinations">Message Combinations</a></li>
@@ -194,7 +199,7 @@ section{margin-bottom:40px;}
 
 <div class="wrap">
   <div class="variable-form">
-    <h3>🎯 Personalize Your Prompts: Fill in Variables Once</h3>
+    <h3>ð¯ Personalize Your Prompts: Fill in Variables Once</h3>
     <div class="variable-grid">
       <div class="variable-field">
         <label>Company Name</label>
@@ -246,8 +251,8 @@ section{margin-bottom:40px;}
       </div>
     </div>
     <div class="variable-actions">
-      <button class="btn-save" onclick="saveVariables()">💾 Save Variables</button>
-      <button class="btn-clear" onclick="clearVariables()">🗑️ Clear All</button>
+      <button class="btn-save" onclick="saveVariables()">ð¾ Save Variables</button>
+      <button class="btn-clear" onclick="clearVariables()">ðï¸ Clear All</button>
     </div>
     <div class="variable-status" id="variableStatus"></div>
   </div>
@@ -255,7 +260,7 @@ section{margin-bottom:40px;}
 
 <div class="bd-section">
   <div class="wrap">
-    <h2 id="bd-prospects">🎯 Business Development Prospects</h2>
+    <h2 id="bd-prospects">ð¯ Business Development Prospects</h2>
     <p class="section-intro">
       Upload your prospect Excel file to generate intelligence-rich cards. Click "Load Prospect Data" on any card to auto-fill the variable form above, 
       then browse messaging sections to generate personalized outreach instantly.
@@ -265,7 +270,7 @@ section{margin-bottom:40px;}
       <div class="bd-upload-box">
         <input type="file" id="prospectFileInput" accept=".xlsx,.xls" style="display:none;">
         <button class="bd-upload-btn" onclick="document.getElementById('prospectFileInput').click()">
-          📁 Upload Prospect List (Excel)
+          ð Upload Prospect List (Excel)
         </button>
         <div class="bd-upload-info">
           <strong>Current List:</strong> <span id="currentListName">Retail Hardliners - Auto Parts (Default)</span>
@@ -288,7 +293,7 @@ section{margin-bottom:40px;}
         <span>Medium Priority</span>
       </div>
       <div class="bd-stat">
-        <strong id="statRevenue">€270M+</strong>
+        <strong id="statRevenue">â¬270M+</strong>
         <span>Total Revenue</span>
       </div>
     </div>
@@ -319,7 +324,7 @@ section{margin-bottom:40px;}
           <span class="badge">Summary</span>
           <h3>One-sentence positioning</h3>
           <div class="prompt">
-Scheer IDS is the right partner because we deliver clean-core, best-practice ERP; empower customers to be self-reliant; solve the complete end-to-end; bring deep industry expertise; and build cloud-ready organizations that stay current, stable, and successful—long after go-live.
+Scheer IDS is the right partner because we deliver clean-core, best-practice ERP; empower customers to be self-reliant; solve the complete end-to-end; bring deep industry expertise; and build cloud-ready organizations that stay current, stable, and successfulâlong after go-live.
           </div>
         </div>
       
@@ -332,7 +337,7 @@ Scheer IDS Netherlands is a boutique SAP consulting firm with 100% focus on SAP 
 We are:
 - The only partner in the Netherlands exclusively focused on Public Edition
 - Strongly connected to the international Scheer Group (DE, AT, CH, HR, US, SG)
-- Specialized in mid-market companies (€50M-€500M, 200+ employees)
+- Specialized in mid-market companies (â¬50M-â¬500M, 200+ employees)
 - Active in Retail, Wholesale, Consumer Products, and Manufacturing
 
 Since 2012: Fully committed to SAP Cloud ERP
@@ -386,14 +391,14 @@ The prompts can be used for:
 
 With Scheer IDS, you get realistic planning backed by 12+ years of exclusive Public Edition experience:
 
-• Project timelines based on 100+ implementations, not optimistic guesses
-• Budget estimates with {X}% accuracy - no hidden surprises
-• Risk assessment that covers every implementation phase
-• Proven SAP Activate methodology with 95%+ on-time delivery
+â¢ Project timelines based on 100+ implementations, not optimistic guesses
+â¢ Budget estimates with {X}% accuracy - no hidden surprises
+â¢ Risk assessment that covers every implementation phase
+â¢ Proven SAP Activate methodology with 95%+ on-time delivery
 
-We know every pitfall, every challenge, every success pattern. Our planning isn't theory—it's battle-tested reality.
+We know every pitfall, every challenge, every success pattern. Our planning isn't theoryâit's battle-tested reality.
 
-When we say {X} months, we mean {X} months. When we estimate €{Y}, that's what you'll invest. No surprises, no scope creep, no regrets.
+When we say {X} months, we mean {X} months. When we estimate â¬{Y}, that's what you'll invest. No surprises, no scope creep, no regrets.
           </div>
         </div>
       
@@ -406,16 +411,16 @@ Traditional ERP implementations take 18-24 months before you see business value.
 Scheer IDS delivers measurable value within {X} weeks:
 
 Digital Discovery Assessment: {Y}-week rapid scoping process
-• 900+ SAP best practices mapped to your business
-• Clear go/no-go decisions on scope
-• Functional demos before you commit
-• Realistic project roadmap from day one
+â¢ 900+ SAP best practices mapped to your business
+â¢ Clear go/no-go decisions on scope
+â¢ Functional demos before you commit
+â¢ Realistic project roadmap from day one
 
 Sprint-based delivery: Value every 2 weeks
-• First processes live in {X} months
-• Phased rollout reduces disruption
-• Early wins build stakeholder confidence
-• Continuous validation with business users
+â¢ First processes live in {X} months
+â¢ Phased rollout reduces disruption
+â¢ Early wins build stakeholder confidence
+â¢ Continuous validation with business users
 
 Result: Your finance team sees first value in month {X}, not month 18. Your operations improves in month {Y}, not after go-live. Competitive advantage starts immediately, not eventually.
           </div>
@@ -430,16 +435,16 @@ Result: Your finance team sees first value in month {X}, not month 18. Your oper
 Scheer IDS de-risks your project through pure specialization:
 
 Proven track record:
-• 95%+ on-time, on-budget delivery rate
-• 100+ successful Public Edition implementations
-• Zero failed projects in {X} years
-• Reference customers in your {INDUSTRY}
+â¢ 95%+ on-time, on-budget delivery rate
+â¢ 100+ successful Public Edition implementations
+â¢ Zero failed projects in {X} years
+â¢ Reference customers in your {INDUSTRY}
 
 Risk mitigation built-in:
-• SAP Qualified Partner Packaged Solutions = pre-configured starting point
-• Industry templates from similar companies eliminate "learning on your project"
-• Fit-to-standard approach avoids custom development risks
-• Change management integrated from day one
+â¢ SAP Qualified Partner Packaged Solutions = pre-configured starting point
+â¢ Industry templates from similar companies eliminate "learning on your project"
+â¢ Fit-to-standard approach avoids custom development risks
+â¢ Change management integrated from day one
 
 What this means: While competitors experiment with Public Edition on your project, we apply proven patterns. Your implementation risk drops from {X}% (industry average) to <5% (Scheer track record).
           </div>
@@ -449,23 +454,23 @@ What this means: While competitors experiment with Public Edition on your projec
           <span class="badge">Value Prop</span>
           <h3">No vendor dependency: Build capability, not reliance</h3>
           <div class="prompt">
-{COMPANY_NAME}, most ERP partners create dependency—every change requires a consultant call at €{X}/hour.
+{COMPANY_NAME}, most ERP partners create dependencyâevery change requires a consultant call at â¬{X}/hour.
 
 Scheer IDS builds your self-reliance from day one:
 
 Knowledge transfer, not gatekeeping:
-• Co-building approach: we implement WITH your team, not FOR them
-• Every configuration choice documented and explained
-• Key users trained to level 3 proficiency
-• {X} hours of hands-on workshops per functional area
+â¢ Co-building approach: we implement WITH your team, not FOR them
+â¢ Every configuration choice documented and explained
+â¢ Key users trained to level 3 proficiency
+â¢ {X} hours of hands-on workshops per functional area
 
 Post-go-live independence:
-• Your team manages daily operations autonomously
-• Configuration changes without consultant dependency
-• Internal capability for reports, workflows, integrations
-• Scheer available for strategic guidance, not tactical fixes
+â¢ Your team manages daily operations autonomously
+â¢ Configuration changes without consultant dependency
+â¢ Internal capability for reports, workflows, integrations
+â¢ Scheer available for strategic guidance, not tactical fixes
 
-ROI impact: Typical customers save €{X}K annually in post-implementation consultant costs. Your team becomes the expert, not us. That's intentional—it's how cloud ERP should work.
+ROI impact: Typical customers save â¬{X}K annually in post-implementation consultant costs. Your team becomes the expert, not us. That's intentionalâit's how cloud ERP should work.
           </div>
         </div>
       
@@ -473,25 +478,25 @@ ROI impact: Typical customers save €{X}K annually in post-implementation consu
           <span class="badge">Value Prop</span>
           <h3>Future-proof through automatic innovation access</h3>
           <div class="prompt">
-{COMPANY_NAME}, your current ERP requires expensive upgrade projects every 3-5 years. Each upgrade = €{X}K investment + {Y} months disruption.
+{COMPANY_NAME}, your current ERP requires expensive upgrade projects every 3-5 years. Each upgrade = â¬{X}K investment + {Y} months disruption.
 
 With Public Edition via Scheer IDS, upgrades become automatic:
 
 Continuous innovation delivery:
-• Quarterly releases with new SAP capabilities
-• AI features, analytics, process improvements arrive automatically
-• Zero disruption, zero downtime, zero upgrade projects
-• Clean core ensures compatibility always
+â¢ Quarterly releases with new SAP capabilities
+â¢ AI features, analytics, process improvements arrive automatically
+â¢ Zero disruption, zero downtime, zero upgrade projects
+â¢ Clean core ensures compatibility always
 
 TCO reduction:
-• No upgrade budget required
-• No regression testing cycles
-• No "frozen" system waiting for next release
-• {X}% lower 5-year TCO vs traditional ERP
+â¢ No upgrade budget required
+â¢ No regression testing cycles
+â¢ No "frozen" system waiting for next release
+â¢ {X}% lower 5-year TCO vs traditional ERP
 
 Competitive advantage: While competitors spend {X} months upgrading their ERP, you're deploying new AI forecasting capabilities the day SAP releases them. Innovation becomes continuous, not event-based.
 
-{COMPANY_NAME} stays current without expensive projects. That's the Public Edition promise—and Scheer's clean core commitment delivers it.
+{COMPANY_NAME} stays current without expensive projects. That's the Public Edition promiseâand Scheer's clean core commitment delivers it.
           </div>
         </div>
       
@@ -499,21 +504,21 @@ Competitive advantage: While competitors spend {X} months upgrading their ERP, y
           <span class="badge">Value Prop</span>
           <h3>Industry-proven templates accelerate your implementation</h3>
           <div class="prompt">
-{COMPANY_NAME}, generic ERP consultants learn {INDUSTRY} processes on your project—at your expense.
+{COMPANY_NAME}, generic ERP consultants learn {INDUSTRY} processes on your projectâat your expense.
 
 Scheer IDS brings {X}+ years of {INDUSTRY} expertise:
 
 Pre-built industry assets:
-• Reference architectures from {X} {INDUSTRY} implementations
-• Process templates for {SPECIFIC_PROCESSES}
-• Integration patterns for {COMMON_SYSTEMS}
-• Best practices from companies like {REFERENCE_CUSTOMER_1}, {REFERENCE_CUSTOMER_2}
+â¢ Reference architectures from {X} {INDUSTRY} implementations
+â¢ Process templates for {SPECIFIC_PROCESSES}
+â¢ Integration patterns for {COMMON_SYSTEMS}
+â¢ Best practices from companies like {REFERENCE_CUSTOMER_1}, {REFERENCE_CUSTOMER_2}
 
 Immediate application:
-• No "discovery phase" learning your industry
-• Day-1 demos showing YOUR processes, not generic examples
-• Implementation {X}% faster through reusable components
-• Lower risk—patterns proven in similar operations
+â¢ No "discovery phase" learning your industry
+â¢ Day-1 demos showing YOUR processes, not generic examples
+â¢ Implementation {X}% faster through reusable components
+â¢ Lower riskâpatterns proven in similar operations
 
 Value: You don't pay for our education. You benefit from our experience. When we implement {PROCESS} at {COMPANY_NAME}, we're applying patterns refined through {X} similar implementations. Your project starts at version 10.0, not version 1.0.
           </div>
@@ -523,25 +528,25 @@ Value: You don't pay for our education. You benefit from our experience. When we
           <span class="badge">Value Prop</span>
           <h3>Complete end-to-end ownership beyond standard SAP</h3>
           <div class="prompt">
-{COMPANY_NAME}, most SAP partners stop at the functional boundary of S/4HANA—leaving you with integration gaps and workarounds.
+{COMPANY_NAME}, most SAP partners stop at the functional boundary of S/4HANAâleaving you with integration gaps and workarounds.
 
 Scheer IDS owns the complete solution:
 
 Full process coverage:
-• Standard S/4HANA for core processes
-• SAP BTP extensions for business-specific requirements
-• Integration with {EXTERNAL_SYSTEM_1}, {EXTERNAL_SYSTEM_2}
-• Gap closing that maintains clean core principles
+â¢ Standard S/4HANA for core processes
+â¢ SAP BTP extensions for business-specific requirements
+â¢ Integration with {EXTERNAL_SYSTEM_1}, {EXTERNAL_SYSTEM_2}
+â¢ Gap closing that maintains clean core principles
 
 Single accountability:
-• One partner for complete end-to-end
-• No "that's not our scope" excuses
-• Seamless handoffs between SAP and extensions
-• Unified support and issue resolution
+â¢ One partner for complete end-to-end
+â¢ No "that's not our scope" excuses
+â¢ Seamless handoffs between SAP and extensions
+â¢ Unified support and issue resolution
 
-Business outcome: Your {PROCESS} works completely, not 85% with manual workarounds. When {BUSINESS_SCENARIO} happens, the system handles it—automatically, correctly, completely.
+Business outcome: Your {PROCESS} works completely, not 85% with manual workarounds. When {BUSINESS_SCENARIO} happens, the system handles itâautomatically, correctly, completely.
 
-If {COMPANY_NAME} needs it for business success, we deliver it. That's not "extra services"—that's basic implementation hygiene. Many partners don't get this. We do.
+If {COMPANY_NAME} needs it for business success, we deliver it. That's not "extra services"âthat's basic implementation hygiene. Many partners don't get this. We do.
           </div>
         </div>
       
@@ -554,20 +559,20 @@ Traditional ERP: 18 months of development, then big-bang go-live. High risk, del
 Scheer IDS agile approach: Value delivery every 2-week sprint.
 
 Sprint-based methodology:
-• Functional demos every sprint—not PowerPoint, actual working system
-• Business validation throughout, not just at end
-• Course corrections early when cheap, not late when expensive
-• Stakeholders see progress continuously, not "trust us, it's coming"
+â¢ Functional demos every sprintânot PowerPoint, actual working system
+â¢ Business validation throughout, not just at end
+â¢ Course corrections early when cheap, not late when expensive
+â¢ Stakeholders see progress continuously, not "trust us, it's coming"
 
 Phased value realization:
-• Finance processes live month {X}
-• Sales & distribution live month {Y}
-• Production live month {Z}
-• Each phase delivers measurable business benefit
+â¢ Finance processes live month {X}
+â¢ Sales & distribution live month {Y}
+â¢ Production live month {Z}
+â¢ Each phase delivers measurable business benefit
 
-Risk reduction: If sprint 5 reveals a misunderstanding, we fix it in sprint 6—at minimal cost. Traditional waterfall? You discover the issue at go-live—too late, too expensive, too risky.
+Risk reduction: If sprint 5 reveals a misunderstanding, we fix it in sprint 6âat minimal cost. Traditional waterfall? You discover the issue at go-liveâtoo late, too expensive, too risky.
 
-{COMPANY_NAME} sees working software from week 2, not month 18. That transparency, that early validation, that risk mitigation—that's what agile delivers. And we've perfected it over 100+ implementations.
+{COMPANY_NAME} sees working software from week 2, not month 18. That transparency, that early validation, that risk mitigationâthat's what agile delivers. And we've perfected it over 100+ implementations.
           </div>
         </div>
       
@@ -580,24 +585,24 @@ Risk reduction: If sprint 5 reveals a misunderstanding, we fix it in sprint 6—
 For Scheer IDS, Public Edition IS our business:
 
 What pure specialization delivers:
-• 12+ years exclusive focus = deep expertise, not surface knowledge
-• 100+ implementations = proven patterns, not experimental approaches
-• Zero on-premise distraction = complete Public Edition mastery
-• Industry templates refined through real projects
-• Predictable delivery backed by track record
+â¢ 12+ years exclusive focus = deep expertise, not surface knowledge
+â¢ 100+ implementations = proven patterns, not experimental approaches
+â¢ Zero on-premise distraction = complete Public Edition mastery
+â¢ Industry templates refined through real projects
+â¢ Predictable delivery backed by track record
 
 The difference:
-→ Generalist partner: "We can do Public Edition" (learning on your project)
-→ Scheer IDS: "Public Edition is all we do" (applying proven expertise)
+â Generalist partner: "We can do Public Edition" (learning on your project)
+â Scheer IDS: "Public Edition is all we do" (applying proven expertise)
 
 When you choose Scheer IDS, you get:
-✓ Realistic planning (we've done this 100+ times)
-✓ Lower risk (95%+ success rate, not industry average)
-✓ Faster delivery (reusable assets, not starting from zero)
-✓ Better outcomes (specialization depth, not breadth)
-✓ Long-term success (clean core commitment, not short-term revenue)
+â Realistic planning (we've done this 100+ times)
+â Lower risk (95%+ success rate, not industry average)
+â Faster delivery (reusable assets, not starting from zero)
+â Better outcomes (specialization depth, not breadth)
+â Long-term success (clean core commitment, not short-term revenue)
 
-One sentence: If {COMPANY_NAME} wants a partner who has implemented Public Edition more times than anyone in Netherlands, who knows every success pattern and every pitfall, who delivers predictable outcomes—that's why our 100% focus exists.
+One sentence: If {COMPANY_NAME} wants a partner who has implemented Public Edition more times than anyone in Netherlands, who knows every success pattern and every pitfall, who delivers predictable outcomesâthat's why our 100% focus exists.
 
 Specialists win. Generalists guess. Choose accordingly.
           </div>
@@ -624,12 +629,12 @@ At {COMPANY_NAME}, we see you're facing {CURRENT_CHALLENGE}.
 
 Scheer IDS works exclusively with SAP best practices as the foundation for every implementation. This means for {COMPANY_NAME}:
 
-• A clean and stable system from day one
-• {X}% faster time-to-value through proven methodology
-• Protection of long-term system integrity
-• Upgrade-friendly architecture that makes SAP innovations immediately available
+â¢ A clean and stable system from day one
+â¢ {X}% faster time-to-value through proven methodology
+â¢ Protection of long-term system integrity
+â¢ Upgrade-friendly architecture that makes SAP innovations immediately available
 
-Where many partners add complexity, we keep ERP standardized and future-proof. This isn't a buzzword—it's been our core implementation philosophy since 2012.
+Where many partners add complexity, we keep ERP standardized and future-proof. This isn't a buzzwordâit's been our core implementation philosophy since 2012.
 
 Key benefits:
 - Accelerated implementation with proven best practices
@@ -647,10 +652,10 @@ Key benefits:
 
 At Scheer IDS, clean core is not a buzzword but a non-negotiable commitment. This means concretely:
 
-✓ Effortless upgrades: No months-long upgrade projects
-✓ Continuous innovation: Automatic access to new SAP capabilities
-✓ Lower lifecycle costs: {X}% lower TCO than traditional ERP
-✓ Zero partner dependency: Your team manages the system independently
+â Effortless upgrades: No months-long upgrade projects
+â Continuous innovation: Automatic access to new SAP capabilities
+â Lower lifecycle costs: {X}% lower TCO than traditional ERP
+â Zero partner dependency: Your team manages the system independently
 
 A clean core keeps ERP current, predictable, and stable. Where other partners implement customizations that lock you in, we build systems that {COMPANY_NAME} can manage autonomously.
 
@@ -668,12 +673,12 @@ Key benefits:
           <div class="prompt">
 With many ERP partners, unwanted dependency arises. Every change, every report, every adjustment means hiring a consultant again.
 
-Scheer IDS's philosophy is different—we empower {COMPANY_NAME} to be self-reliant:
+Scheer IDS's philosophy is differentâwe empower {COMPANY_NAME} to be self-reliant:
 
-• Co-building approach: We build WITH your team, not FOR you
-• Clear decision governance: Every configuration choice is documented and understandable
-• Transparent configuration: No black box, complete transparency
-• Practical training: Hands-on training so {KEY_USERS} manage the system independently
+â¢ Co-building approach: We build WITH your team, not FOR you
+â¢ Clear decision governance: Every configuration choice is documented and understandable
+â¢ Transparent configuration: No black box, complete transparency
+â¢ Practical training: Hands-on training so {KEY_USERS} manage the system independently
 
 Our goal is not to create dependency, but to build capability. {COMPANY_NAME} understands, owns, and manages your ERP long after go-live.
 
@@ -687,16 +692,16 @@ Key benefits:
       
         <div class="card">
           <span class="badge">Message 4</span>
-          <h3>We own the whole end-to-end—even beyond SAP best practices</h3>
+          <h3>We own the whole end-to-endâeven beyond SAP best practices</h3>
           <div class="prompt">
 {COMPANY_NAME}, in your {INDUSTRY} business there are always unique requirements that fall just outside standard SAP best practices.
 
 Where many partners stop at the functional boundary of S/4HANA, Scheer IDS continues:
 
-• End-to-end ownership: We're responsible for the complete process
-• Gap closing: Via SAP BTP we close business-specific gaps
-• Process extensions: Custom extensions within clean core principles
-• Integration expertise: {EXTERNAL_SYSTEM} integrates seamlessly
+â¢ End-to-end ownership: We're responsible for the complete process
+â¢ Gap closing: Via SAP BTP we close business-specific gaps
+â¢ Process extensions: Custom extensions within clean core principles
+â¢ Integration expertise: {EXTERNAL_SYSTEM} integrates seamlessly
 
 If {COMPANY_NAME} needs it for your business, we solve it. Every link in the chain works, or we make it work. No "that's not possible" or "you need to hire another partner for that."
 
@@ -715,15 +720,15 @@ Key benefits:
 Many SAP partners understand the technology but not your {INDUSTRY} business. At Scheer IDS, that's different.
 
 Our consultants combine SAP expertise with fundamental industry knowledge in:
-• {INDUSTRY_FOCUS}: {X}+ implementations
-• International operations: Multi-entity, multi-currency, cross-border
-• Complex supply chains: From procurement to customer delivery
+â¢ {INDUSTRY_FOCUS}: {X}+ implementations
+â¢ International operations: Multi-entity, multi-currency, cross-border
+â¢ Complex supply chains: From procurement to customer delivery
 
 We don't start with "how do we configure SAP?" but with "how does your business run at {COMPANY_NAME}?"
 
 Examples from your sector:
-→ {REFERENCE_CUSTOMER_1}: {ACHIEVEMENT_1}
-→ {REFERENCE_CUSTOMER_2}: {ACHIEVEMENT_2}
+â {REFERENCE_CUSTOMER_1}: {ACHIEVEMENT_1}
+â {REFERENCE_CUSTOMER_2}: {ACHIEVEMENT_2}
 
 Industry insight first, technical configuration second. That makes the difference.
 
@@ -739,19 +744,19 @@ Key benefits:
           <span class="badge">Message 6</span>
           <h3>We build future-proof organizations, not just systems</h3>
           <div class="prompt">
-{COMPANY_NAME}, implementing a new ERP system is not the end goal—it's the starting point.
+{COMPANY_NAME}, implementing a new ERP system is not the end goalâit's the starting point.
 
 Scheer IDS builds future-proof organizations, not just systems:
 
-📈 Cloud mindset development
-• From "one-time project" to continuous improvement
-• Adoption of SAP innovations as part of your roadmap
-• Lifecycle management as business-as-usual
+ð Cloud mindset development
+â¢ From "one-time project" to continuous improvement
+â¢ Adoption of SAP innovations as part of your roadmap
+â¢ Lifecycle management as business-as-usual
 
-🎯 Strategic enablement
-• ERP becomes strategic business enabler, not constraint
-• Process standardization that enables scale
-• Foundation for {FUTURE_INITIATIVE}
+ð¯ Strategic enablement
+â¢ ERP becomes strategic business enabler, not constraint
+â¢ Process standardization that enables scale
+â¢ Foundation for {FUTURE_INITIATIVE}
 
 The result? {COMPANY_NAME} isn't dependent on a system that becomes outdated, but has a platform that grows with your ambitions.
 
@@ -767,24 +772,24 @@ Key benefits:
       
         <div class="card">
           <span class="badge">Message 7</span>
-          <h3>We are specialists—not generalists</h3>
+          <h3>We are specialistsânot generalists</h3>
           <div class="prompt">
 {COMPANY_NAME}, when choosing an ERP partner, focus is crucial.
 
 Many partners offer "SAP among other things." At Scheer IDS, this IS who we are:
 
-🎯 Pure specialization
-• Since 2012: 100% committed to SAP Cloud ERP
-• Since 2017: SAP S/4HANA Cloud Public Edition as core solution
-• Only partner in NL with complete focus on Public Edition
-• {X}+ successful implementations in your industry
+ð¯ Pure specialization
+â¢ Since 2012: 100% committed to SAP Cloud ERP
+â¢ Since 2017: SAP S/4HANA Cloud Public Edition as core solution
+â¢ Only partner in NL with complete focus on Public Edition
+â¢ {X}+ successful implementations in your industry
 
-📊 Proven track record
-• {IMPLEMENTATION_TIME} average implementation time
-• {SUCCESS_RATE}% on-time, on-budget delivery
-• {CUSTOMER_RETENTION}% customer retention
+ð Proven track record
+â¢ {IMPLEMENTATION_TIME} average implementation time
+â¢ {SUCCESS_RATE}% on-time, on-budget delivery
+â¢ {CUSTOMER_RETENTION}% customer retention
 
-This is not one service among many—this is who we are. Our depth, focus, and proven methods set us apart. If {COMPANY_NAME} chooses a specialist, not a generalist, then Scheer IDS is your partner.
+This is not one service among manyâthis is who we are. Our depth, focus, and proven methods set us apart. If {COMPANY_NAME} chooses a specialist, not a generalist, then Scheer IDS is your partner.
 
 Key benefits:
 - 12+ years exclusive SAP Cloud focus
@@ -819,9 +824,9 @@ For companies struggling with:
 - Difficult upgrades
 
 Emphasis:
-→ Clean core means no more painful upgrades
-→ Self-reliance means no more consultant dependency
-→ Lower TCO through both principles combined
+â Clean core means no more painful upgrades
+â Self-reliance means no more consultant dependency
+â Lower TCO through both principles combined
           </div>
         </div>
       
@@ -838,9 +843,9 @@ For companies experiencing:
 - Need for agility
 
 Emphasis:
-→ Best-practice foundation enables fast scaling
-→ Cloud mindset supports continuous evolution
-→ System grows with business ambitions
+â Best-practice foundation enables fast scaling
+â Cloud mindset supports continuous evolution
+â System grows with business ambitions
           </div>
         </div>
       
@@ -857,9 +862,9 @@ For companies with:
 - Integration challenges
 
 Emphasis:
-→ We understand your industry deeply
-→ We own the complete solution, not just SAP
-→ BTP closes gaps while maintaining clean core
+â We understand your industry deeply
+â We own the complete solution, not just SAP
+â BTP closes gaps while maintaining clean core
           </div>
         </div>
       
@@ -876,10 +881,10 @@ For stakeholders concerned about:
 - Successful outcomes
 
 Emphasis:
-→ 12+ years exclusive focus, not generalists
-→ Proven methodology with {X}% success rate
-→ Reference customers in your industry
-→ Predictable, professional delivery
+â 12+ years exclusive focus, not generalists
+â Proven methodology with {X}% success rate
+â Reference customers in your industry
+â Predictable, professional delivery
           </div>
         </div>
       
@@ -908,7 +913,7 @@ Result: Complete value proposition that differentiates Scheer IDS from both SAP 
           <div class="prompt">
 Scheer IDS is the only Dutch partner with 100% focus on SAP S/4HANA Cloud Public Edition.
 
-Since 2017, we've built our entire practice around delivering clean-core, best-practice implementations that make customers self-reliant—not dependent on consultants.
+Since 2017, we've built our entire practice around delivering clean-core, best-practice implementations that make customers self-reliantânot dependent on consultants.
 
 We don't just configure SAP. We understand {INDUSTRY} operations deeply, own the complete end-to-end solution, and build organizations that treat ERP as a competitive advantage, not a constraint.
 
@@ -933,8 +938,8 @@ If you want specialists with proven methodology, not generalists learning on you
       <a href="Playbook-Scheer-Branding.html" target="_blank">Why Scheer Branding</a>
     </div>
     <div class="copyright">
-      Scheer IDS Netherlands – Why Scheer Branding Playbook – Living document, regularly updated.<br>
-      © Scheer Group – SAP Expert Partner for S/4HANA Cloud Public Edition
+      Scheer IDS Netherlands â Why Scheer Branding Playbook â Living document, regularly updated.<br>
+      Â© Scheer Group â SAP Expert Partner for S/4HANA Cloud Public Edition
     </div>
   </div>
 </footer>
@@ -959,7 +964,7 @@ function handleExcelUpload(event) {
   
   const status = document.getElementById('uploadStatus');
   status.className = 'bd-upload-status';
-  status.textContent = '⏳ Processing Excel file...';
+  status.textContent = 'â³ Processing Excel file...';
   status.style.display = 'block';
   
   const reader = new FileReader();
@@ -1013,7 +1018,7 @@ function handleExcelUpload(event) {
       
       // Show success
       status.className = 'bd-upload-status success';
-      status.textContent = `✓ Successfully loaded ${jsonData.length} prospects from ${file.name}`;
+      status.textContent = `â Successfully loaded ${jsonData.length} prospects from ${file.name}`;
       
       setTimeout(() => {
         status.style.display = 'none';
@@ -1021,14 +1026,14 @@ function handleExcelUpload(event) {
       
     } catch (error) {
       status.className = 'bd-upload-status error';
-      status.textContent = `✗ Error: ${error.message}`;
+      status.textContent = `â Error: ${error.message}`;
       console.error('Excel parsing error:', error);
     }
   };
   
   reader.onerror = function() {
     status.className = 'bd-upload-status error';
-    status.textContent = '✗ Error reading file';
+    status.textContent = 'â Error reading file';
   };
   
   reader.readAsArrayBuffer(file);
@@ -1050,12 +1055,12 @@ function updateBDStats() {
   let totalRevenue = 0;
   data.forEach(p => {
     const rev = p['Est. Revenue (EUR)'] || '';
-    const match = rev.match(/€?(\d+)/);
+    const match = rev.match(/â¬?(\d+)/);
     if (match) {
       totalRevenue += parseInt(match[1]);
     }
   });
-  document.getElementById('statRevenue').textContent = '€' + totalRevenue + 'M+';
+  document.getElementById('statRevenue').textContent = 'â¬' + totalRevenue + 'M+';
 }
 
 // ============================================
@@ -1069,9 +1074,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "https://www.linkedin.com/company/evert-hammink-truck-&-trailerparts",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Truck & Trailer",
-    "Est. Revenue (EUR)": "€30M - €40M",
+    "Est. Revenue (EUR)": "â¬30M - â¬40M",
     "Employees": "40-50",
-    "Why Target": "✅ Internationale distributie (NL, DE, hele Europa)\n✅ Multi-entiteit operatie (meerdere vestigingen)\n✅ 20.000+ SKU's - extreme assortiment complexiteit\n✅ Eigen bezorgservice - complexe logistics\n✅ Importeur/Exporteur - multi-currency, cross-border",
+    "Why Target": "â Internationale distributie (NL, DE, hele Europa)\nâ Multi-entiteit operatie (meerdere vestigingen)\nâ 20.000+ SKU's - extreme assortiment complexiteit\nâ Eigen bezorgservice - complexe logistics\nâ Importeur/Exporteur - multi-currency, cross-border",
     "Campaign": "AI Demand Forecasting",
     "Current ERP (Suspected)": "Mogelijk Microsoft Dynamics / Legacy systeem",
     "Cold Call Topic/Hook": "Met 20.000+ artikelen en internationale distributie, hoe managet u real-time voorraad optimalisatie over meerdere vestigingen?"
@@ -1083,9 +1088,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "https://nl.linkedin.com/company/tevu",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Truck & Trailer",
-    "Est. Revenue (EUR)": "€25M - €35M",
+    "Est. Revenue (EUR)": "â¬25M - â¬35M",
     "Employees": "~20",
-    "Why Target": "✅ Online groothandel model - e-commerce complexiteit\n✅ Eigen bezorgdienst (NL + België)\n✅ 35+ jaar ervaring - gevestigde klantenbasis\n✅ Breed assortiment (DAF, Scania, Volvo, Mercedes, MAN, Renault, Iveco)\n✅ TIR compliance - internationale transport focus",
+    "Why Target": "â Online groothandel model - e-commerce complexiteit\nâ Eigen bezorgdienst (NL + BelgiÃ«)\nâ 35+ jaar ervaring - gevestigde klantenbasis\nâ Breed assortiment (DAF, Scania, Volvo, Mercedes, MAN, Renault, Iveco)\nâ TIR compliance - internationale transport focus",
     "Campaign": "Unified Commerce",
     "Current ERP (Suspected)": "Mogelijk webshop-gericht systeem (needs ERP upgrade)",
     "Cold Call Topic/Hook": "Als online groothandel met eigen bezorgdienst, hoe synchroniseert u webshop orders met warehouse picking en route planning?"
@@ -1097,9 +1102,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Truck, Trailer, Bus",
-    "Est. Revenue (EUR)": "€30M+",
+    "Est. Revenue (EUR)": "â¬30M+",
     "Employees": "?",
-    "Why Target": "✅ 150.000+ SKU's catalogus - massive complexity\n✅ 60.000 artikelen op voorraad - significant warehouse operations\n✅ 80+ jaar ervaring in truck/trailer branche\n✅ B2B focus: groothandels, dealerorganisaties\n✅ Europese distributie - 3 werkdagen Europa-wide",
+    "Why Target": "â 150.000+ SKU's catalogus - massive complexity\nâ 60.000 artikelen op voorraad - significant warehouse operations\nâ 80+ jaar ervaring in truck/trailer branche\nâ B2B focus: groothandels, dealerorganisaties\nâ Europese distributie - 3 werkdagen Europa-wide",
     "Campaign": "AI Demand Forecasting",
     "Current ERP (Suspected)": "Legacy systeem (gezien complexiteit)",
     "Cold Call Topic/Hook": "Met 150.000 SKU's en pan-Europese 3-day delivery SLA's, hoe optimaliseert u voorraadniveaus tegen capital costs?"
@@ -1111,12 +1116,12 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Truck & Trailer Specialist",
-    "Est. Revenue (EUR)": "€25M+",
+    "Est. Revenue (EUR)": "â¬25M+",
     "Employees": "?",
-    "Why Target": "✅ Familiebedrijf met schaalgrootte - succession/modernization opportunity\n✅ Gespecialiseerd assortiment (vangmuilkoppelingen, trailerassen)\n✅ Webshop + groothandel combinatie\n✅ Grote voorraad model - snelle levering USP",
+    "Why Target": "â Familiebedrijf met schaalgrootte - succession/modernization opportunity\nâ Gespecialiseerd assortiment (vangmuilkoppelingen, trailerassen)\nâ Webshop + groothandel combinatie\nâ Grote voorraad model - snelle levering USP",
     "Campaign": "Unified Commerce",
     "Current ERP (Suspected)": "Mogelijk legacy/family business systeem",
-    "Cold Call Topic/Hook": "Als gerenommeerd familiebedrijf, hoe borgt u continuïteit en schaalbaarheid richting volgende generatie?"
+    "Cold Call Topic/Hook": "Als gerenommeerd familiebedrijf, hoe borgt u continuÃ¯teit en schaalbaarheid richting volgende generatie?"
   },
   {
     "Priority": "HIGH",
@@ -1125,9 +1130,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Truck & Automotive",
-    "Est. Revenue (EUR)": "€25M+",
+    "Est. Revenue (EUR)": "â¬25M+",
     "Employees": "?",
-    "Why Target": "✅ 2.000 M2 magazijn met 10.000+ artikelen voorraad\n✅ 6x per dag bezorging Rijssen e.o. - intense logistics operations\n✅ Truck + trailer + auto onderdelen - breed portfolio\n✅ Eigen gasveer productie - manufacturing element",
+    "Why Target": "â 2.000 M2 magazijn met 10.000+ artikelen voorraad\nâ 6x per dag bezorging Rijssen e.o. - intense logistics operations\nâ Truck + trailer + auto onderdelen - breed portfolio\nâ Eigen gasveer productie - manufacturing element",
     "Campaign": "Unified Commerce",
     "Current ERP (Suspected)": "Mogelijk legacy systeem",
     "Cold Call Topic/Hook": "Met 6 bezorgrondes per dag en productie-activiteiten, hoe integreert u manufacturing en distributie?"
@@ -1139,9 +1144,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Passenger Cars",
-    "Est. Revenue (EUR)": "€25M - €35M",
+    "Est. Revenue (EUR)": "â¬25M - â¬35M",
     "Employees": "?",
-    "Why Target": "✅ Eigen merken (Palidium, Ashuki) - productie/sourcing complexiteit\n✅ Groothandel voor garages - B2B focus\n✅ Aftermarket + originele onderdelen - dual sourcing\n✅ Snelle levering requirement - warehouse optimization",
+    "Why Target": "â Eigen merken (Palidium, Ashuki) - productie/sourcing complexiteit\nâ Groothandel voor garages - B2B focus\nâ Aftermarket + originele onderdelen - dual sourcing\nâ Snelle levering requirement - warehouse optimization",
     "Campaign": "AI Demand Forecasting",
     "Current ERP (Suspected)": "?",
     "Cold Call Topic/Hook": "Als groothandel met eigen private label merken, hoe integreert u productie-planning met groothandel distributie?"
@@ -1153,9 +1158,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Automotive Materials",
-    "Est. Revenue (EUR)": "€25M+",
+    "Est. Revenue (EUR)": "â¬25M+",
     "Employees": "?",
-    "Why Target": "✅ Sinds 1982 - gevestigde groothandel (40+ jaar)\n✅ #1 automaterialen groothandel Twente\n✅ Binnen 1 uur geleverd Twente - intense logistics\n✅ Eigen bezorgservice - delivery optimization\n✅ NL/BE/DE levering - cross-border operations",
+    "Why Target": "â Sinds 1982 - gevestigde groothandel (40+ jaar)\nâ #1 automaterialen groothandel Twente\nâ Binnen 1 uur geleverd Twente - intense logistics\nâ Eigen bezorgservice - delivery optimization\nâ NL/BE/DE levering - cross-border operations",
     "Campaign": "Unified Commerce",
     "Current ERP (Suspected)": "Webshop systeem (mogelijk needs ERP integration)",
     "Cold Call Topic/Hook": "Met 1-uur delivery SLA in Twente en internationale orders, hoe balanceert u lokale snelheid met cross-border efficiency?"
@@ -1167,9 +1172,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Performance/Tuning",
-    "Est. Revenue (EUR)": "€25M+",
+    "Est. Revenue (EUR)": "â¬25M+",
     "Employees": "?",
-    "Why Target": "✅ Europese distributie (NL, BE, LUX, DE, FR, ES, PT)\n✅ Niche focus: performance tuning - premium margins\n✅ B2B platform - webshops, retailers, garages\n✅ Snelheid als USP - complexe fulfilment requirements",
+    "Why Target": "â Europese distributie (NL, BE, LUX, DE, FR, ES, PT)\nâ Niche focus: performance tuning - premium margins\nâ B2B platform - webshops, retailers, garages\nâ Snelheid als USP - complexe fulfilment requirements",
     "Campaign": "AI Demand Forecasting",
     "Current ERP (Suspected)": "Mogelijk Shopware/E-commerce gericht systeem",
     "Cold Call Topic/Hook": "Performance parts vereisen snelle levering aan heel Europa. Hoe optimaliseert u multi-country voorraad?"
@@ -1181,12 +1186,12 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Automotive + Tools",
-    "Est. Revenue (EUR)": "€25M+",
+    "Est. Revenue (EUR)": "â¬25M+",
     "Employees": "?",
-    "Why Target": "✅ B2B groothandel voor retail & webshops\n✅ Multi-category: automotive, fiets, gereedschap\n✅ Grote voorraad model - snelle replenishment\n✅ Breed assortiment = SKU complexiteit",
+    "Why Target": "â B2B groothandel voor retail & webshops\nâ Multi-category: automotive, fiets, gereedschap\nâ Grote voorraad model - snelle replenishment\nâ Breed assortiment = SKU complexiteit",
     "Campaign": "Unified Commerce",
     "Current ERP (Suspected)": "?",
-    "Cold Call Topic/Hook": "Met automotive, fiets en gereedschap onder één dak, hoe managet u cross-category voorraad en pricing?"
+    "Cold Call Topic/Hook": "Met automotive, fiets en gereedschap onder Ã©Ã©n dak, hoe managet u cross-category voorraad en pricing?"
   },
   {
     "Priority": "MEDIUM",
@@ -1195,9 +1200,9 @@ const DEFAULT_PROSPECTS_DATA = [
     "LinkedIn Company Page": "https://nl.linkedin.com/company/airco-techniek-groningen",
     "Segment": "Retail Hardliners",
     "Subsector": "Auto Parts - Airco Specialist",
-    "Est. Revenue (EUR)": "€25M+",
+    "Est. Revenue (EUR)": "â¬25M+",
     "Employees": "?",
-    "Why Target": "✅ Airco technische groothandel automotive sector\n✅ Distributie heel Nederland vanuit Groningen\n✅ Equipment sales + onderdelen - dual revenue model\n✅ Mobiele service - field operations complexity",
+    "Why Target": "â Airco technische groothandel automotive sector\nâ Distributie heel Nederland vanuit Groningen\nâ Equipment sales + onderdelen - dual revenue model\nâ Mobiele service - field operations complexity",
     "Campaign": "Unified Commerce",
     "Current ERP (Suspected)": "?",
     "Cold Call Topic/Hook": "Als specialist in airco equipment en service, hoe integreert u verkoop, field service en onderdelendistributie?"
@@ -1225,8 +1230,8 @@ function generateBDCards() {
         <div class="bd-company">${prospect['Company Name']}</div>
         
         <div class="bd-meta">
-          <span class="bd-meta-item"><strong>💰</strong> ${prospect['Est. Revenue (EUR)']}</span>
-          <span class="bd-meta-item"><strong>👥</strong> ${prospect.Employees}</span>
+          <span class="bd-meta-item"><strong>ð°</strong> ${prospect['Est. Revenue (EUR)']}</span>
+          <span class="bd-meta-item"><strong>ð¥</strong> ${prospect.Employees}</span>
         </div>
         
         <span class="bd-segment">${prospect.Subsector}</span>
@@ -1237,7 +1242,7 @@ function generateBDCards() {
         </div>
         
         <div class="bd-campaign">
-          <strong>🎯 Campaign:</strong> ${prospect.Campaign}
+          <strong>ð¯ Campaign:</strong> ${prospect.Campaign}
         </div>
         
         <div class="bd-erp">
@@ -1258,7 +1263,7 @@ function generateBDCards() {
         </div>
         
         <button class="bd-load-btn" onclick="loadProspectData('${prospect['Company Name'].replace(/'/g, "\\'")}')">
-          ⚡ Load Prospect Data
+          â¡ Load Prospect Data
         </button>
       </div>
     `;
@@ -1281,7 +1286,7 @@ function loadProspectData(companyName) {
   document.getElementById('var_industry').value = prospect.Subsector;
   document.getElementById('var_current_challenge').value = prospect['Cold Call Topic/Hook'].substring(0, 100) + '...';
   document.getElementById('var_current_erp').value = prospect['Current ERP (Suspected)'];
-  document.getElementById('var_pain_point').value = prospect['Why Target'].split('\n')[0].replace('✅ ', '');
+  document.getElementById('var_pain_point').value = prospect['Why Target'].split('\n')[0].replace('â ', '');
   document.getElementById('var_industry_focus').value = prospect.Segment;
   document.getElementById('var_reference_customer_1').value = 'Beddinghouse';
   document.getElementById('var_reference_customer_2').value = 'Better Bed';
@@ -1295,7 +1300,7 @@ function loadProspectData(companyName) {
   // Show success message
   const status = document.getElementById('variableStatus');
   status.className = 'variable-status success';
-  status.textContent = `✓ Loaded data for ${companyName}. All prompts are now personalized!`;
+  status.textContent = `â Loaded data for ${companyName}. All prompts are now personalized!`;
   setTimeout(() => {
     status.style.display = 'none';
   }, 4000);
@@ -1353,7 +1358,7 @@ function saveVariables() {
   
   const status = document.getElementById('variableStatus');
   status.className = 'variable-status success';
-  status.textContent = `✓ ${savedCount} variables saved! All prompts are now personalized.`;
+  status.textContent = `â ${savedCount} variables saved! All prompts are now personalized.`;
   setTimeout(() => {
     status.style.display = 'none';
   }, 3000);
@@ -1401,14 +1406,14 @@ function addCopyButtons() {
       if (!card.querySelector('.copy-btn')) {
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
-        copyBtn.innerHTML = '📋 Copy Personalized Prompt';
+        copyBtn.innerHTML = 'ð Copy Personalized Prompt';
         copyBtn.onclick = function() {
           const promptText = promptDiv.textContent.trim();
           const mergedText = mergeVariables(promptText);
           
           navigator.clipboard.writeText(mergedText).then(() => {
             const originalText = copyBtn.innerHTML;
-            copyBtn.innerHTML = '✓ Copied!';
+            copyBtn.innerHTML = 'â Copied!';
             copyBtn.style.background = '#28a745';
             
             setTimeout(() => {
