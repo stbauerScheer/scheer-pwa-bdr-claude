@@ -342,6 +342,37 @@
       text-align: center;
     }
 
+    .nav-clear-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      padding: 0;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: 11px;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: color var(--transition);
+      opacity: 0.6;
+    }
+
+    .nav-clear-btn:hover {
+      color: var(--blue);
+      opacity: 1;
+    }
+
+    .nav-clear-btn svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .nav-clear-btn.done {
+      color: var(--success);
+      opacity: 1;
+    }
+
     @media (max-width: 768px) {
       .nav-column { min-width: 180px; max-width: 180px; }
     }
@@ -369,6 +400,11 @@
 
       <div class="nav-footer">
         <span class="nav-count" id="navCount">0</span> playbooks beschikbaar
+        <br>
+        <button class="nav-clear-btn" id="clearCacheBtn" title="Cache en service worker wissen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M5 6v14a2 2 0 002 2h10a2 2 0 002-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          Clear cache
+        </button>
       </div>
     </aside>
 
@@ -507,6 +543,29 @@
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js').catch(() => {});
       }
+
+      // ── Clear Cache Button ──
+      document.getElementById('clearCacheBtn').addEventListener('click', async () => {
+        const btn = document.getElementById('clearCacheBtn');
+        try {
+          // Unregister all service workers
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) { await reg.unregister(); }
+
+          // Clear all caches
+          const keys = await caches.keys();
+          for (const key of keys) { await caches.delete(key); }
+
+          // Visual feedback
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><path d="M20 6L9 17l-5-5"/></svg> Gewist!';
+          btn.classList.add('done');
+
+          // Reload after short delay
+          setTimeout(() => { location.reload(true); }, 1200);
+        } catch (e) {
+          btn.textContent = 'Fout — probeer handmatig';
+        }
+      });
 
       discover();
     })();
