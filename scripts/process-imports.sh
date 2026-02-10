@@ -4,15 +4,6 @@
 # Scans the imports/ folder and converts each
 # HTML file into a styled playbook.
 #
-# What it does per file:
-#   1. Creates playbooks/<id>/ directory
-#   2. Copies HTML as index.html
-#   3. Injects <link> to shared/playbook.css
-#   4. Injects standard playbook header
-#   5. Creates meta.json
-#   6. Moves original to imports/.processed/
-#   7. Optional: git push
-#
 # Usage:
 #   ./scripts/process-imports.sh
 # ──────────────────────────────────────────────
@@ -38,15 +29,12 @@ echo -e "${BLUE}│  Scheer IDS — Process Imports        │${NC}"
 echo -e "${BLUE}└─────────────────────────────────────┘${NC}"
 echo ""
 
-# ── Check imports directory ──
 if [ ! -d "$IMPORTS_DIR" ]; then
   mkdir -p "$IMPORTS_DIR"
 fi
 
-# ── Check shared CSS exists ──
 if [ ! -f "$PLAYBOOKS_DIR/shared/playbook.css" ]; then
   echo -e "${RED}Error: playbooks/shared/playbook.css not found.${NC}"
-  echo "Run this first or copy the stylesheet."
   exit 1
 fi
 
@@ -60,12 +48,32 @@ if [ ${#HTML_FILES[@]} -eq 0 ]; then
   echo -e "${ORANGE}Geen HTML bestanden gevonden in imports/${NC}"
   echo "Drop je playbook HTML bestanden in:"
   echo "  $IMPORTS_DIR"
-  echo ""
   exit 0
 fi
 
 echo -e "Gevonden: ${GREEN}${#HTML_FILES[@]}${NC} bestand(en)"
 echo ""
+
+# ── Helper: inject CSS link using perl ──
+inject_css() {
+  local FILE="$1"
+  perl -i -pe '
+    unless ($done) {
+      if (s|</head>|<link rel="stylesheet" href="'"$SHARED_CSS"'">\n</head>|) {
+        $done = 1;
+      }
+    }
+  ' "$FILE"
+}
+
+# ── Helper: inject header using perl ──
+inject_header() {
+  local FILE="$1"
+  local TITLE="$2"
+  perl -i -0pe '
+    s/(<body[^>]*>)/$1\n<!-- Scheer Playbook Header -->\n<div class="pb-header">\n  <a href="..\/..\/index.html" class="pb-header-back">\x{2190} Back to Playbooks<\/a>\n  <span class="pb-header-title">'"$TITLE"'<\/span>\n<\/div>/s;
+  ' "$FILE"
+}
 
 # ── Process each file ──
 for HTML_FILE in "${HTML_FILES[@]}"; do
@@ -74,14 +82,13 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   echo -e "${BLUE}Bestand:${NC} $FILENAME"
   echo ""
 
-  # ── Extract title from HTML ──
+  # ── Extract title ──
   EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | sed 's/ — .*$//' | xargs)
-
   if [ -n "$EXTRACTED_TITLE" ]; then
     echo -e "  Gevonden titel: ${GREEN}$EXTRACTED_TITLE${NC}"
   fi
 
-  # ── Generate default ID from filename ──
+  # ── Default ID from filename ──
   DEFAULT_ID=$(echo "$FILENAME" | sed 's/\.html$//' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
 
   # ── Gather metadata ──
@@ -94,7 +101,6 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
     read -rp "  Overschrijven? (y/N): " OVERWRITE
     if [[ ! "$OVERWRITE" =~ ^[Yy]$ ]]; then
       echo -e "  ${ORANGE}Overgeslagen.${NC}"
-      echo ""
       continue
     fi
   fi
@@ -117,28 +123,20 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   cp "$HTML_FILE" "$PB_DIR/index.html"
   echo -e "  ${GREEN}✓${NC} HTML → playbooks/$PB_ID/index.html"
 
-  # ── 1. Inject CSS link ──
-  if ! grep -q "shared/playbook.css" "$PB_DIR/index.html"; then
-    if grep -q "</head>" "$PB_DIR/index.html"; then
-      sed -i '' "s|</head>|<link rel=\"stylesheet\" href=\"$SHARED_CSS\">\n</head>|" "$PB_DIR/index.html"
-      echo -e "  ${GREEN}✓${NC} Master CSS gelinkt"
-    else
-      echo -e "  ${ORANGE}⚠${NC} Geen </head> tag — CSS niet gelinkt"
-    fi
-  else
+  # ── 1. Inject CSS ──
+  if grep -q "shared/playbook.css" "$PB_DIR/index.html"; then
     echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
+  else
+    inject_css "$PB_DIR/index.html"
+    echo -e "  ${GREEN}✓${NC} Master CSS gelinkt"
   fi
 
-  # ── 2. Inject playbook header ──
-  if ! grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
-    HEADER_HTML='<!-- Scheer Playbook Header --><div class="pb-header"><a href="../../index.html" class="pb-header-back">← Back to Playbooks</a><span class="pb-header-title">'"$PB_TITLE"'</span></div>'
-
-    if grep -q "<body" "$PB_DIR/index.html"; then
-      sed -i '' "s|<body[^>]*>|&${HEADER_HTML}|" "$PB_DIR/index.html"
-      echo -e "  ${GREEN}✓${NC} Header geïnjecteerd"
-    fi
-  else
+  # ── 2. Inject header ──
+  if grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
     echo -e "  ${GREEN}✓${NC} Header al aanwezig"
+  else
+    inject_header "$PB_DIR/index.html" "$PB_TITLE"
+    echo -e "  ${GREEN}✓${NC} Header geïnjecteerd"
   fi
 
   # ── 3. Create meta.json ──
@@ -156,13 +154,12 @@ EOF
   # ── 4. Move to processed ──
   mkdir -p "$IMPORTS_DIR/.processed"
   mv "$HTML_FILE" "$IMPORTS_DIR/.processed/$FILENAME"
-  echo -e "  ${GREEN}✓${NC} Verplaatst naar imports/.processed/"
+  echo -e "  ${GREEN}✓${NC} → imports/.processed/"
 
   PROCESSED=$((PROCESSED + 1))
   echo ""
 done
 
-# ── Summary ──
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}$PROCESSED playbook(s) verwerkt.${NC}"
 echo ""
@@ -176,11 +173,6 @@ if [ "$PROCESSED" -gt 0 ]; then
     git push
     echo ""
     echo -e "${GREEN}✓ Pushed!${NC} GitHub Action update registry automatisch."
-  else
-    echo ""
-    echo "Wanneer klaar:"
-    echo "  cd $REPO_ROOT"
-    echo "  git add -A && git commit -m 'add playbooks' && git push"
   fi
 fi
 
