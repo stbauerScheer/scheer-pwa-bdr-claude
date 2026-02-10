@@ -121,6 +121,12 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   cp "$HTML_FILE" "$PB_DIR/index.html"
   echo -e "  ${GREEN}✓${NC} HTML → playbooks/$PB_ID/index.html"
 
+  # Fix encoding (emoji, euro signs, bullets, em-dashes -> ASCII)
+  if [ -f "$SCRIPT_DIR/fix-encoding.sh" ]; then
+    "$SCRIPT_DIR/fix-encoding.sh" "$PB_ID" 2>/dev/null
+    echo -e "  ${GREEN}✓${NC} Encoding opgeschoond"
+  fi
+
   if grep -q "shared/playbook.css" "$PB_DIR/index.html"; then
     echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
   else
