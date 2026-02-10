@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Scheer IDS - AI Tools Overview</title>
+  <style>
+:root{
+  --dunkelblau:#05618d;
+  --blue:#2996cc;
+  --orange:#ef7c00;
+  --dunkelgrau:#6a747f;
+  --dunkelrot:#ac1e1c;
+  --bg:#ffffff;
+  --card:#f8f9fa;
+  --muted:#6c757d;
+  --text:#212529;
+  --line:#dee2e6;
+  --badge-bg:rgba(41, 150, 204, 0.15);
+  --badge-text:#05618d;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+header{padding:28px 20px;border-bottom:1px solid var(--line);background:var(--dunkelblau);}
+h1{margin:0;font-size:26px;color:#ffffff;}
+.sub{margin-top:8px;color:#ffffff;font-size:13px;opacity:0.95;line-height:1.5;}
+.wrap{max-width:1100px;margin:0 auto}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+input[type="search"]{flex:1;min-width:240px;background:#ffffff;border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:8px;outline:none}
+select{background:#ffffff;border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:8px;outline:none}
+main{padding:24px 20px 40px}
+section{margin-top:32px}
+h2{margin:0 0 16px;font-size:20px;color:var(--blue);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.card:hover{border-color:var(--blue);box-shadow:0 4px 12px rgba(41, 150, 204, 0.2);transform:translateY(-2px);}
+.name{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.name a{color:var(--dunkelblau);text-decoration:none;font-weight:700;font-size:15px;}
+.name a:hover{color:var(--blue);}
+.badge{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--blue);color:var(--badge-text);background:var(--badge-bg);}
+.row{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.5}
+.row b{color:var(--text);font-weight:600}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pill{font-size:12px;padding:6px 10px;border-radius:8px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
+.pill b{color:var(--text);}
+footer{margin-top:60px;padding:24px 20px;background:var(--dunkelgrau);border-top:1px solid var(--line);}
+footer .footer-content{max-width:1100px;margin:0 auto;}
+footer .footer-title{color:var(--orange);font-size:14px;font-weight:600;margin-bottom:12px;}
+footer .playbook-links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+footer .playbook-links a{color:var(--dunkelrot);text-decoration:none;font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:6px;transition:all 0.2s;}
+footer .playbook-links a:hover{background:var(--dunkelrot);color:#ffffff;border-color:var(--dunkelrot);}
+footer .copyright{color:var(--muted);font-size:12px;margin-top:16px;}
+nav{margin-top:20px;}
+nav a{color:#ffffff;text-decoration:none;font-weight:500;transition:all 0.2s;padding:4px 8px;border-radius:4px;font-size:13px;}
+nav a:hover{background:rgba(255,255,255,0.15);}
+  </style>
+<link rel="stylesheet" href="../shared/playbook.css">
+</head>
+<body>
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+  <a href="../../index.html" class="pb-header-back">← Back to Playbooks</a>
+  <span class="pb-header-title">Overview of handy AI tools</span>
+</div>
+  <header>
+    <div class="wrap">
+      <h1>Scheer IDS - AI Tools Overview</h1>
+      <div class="sub">
+        Last updated: January 2, 2026<br>
+        Note: Prices vary by country/currency and may change. Where "Varies/Unknown" appears, check the tool's pricing page directly.
+      </div>
+      <div class="controls">
+        <input id="q" type="search" placeholder="Search by name, type, link, pricingâ¦">
+        <select id="cat">
+          <option value="all">All categories</option>
+          <option value="AI assistants (chat)">AI assistants (chat)</option>
+          <option value="Audio &amp; voice">Audio &amp; voice</option>
+          <option value="Automation &amp; productivity">Automation &amp; productivity</option>
+          <option value="Avatars (talking head)">Avatars (talking head)</option>
+          <option value="Design &amp; layout">Design &amp; layout</option>
+          <option value="Ideas &amp; research">Ideas &amp; research</option>
+          <option value="Image (edit)">Image (edit)</option>
+          <option value="Image (generate / enhance)">Image (generate / enhance)</option>
+          <option value="PDF &amp; file utilities">PDF &amp; file utilities</option>
+          <option value="Video (edit / create)">Video (edit / create)</option>
+          <option value="Video (quick edits)">Video (quick edits)</option>
+          <option value="Video assets (stock)">Video assets (stock)</option>
+          <option value="Web building">Web building</option>
+          <option value="Writing &amp; copy">Writing &amp; copy</option>
+        </select>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+    
+    <section id="ai-assistants-chat">
+      <h2>AI assistants (chat)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="ChatGPT General assistant (search, writing, analysis) https://chatgpt.com/ Yes (good for light use) ~$20/month (Plus) ">
+          <div class="name">
+            <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> General assistant (search, writing, analysis)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (good for light use)</span>
+            <span class="pill"><b>Paid from:</b> ~$20/month (Plus)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="Claude Chat assistant (writing, analysis) https://claude.ai/ Yes (limited) $20/month (Claude Pro) ">
+          <div class="name">
+            <a href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Chat assistant (writing, analysis)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limited)</span>
+            <span class="pill"><b>Paid from:</b> $20/month (Claude Pro)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="DeepSeek Chat assistant / open models https://www.deepseek.com/ Varies Varies ">
+          <div class="name">
+            <a href="https://www.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Chat assistant / open models</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Varies</span>
+            <span class="pill"><b>Paid from:</b> Varies</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="Google Gemini Chat assistant; quick image tasks (incl. background removal workflows) https://gemini.google.com/ Yes (limited) Varies by Google plan/region ">
+          <div class="name">
+            <a href="https://gemini.google.com/" target="_blank" rel="noopener">Google Gemini</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Chat assistant; quick image tasks (incl. background removal workflows)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limited)</span>
+            <span class="pill"><b>Paid from:</b> Varies by Google plan/region</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="Grok Chat assistant with X integration https://x.ai/ Varies Varies (often via X subscription tiers) ">
+          <div class="name">
+            <a href="https://x.ai/" target="_blank" rel="noopener">Grok</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Chat assistant with X integration</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Varies</span>
+            <span class="pill"><b>Paid from:</b> Varies (often via X subscription tiers)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="Meta AI Chat assistant inside Meta apps https://ai.meta.com/meta-ai/ Yes Free (consumer access) ">
+          <div class="name">
+            <a href="https://ai.meta.com/meta-ai/" target="_blank" rel="noopener">Meta AI</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Chat assistant inside Meta apps</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes</span>
+            <span class="pill"><b>Paid from:</b> Free (consumer access)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="Microsoft Copilot Chat assistant inside Microsoft ecosystem https://copilot.microsoft.com/ Yes (basic) Varies (e.g., Copilot Pro / Microsoft plans) ">
+          <div class="name">
+            <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Microsoft Copilot</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Chat assistant inside Microsoft ecosystem</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (basic)</span>
+            <span class="pill"><b>Paid from:</b> Varies (e.g., Copilot Pro / Microsoft plans)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="AI assistants (chat)" data-text="Perplexity AI search with citations https://www.perplexity.ai/ Yes (limited Pro searches) $20/month (Perplexity Pro) ">
+          <div class="name">
+            <a href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+            <span class="badge">AI assistants (chat)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI search with citations</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limited Pro searches)</span>
+            <span class="pill"><b>Paid from:</b> $20/month (Perplexity Pro)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="audio-voice">
+      <h2>Audio &amp; voice</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Audio &amp; voice" data-text="Adobe Enhance Speech Noise removal / speech enhancement https://podcast.adobe.com/enhance Yes (often) May require Adobe plan for higher limits ">
+          <div class="name">
+            <a href="https://podcast.adobe.com/enhance" target="_blank" rel="noopener">Adobe Enhance Speech</a>
+            <span class="badge">Audio &amp; voice</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Noise removal / speech enhancement</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (often)</span>
+            <span class="pill"><b>Paid from:</b> May require Adobe plan for higher limits</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Audio &amp; voice" data-text="ElevenLabs Voice generation, cloning, dubbing https://elevenlabs.io/ Yes (Free plan) $5/month (Starter) ">
+          <div class="name">
+            <a href="https://elevenlabs.io/" target="_blank" rel="noopener">ElevenLabs</a>
+            <span class="badge">Audio &amp; voice</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Voice generation, cloning, dubbing</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (Free plan)</span>
+            <span class="pill"><b>Paid from:</b> $5/month (Starter)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Audio &amp; voice" data-text="Play.ht Text-to-speech voice generation https://play.ht/ Varies Varies by plan ">
+          <div class="name">
+            <a href="https://play.ht/" target="_blank" rel="noopener">Play.ht</a>
+            <span class="badge">Audio &amp; voice</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Text-to-speech voice generation</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Varies</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Audio &amp; voice" data-text="Suno AI music generation https://suno.com/ Limited Varies by plan ">
+          <div class="name">
+            <a href="https://suno.com/" target="_blank" rel="noopener">Suno</a>
+            <span class="badge">Audio &amp; voice</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI music generation</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="automation-productivity">
+      <h2>Automation &amp; productivity</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Automation &amp; productivity" data-text="Notion Notes + docs + database workspace https://www.notion.so/ Yes (personal) Varies by plan ">
+          <div class="name">
+            <a href="https://www.notion.so/" target="_blank" rel="noopener">Notion</a>
+            <span class="badge">Automation &amp; productivity</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Notes + docs + database workspace</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (personal)</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Automation &amp; productivity" data-text="Otter.ai Meeting transcription https://otter.ai/ Limited Varies by plan ">
+          <div class="name">
+            <a href="https://otter.ai/" target="_blank" rel="noopener">Otter.ai</a>
+            <span class="badge">Automation &amp; productivity</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Meeting transcription</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Automation &amp; productivity" data-text="Scribe Step-by-step process guides https://scribehow.com/ Limited Varies by plan ">
+          <div class="name">
+            <a href="https://scribehow.com/" target="_blank" rel="noopener">Scribe</a>
+            <span class="badge">Automation &amp; productivity</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Step-by-step process guides</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Automation &amp; productivity" data-text="Zapier Workflow automation between apps https://zapier.com/ Yes (limited tasks) Varies by plan ">
+          <div class="name">
+            <a href="https://zapier.com/" target="_blank" rel="noopener">Zapier</a>
+            <span class="badge">Automation &amp; productivity</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Workflow automation between apps</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limited tasks)</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="avatars-talking-head">
+      <h2>Avatars (talking head)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Avatars (talking head)" data-text="D-ID Facial animation / talking head https://www.d-id.com/ Limited trial Varies by plan ">
+          <div class="name">
+            <a href="https://www.d-id.com/" target="_blank" rel="noopener">D-ID</a>
+            <span class="badge">Avatars (talking head)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Facial animation / talking head</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited trial</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Avatars (talking head)" data-text="HeyGen Talking-avatar videos https://www.heygen.com/ Limited trial Varies by plan ">
+          <div class="name">
+            <a href="https://www.heygen.com/" target="_blank" rel="noopener">HeyGen</a>
+            <span class="badge">Avatars (talking head)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Talking-avatar videos</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited trial</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Avatars (talking head)" data-text="Synthesia AI avatar videos from scripts https://www.synthesia.io/ Demo/trial Varies by plan ">
+          <div class="name">
+            <a href="https://www.synthesia.io/" target="_blank" rel="noopener">Synthesia</a>
+            <span class="badge">Avatars (talking head)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI avatar videos from scripts</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Demo/trial</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="design-layout">
+      <h2>Design &amp; layout</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Design &amp; layout" data-text="Canva Fast design for socials, decks, docs https://www.canva.com/ Yes ~$12.99/month (Pro, region-dependent) ">
+          <div class="name">
+            <a href="https://www.canva.com/" target="_blank" rel="noopener">Canva</a>
+            <span class="badge">Design &amp; layout</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Fast design for socials, decks, docs</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes</span>
+            <span class="pill"><b>Paid from:</b> ~$12.99/month (Pro, region-dependent)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Design &amp; layout" data-text="Napkin AI Text-to-infographic / quick visuals https://www.napkin.ai/ Varies Varies ">
+          <div class="name">
+            <a href="https://www.napkin.ai/" target="_blank" rel="noopener">Napkin AI</a>
+            <span class="badge">Design &amp; layout</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Text-to-infographic / quick visuals</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Varies</span>
+            <span class="pill"><b>Paid from:</b> Varies</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="ideas-research">
+      <h2>Ideas &amp; research</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Ideas &amp; research" data-text="Answer Socrates Audience questions / keyword ideas https://answersocrates.com/ Limited Varies ">
+          <div class="name">
+            <a href="https://answersocrates.com/" target="_blank" rel="noopener">Answer Socrates</a>
+            <span class="badge">Ideas &amp; research</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Audience questions / keyword ideas</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Ideas &amp; research" data-text="Google Trends Find trending topics https://trends.google.com/ Yes Free ">
+          <div class="name">
+            <a href="https://trends.google.com/" target="_blank" rel="noopener">Google Trends</a>
+            <span class="badge">Ideas &amp; research</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Find trending topics</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes</span>
+            <span class="pill"><b>Paid from:</b> Free</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Ideas &amp; research" data-text="Lazylines Idea generation / viral video inspiration https://lazylines.ai/ Unknown Unknown ">
+          <div class="name">
+            <a href="https://lazylines.ai/" target="_blank" rel="noopener">Lazylines</a>
+            <span class="badge">Ideas &amp; research</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Idea generation / viral video inspiration</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Unknown</span>
+            <span class="pill"><b>Paid from:</b> Unknown</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="image-edit">
+      <h2>Image (edit)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Image (edit)" data-text="Photopea Photoshop / Illustrator (browser-based) https://www.photopea.com/ Yes (ads) ~$5/month (Premium, removes ads) ">
+          <div class="name">
+            <a href="https://www.photopea.com/" target="_blank" rel="noopener">Photopea</a>
+            <span class="badge">Image (edit)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Photoshop / Illustrator (browser-based)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (ads)</span>
+            <span class="pill"><b>Paid from:</b> ~$5/month (Premium, removes ads)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Image (edit)" data-text="Photoshop Professional image editing https://www.adobe.com/products/photoshop.html No Varies by Adobe plan/region ">
+          <div class="name">
+            <a href="https://www.adobe.com/products/photoshop.html" target="_blank" rel="noopener">Photoshop</a>
+            <span class="badge">Image (edit)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Professional image editing</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> No</span>
+            <span class="pill"><b>Paid from:</b> Varies by Adobe plan/region</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="image-generate-enhance">
+      <h2>Image (generate / enhance)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Image (generate / enhance)" data-text="Fotor AI Art Generator AI art / image generation https://www.fotor.com/ai-art-generator/ Yes (limited) Varies by region/plan ">
+          <div class="name">
+            <a href="https://www.fotor.com/ai-art-generator/" target="_blank" rel="noopener">Fotor AI Art Generator</a>
+            <span class="badge">Image (generate / enhance)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI art / image generation</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limited)</span>
+            <span class="pill"><b>Paid from:</b> Varies by region/plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Image (generate / enhance)" data-text="Leonardo.ai AI image generation (budget alternative) https://leonardo.ai/ Yes (limited tokens) $12/month (Apprentice) ">
+          <div class="name">
+            <a href="https://leonardo.ai/" target="_blank" rel="noopener">Leonardo.ai</a>
+            <span class="badge">Image (generate / enhance)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI image generation (budget alternative)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limited tokens)</span>
+            <span class="pill"><b>Paid from:</b> $12/month (Apprentice)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Image (generate / enhance)" data-text="Midjourney AI image generation https://www.midjourney.com/ No (typically) $10/month (Basic) ">
+          <div class="name">
+            <a href="https://www.midjourney.com/" target="_blank" rel="noopener">Midjourney</a>
+            <span class="badge">Image (generate / enhance)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI image generation</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> No (typically)</span>
+            <span class="pill"><b>Paid from:</b> $10/month (Basic)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Image (generate / enhance)" data-text="Upscale.media Image upscaling / quality improvement https://www.upscale.media/ Limited Varies (plans shown in local currency) ">
+          <div class="name">
+            <a href="https://www.upscale.media/" target="_blank" rel="noopener">Upscale.media</a>
+            <span class="badge">Image (generate / enhance)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Image upscaling / quality improvement</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies (plans shown in local currency)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="pdf-file-utilities">
+      <h2>PDF &amp; file utilities</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="PDF &amp; file utilities" data-text="Ezgif GIF tools + quick image ops https://ezgif.com/ Yes Free (ads/donations) ">
+          <div class="name">
+            <a href="https://ezgif.com/" target="_blank" rel="noopener">Ezgif</a>
+            <span class="badge">PDF &amp; file utilities</span>
+          </div>
+          <div class="row"><b>Replaces:</b> GIF tools + quick image ops</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes</span>
+            <span class="pill"><b>Paid from:</b> Free (ads/donations)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="PDF &amp; file utilities" data-text="iLovePDF Adobe Acrobat basic PDF tasks https://www.ilovepdf.com/ Yes (limits) Varies (Premium/Business) ">
+          <div class="name">
+            <a href="https://www.ilovepdf.com/" target="_blank" rel="noopener">iLovePDF</a>
+            <span class="badge">PDF &amp; file utilities</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Adobe Acrobat basic PDF tasks</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limits)</span>
+            <span class="pill"><b>Paid from:</b> Varies (Premium/Business)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="PDF &amp; file utilities" data-text="Online-Convert File conversion into many formats https://www.online-convert.com/ Yes (limits) â¬22.42/month (Premium subscription) ">
+          <div class="name">
+            <a href="https://www.online-convert.com/" target="_blank" rel="noopener">Online-Convert</a>
+            <span class="badge">PDF &amp; file utilities</span>
+          </div>
+          <div class="row"><b>Replaces:</b> File conversion into many formats</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (limits)</span>
+            <span class="pill"><b>Paid from:</b> â¬22.42/month (Premium subscription)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="PDF &amp; file utilities" data-text="TinyWow All-in-one small utilities (PDF, image, video, AI writing) https://tinywow.com/ Yes Optional support / may have premium ">
+          <div class="name">
+            <a href="https://tinywow.com/" target="_blank" rel="noopener">TinyWow</a>
+            <span class="badge">PDF &amp; file utilities</span>
+          </div>
+          <div class="row"><b>Replaces:</b> All-in-one small utilities (PDF, image, video, AI writing)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes</span>
+            <span class="pill"><b>Paid from:</b> Optional support / may have premium</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="video-edit-create">
+      <h2>Video (edit / create)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Video (edit / create)" data-text="CapCut Quick social video editing https://www.capcut.com/ Yes Varies (CapCut Pro) ">
+          <div class="name">
+            <a href="https://www.capcut.com/" target="_blank" rel="noopener">CapCut</a>
+            <span class="badge">Video (edit / create)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Quick social video editing</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes</span>
+            <span class="pill"><b>Paid from:</b> Varies (CapCut Pro)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Video (edit / create)" data-text="Captions Short-form captioning + editor https://www.captions.ai/ Limited Varies by plan ">
+          <div class="name">
+            <a href="https://www.captions.ai/" target="_blank" rel="noopener">Captions</a>
+            <span class="badge">Video (edit / create)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Short-form captioning + editor</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Video (edit / create)" data-text="Descript Editing video/audio by editing text https://www.descript.com/ Yes (Free plan) $16/month (Hobbyist) ">
+          <div class="name">
+            <a href="https://www.descript.com/" target="_blank" rel="noopener">Descript</a>
+            <span class="badge">Video (edit / create)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Editing video/audio by editing text</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (Free plan)</span>
+            <span class="pill"><b>Paid from:</b> $16/month (Hobbyist)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Video (edit / create)" data-text="Premiere Pro Professional video editor https://www.adobe.com/products/premiere.html No Varies by Adobe plan/region ">
+          <div class="name">
+            <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener">Premiere Pro</a>
+            <span class="badge">Video (edit / create)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Professional video editor</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> No</span>
+            <span class="pill"><b>Paid from:</b> Varies by Adobe plan/region</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Video (edit / create)" data-text="Runway AI-assisted video editing/generation https://runwayml.com/ Limited $12/month (Standard) ">
+          <div class="name">
+            <a href="https://runwayml.com/" target="_blank" rel="noopener">Runway</a>
+            <span class="badge">Video (edit / create)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> AI-assisted video editing/generation</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> $12/month (Standard)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="video-quick-edits">
+      <h2>Video (quick edits)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Video (quick edits)" data-text="VidMix Fast trimming/cutting online https://vidmix.app/ Unknown Unknown ">
+          <div class="name">
+            <a href="https://vidmix.app/" target="_blank" rel="noopener">VidMix</a>
+            <span class="badge">Video (quick edits)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Fast trimming/cutting online</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Unknown</span>
+            <span class="pill"><b>Paid from:</b> Unknown</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="video-assets-stock">
+      <h2>Video assets (stock)</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Video assets (stock)" data-text="Artlist Stock music/SFX (and more) https://artlist.io/ No (usually trial only) Varies by plan ">
+          <div class="name">
+            <a href="https://artlist.io/" target="_blank" rel="noopener">Artlist</a>
+            <span class="badge">Video assets (stock)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Stock music/SFX (and more)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> No (usually trial only)</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Video assets (stock)" data-text="Storyblocks Stock video/audio/images subscription https://www.storyblocks.com/ No Varies by plan ">
+          <div class="name">
+            <a href="https://www.storyblocks.com/" target="_blank" rel="noopener">Storyblocks</a>
+            <span class="badge">Video assets (stock)</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Stock video/audio/images subscription</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> No</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="web-building">
+      <h2>Web building</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Web building" data-text="Silex No-code website builder (Webflow alternative) https://www.silex.me/ Yes (open-source) Free ">
+          <div class="name">
+            <a href="https://www.silex.me/" target="_blank" rel="noopener">Silex</a>
+            <span class="badge">Web building</span>
+          </div>
+          <div class="row"><b>Replaces:</b> No-code website builder (Webflow alternative)</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (open-source)</span>
+            <span class="pill"><b>Paid from:</b> Free</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="writing-copy">
+      <h2>Writing &amp; copy</h2>
+      <div class="grid">
+        
+        <div class="card" data-cat="Writing &amp; copy" data-text="Copy.ai Marketing copywriting / workflows https://www.copy.ai/ Limited Varies by plan ">
+          <div class="name">
+            <a href="https://www.copy.ai/" target="_blank" rel="noopener">Copy.ai</a>
+            <span class="badge">Writing &amp; copy</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Marketing copywriting / workflows</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Limited</span>
+            <span class="pill"><b>Paid from:</b> Varies by plan</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+        
+        <div class="card" data-cat="Writing &amp; copy" data-text="Grammarly Grammar + tone + rewrite assistant https://www.grammarly.com/ Yes (basic) â¬12/month (billed monthly) ">
+          <div class="name">
+            <a href="https://www.grammarly.com/" target="_blank" rel="noopener">Grammarly</a>
+            <span class="badge">Writing &amp; copy</span>
+          </div>
+          <div class="row"><b>Replaces:</b> Grammar + tone + rewrite assistant</div>
+          <div class="meta">
+            <span class="pill"><b>Free:</b> Yes (basic)</span>
+            <span class="pill"><b>Paid from:</b> â¬12/month (billed monthly)</span>
+          </div>
+          <div class="row"><b>Advice:</b> </div>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-title">Scheer IDS Playbook Library</div>
+      <div class="playbook-links">
+        <a href="Playbook-Customer_References-Published.html" target="_blank">Customer References</a>
+        <a href="Playboook-Internal-Customer-Cases.html" target="_blank">Internal Customer Cases</a>
+        <a href="Playbook-Scheer-Authority-Leadership-Campaign.html" target="_blank">Authority Leadership</a>
+        <a href="Playbook-AI-Consulting.html" target="_blank">AI Consulting</a>
+        <a href="Playbook-AI-Tools.html" target="_blank">AI Tools Overview</a>
+      </div>
+      <div class="copyright">
+        Scheer IDS Netherlands â AI Tools Overview â Regularly updated<br>
+        Â© Scheer Group â SAP Expert Partner for S/4HANA Cloud Public Edition
+      </div>
+    </div>
+  </footer>
+
+  <script>
+(function(){
+  const searchInput = document.getElementById('q');
+  const categoryFilter = document.getElementById('cat');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  
+  function filter(){
+    const query = searchInput.value.toLowerCase();
+    const category = categoryFilter.value;
+    
+    cards.forEach(card => {
+      const text = card.getAttribute('data-text').toLowerCase();
+      const cardCategory = card.getAttribute('data-cat');
+      
+      const matchesText = text.includes(query);
+      const matchesCategory = (category === 'all') || (cardCategory === category);
+      
+      card.style.display = (matchesText && matchesCategory) ? '' : 'none';
+    });
+  }
+  
+  searchInput.addEventListener('input', filter);
+  categoryFilter.addEventListener('change', filter);
+})();
+  </script>
+
+</body>
+</html>
