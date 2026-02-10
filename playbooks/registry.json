@@ -7,6 +7,13 @@
     "path": "playbooks/customer-cases/index.html"
   },
   {
+    "id": "snl-customer-names",
+    "title": "Customer Projects from 2012",
+    "description": "Overview Customer Projecta",
+    "status": "active",
+    "path": "playbooks/snl-customer-names/index.html"
+  },
+  {
     "id": "authentic-leadership",
     "title": "Scheer Authority Leadership Campaign | Playbook",
     "description": "Overview Authentic Leadership",
