@@ -2,11 +2,19 @@
 # ──────────────────────────────────────────────
 # process-imports.sh
 # Scans the imports/ folder and converts each
-# HTML file into a playbook.
+# HTML file into a styled playbook.
+#
+# What it does per file:
+#   1. Creates playbooks/<id>/ directory
+#   2. Copies HTML as index.html
+#   3. Injects <link> to shared/playbook.css
+#   4. Injects standard playbook header
+#   5. Creates meta.json
+#   6. Moves original to imports/.processed/
+#   7. Optional: git push
 #
 # Usage:
 #   ./scripts/process-imports.sh
-#   (or trigger via Quick Action)
 # ──────────────────────────────────────────────
 
 set -e
@@ -17,11 +25,11 @@ ORANGE='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-# ── Find repo root ──
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 IMPORTS_DIR="$REPO_ROOT/imports"
 PLAYBOOKS_DIR="$REPO_ROOT/playbooks"
+SHARED_CSS="../shared/playbook.css"
 PROCESSED=0
 
 echo ""
@@ -32,8 +40,14 @@ echo ""
 
 # ── Check imports directory ──
 if [ ! -d "$IMPORTS_DIR" ]; then
-  echo -e "${ORANGE}Creating imports/ directory...${NC}"
   mkdir -p "$IMPORTS_DIR"
+fi
+
+# ── Check shared CSS exists ──
+if [ ! -f "$PLAYBOOKS_DIR/shared/playbook.css" ]; then
+  echo -e "${RED}Error: playbooks/shared/playbook.css not found.${NC}"
+  echo "Run this first or copy the stylesheet."
+  exit 1
 fi
 
 # ── Find HTML files ──
@@ -60,7 +74,7 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   echo -e "${BLUE}Bestand:${NC} $FILENAME"
   echo ""
 
-  # ── Try to extract title from HTML ──
+  # ── Extract title from HTML ──
   EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | sed 's/ — .*$//' | xargs)
 
   if [ -n "$EXTRACTED_TITLE" ]; then
@@ -70,12 +84,11 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   # ── Generate default ID from filename ──
   DEFAULT_ID=$(echo "$FILENAME" | sed 's/\.html$//' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
 
-  # ── Ask for metadata ──
+  # ── Gather metadata ──
   read -rp "  ID (slug) [$DEFAULT_ID]: " PB_ID
   PB_ID=${PB_ID:-$DEFAULT_ID}
   PB_ID=$(echo "$PB_ID" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
 
-  # Check if exists
   if [ -d "$PLAYBOOKS_DIR/$PB_ID" ]; then
     echo -e "  ${ORANGE}⚠ playbooks/$PB_ID/ bestaat al${NC}"
     read -rp "  Overschrijven? (y/N): " OVERWRITE
@@ -101,25 +114,34 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   # ── Create playbook ──
   PB_DIR="$PLAYBOOKS_DIR/$PB_ID"
   mkdir -p "$PB_DIR"
-
-  # Copy HTML
   cp "$HTML_FILE" "$PB_DIR/index.html"
   echo -e "  ${GREEN}✓${NC} HTML → playbooks/$PB_ID/index.html"
 
-  # ── Inject header if needed ──
-  if ! grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
-    HEADER='<!-- Scheer Playbook Header (auto) --><div style="background:#fff;border-bottom:1px solid #dee2e6;padding:12px 20px;position:sticky;top:0;z-index:9999;font-family:Segoe UI,Tahoma,sans-serif;display:flex;align-items:center;justify-content:space-between;"><a href="../../index.html" style="color:#2996cc;text-decoration:none;font-size:13px;font-weight:600;">← Back to Playbooks</a><span style="font-size:12px;color:#6c757d;">'"$PB_TITLE"'</span></div>'
-
-    # Inject after <body> tag
-    if grep -q "<body" "$PB_DIR/index.html"; then
-      sed -i '' "s|<body[^>]*>|&${HEADER}|" "$PB_DIR/index.html" 2>/dev/null || true
+  # ── 1. Inject CSS link ──
+  if ! grep -q "shared/playbook.css" "$PB_DIR/index.html"; then
+    if grep -q "</head>" "$PB_DIR/index.html"; then
+      sed -i '' "s|</head>|<link rel=\"stylesheet\" href=\"$SHARED_CSS\">\n</head>|" "$PB_DIR/index.html"
+      echo -e "  ${GREEN}✓${NC} Master CSS gelinkt"
+    else
+      echo -e "  ${ORANGE}⚠${NC} Geen </head> tag — CSS niet gelinkt"
     fi
-    echo -e "  ${GREEN}✓${NC} Header geïnjecteerd"
+  else
+    echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
+  fi
+
+  # ── 2. Inject playbook header ──
+  if ! grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
+    HEADER_HTML='<!-- Scheer Playbook Header --><div class="pb-header"><a href="../../index.html" class="pb-header-back">← Back to Playbooks</a><span class="pb-header-title">'"$PB_TITLE"'</span></div>'
+
+    if grep -q "<body" "$PB_DIR/index.html"; then
+      sed -i '' "s|<body[^>]*>|&${HEADER_HTML}|" "$PB_DIR/index.html"
+      echo -e "  ${GREEN}✓${NC} Header geïnjecteerd"
+    fi
   else
     echo -e "  ${GREEN}✓${NC} Header al aanwezig"
   fi
 
-  # ── Create meta.json ──
+  # ── 3. Create meta.json ──
   cat > "$PB_DIR/meta.json" <<EOF
 {
   "id": "$PB_ID",
@@ -131,7 +153,7 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
 EOF
   echo -e "  ${GREEN}✓${NC} meta.json aangemaakt"
 
-  # ── Move processed file to .processed ──
+  # ── 4. Move to processed ──
   mkdir -p "$IMPORTS_DIR/.processed"
   mv "$HTML_FILE" "$IMPORTS_DIR/.processed/$FILENAME"
   echo -e "  ${GREEN}✓${NC} Verplaatst naar imports/.processed/"
@@ -146,12 +168,11 @@ echo -e "${GREEN}$PROCESSED playbook(s) verwerkt.${NC}"
 echo ""
 
 if [ "$PROCESSED" -gt 0 ]; then
-  # ── Git push? ──
   read -rp "Git add, commit & push? (Y/n): " DO_GIT
   if [[ ! "$DO_GIT" =~ ^[Nn]$ ]]; then
     cd "$REPO_ROOT"
     git add playbooks/ imports/
-    git commit -m "feat: add $PROCESSED new playbook(s) via import"
+    git commit -m "feat: import $PROCESSED playbook(s) with master styling"
     git push
     echo ""
     echo -e "${GREEN}✓ Pushed!${NC} GitHub Action update registry automatisch."
