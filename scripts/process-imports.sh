@@ -4,6 +4,8 @@
 # Scans the imports/ folder and converts each
 # HTML file into a styled playbook.
 #
+# Push via GitHub Desktop after running.
+#
 # Usage:
 #   ./scripts/process-imports.sh
 # ──────────────────────────────────────────────
@@ -82,16 +84,13 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   echo -e "${BLUE}Bestand:${NC} $FILENAME"
   echo ""
 
-  # ── Extract title ──
   EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | sed 's/ — .*$//' | xargs)
   if [ -n "$EXTRACTED_TITLE" ]; then
     echo -e "  Gevonden titel: ${GREEN}$EXTRACTED_TITLE${NC}"
   fi
 
-  # ── Default ID from filename ──
   DEFAULT_ID=$(echo "$FILENAME" | sed 's/\.html$//' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
 
-  # ── Gather metadata ──
   read -rp "  ID (slug) [$DEFAULT_ID]: " PB_ID
   PB_ID=${PB_ID:-$DEFAULT_ID}
   PB_ID=$(echo "$PB_ID" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
@@ -117,13 +116,11 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
 
   read -rp "  Beschrijving (optioneel): " PB_DESC
 
-  # ── Create playbook ──
   PB_DIR="$PLAYBOOKS_DIR/$PB_ID"
   mkdir -p "$PB_DIR"
   cp "$HTML_FILE" "$PB_DIR/index.html"
   echo -e "  ${GREEN}✓${NC} HTML → playbooks/$PB_ID/index.html"
 
-  # ── 1. Inject CSS ──
   if grep -q "shared/playbook.css" "$PB_DIR/index.html"; then
     echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
   else
@@ -131,7 +128,6 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
     echo -e "  ${GREEN}✓${NC} Master CSS gelinkt"
   fi
 
-  # ── 2. Inject header ──
   if grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
     echo -e "  ${GREEN}✓${NC} Header al aanwezig"
   else
@@ -139,7 +135,6 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
     echo -e "  ${GREEN}✓${NC} Header geïnjecteerd"
   fi
 
-  # ── 3. Create meta.json ──
   cat > "$PB_DIR/meta.json" <<EOF
 {
   "id": "$PB_ID",
@@ -151,7 +146,6 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
 EOF
   echo -e "  ${GREEN}✓${NC} meta.json aangemaakt"
 
-  # ── 4. Move to processed ──
   mkdir -p "$IMPORTS_DIR/.processed"
   mv "$HTML_FILE" "$IMPORTS_DIR/.processed/$FILENAME"
   echo -e "  ${GREEN}✓${NC} → imports/.processed/"
@@ -163,18 +157,7 @@ done
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}$PROCESSED playbook(s) verwerkt.${NC}"
 echo ""
-
 if [ "$PROCESSED" -gt 0 ]; then
-  read -rp "Git add, commit & push? (Y/n): " DO_GIT
-  if [[ ! "$DO_GIT" =~ ^[Nn]$ ]]; then
-    cd "$REPO_ROOT"
-    git add playbooks/ imports/
-    git commit -m "feat: import $PROCESSED playbook(s) with master styling"
-    git push
-    echo ""
-    echo -e "${GREEN}✓ Pushed!${NC} GitHub Action update registry automatisch."
-  fi
+  echo -e "  ${BLUE}→ Open GitHub Desktop om te committen en pushen.${NC}"
 fi
-
 echo ""
-echo -e "${BLUE}Done.${NC}"

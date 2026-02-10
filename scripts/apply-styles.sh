@@ -4,6 +4,8 @@
 # Applies the master playbook stylesheet to
 # all existing playbooks.
 #
+# Push via GitHub Desktop after running.
+#
 # Usage:
 #   ./scripts/apply-styles.sh           (all playbooks)
 #   ./scripts/apply-styles.sh branding  (single playbook)
@@ -35,7 +37,6 @@ if [ ! -f "$PLAYBOOKS_DIR/shared/playbook.css" ]; then
   exit 1
 fi
 
-# ── Determine targets ──
 if [ -n "$1" ]; then
   TARGETS=("$1")
 else
@@ -56,23 +57,18 @@ fi
 echo -e "Playbooks: ${GREEN}${#TARGETS[@]}${NC}"
 echo ""
 
-# ── Helper: inject header after <body> using perl ──
 inject_header() {
   local FILE="$1"
   local TITLE="$2"
-
   perl -i -0pe '
-    # Only inject if not already present
     unless (m/class="pb-header"/) {
       s/(<body[^>]*>)/$1\n<!-- Scheer Playbook Header -->\n<div class="pb-header">\n  <a href="..\/..\/index.html" class="pb-header-back">\x{2190} Back to Playbooks<\/a>\n  <span class="pb-header-title">'"$TITLE"'<\/span>\n<\/div>/s;
     }
   ' "$FILE"
 }
 
-# ── Helper: inject CSS link before </head> using perl ──
 inject_css() {
   local FILE="$1"
-
   perl -i -pe '
     unless ($done) {
       if (s|</head>|<link rel="stylesheet" href="'"$SHARED_CSS"'">\n</head>|) {
@@ -82,9 +78,6 @@ inject_css() {
   ' "$FILE"
 }
 
-# ══════════════════════════════════════
-# Process each playbook
-# ══════════════════════════════════════
 for PB_ID in "${TARGETS[@]}"; do
   PB_FILE="$PLAYBOOKS_DIR/$PB_ID/index.html"
 
@@ -96,7 +89,6 @@ for PB_ID in "${TARGETS[@]}"; do
 
   echo -e "${BLUE}Processing:${NC} $PB_ID"
 
-  # ── Get title ──
   PB_TITLE=""
   if [ -f "$PLAYBOOKS_DIR/$PB_ID/meta.json" ]; then
     PB_TITLE=$(python3 -c "import json; print(json.load(open('$PLAYBOOKS_DIR/$PB_ID/meta.json')).get('title',''))" 2>/dev/null || echo "")
@@ -105,7 +97,6 @@ for PB_ID in "${TARGETS[@]}"; do
     PB_TITLE=$(grep -o '<title>[^<]*</title>' "$PB_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | xargs)
   fi
 
-  # ── 1. CSS link ──
   if grep -q "shared/playbook.css" "$PB_FILE"; then
     echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
   else
@@ -113,19 +104,16 @@ for PB_ID in "${TARGETS[@]}"; do
     echo -e "  ${GREEN}✓${NC} CSS link geïnjecteerd"
   fi
 
-  # ── 2. Remove old inline-style headers ──
   if grep -q 'id="scheer-pb-header"' "$PB_FILE"; then
     perl -i -pe 's/.*id="scheer-pb-header".*\n?//' "$PB_FILE"
     echo -e "  ${GREEN}✓${NC} Oude inline header verwijderd"
   fi
 
-  # Remove any loose inline "Back to Playbooks" links (not in a pb-header div)
   if grep -q 'Back to Playbooks' "$PB_FILE" && ! grep -q 'class="pb-header"' "$PB_FILE"; then
     perl -i -pe 's/.*Back to Playbooks.*\n?//' "$PB_FILE"
     echo -e "  ${GREEN}✓${NC} Oude back-link verwijderd"
   fi
 
-  # ── 3. Inject standard header ──
   if grep -q 'class="pb-header"' "$PB_FILE"; then
     echo -e "  ${GREEN}✓${NC} Standaard header al aanwezig"
   else
@@ -137,22 +125,10 @@ for PB_ID in "${TARGETS[@]}"; do
   echo ""
 done
 
-# ── Summary ──
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}$PROCESSED verwerkt${NC}, $SKIPPED overgeslagen"
 echo ""
-
 if [ "$PROCESSED" -gt 0 ]; then
-  read -rp "Git add, commit & push? (Y/n): " DO_GIT
-  if [[ ! "$DO_GIT" =~ ^[Nn]$ ]]; then
-    cd "$REPO_ROOT"
-    git add playbooks/
-    git commit -m "style: apply master stylesheet to $PROCESSED playbook(s)"
-    git push
-    echo ""
-    echo -e "${GREEN}✓ Pushed!${NC}"
-  fi
+  echo -e "  ${BLUE}→ Open GitHub Desktop om te committen en pushen.${NC}"
 fi
-
 echo ""
-echo -e "${BLUE}Done.${NC}"
