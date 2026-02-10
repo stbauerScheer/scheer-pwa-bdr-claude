@@ -14,6 +14,13 @@
     "path": "playbooks/snl-customer-names/index.html"
   },
   {
+    "id": "ai-tools-overview",
+    "title": "Overview of handy AI tools",
+    "description": "Quick Overview of AI tools including link , purpose and Pricing info",
+    "status": "active",
+    "path": "playbooks/ai-tools-overview/index.html"
+  },
+  {
     "id": "authentic-leadership",
     "title": "Scheer Authority Leadership Campaign | Playbook",
     "description": "Overview Authentic Leadership",
