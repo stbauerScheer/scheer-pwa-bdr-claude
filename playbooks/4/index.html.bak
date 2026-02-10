@@ -449,14 +449,8 @@
             display: none !important;
         }
     </style>
-<link rel="stylesheet" href="../shared/playbook.css">
 </head>
 <body>
-<!-- Scheer Playbook Header -->
-<div class="pb-header">
-  <a href="../../index.html" class="pb-header-back">← Back to Playbooks</a>
-  <span class="pb-header-title">Scheer IDS NL - Internal Customer Cases | Playbook</span>
-</div>
     <header>
         <div class="header-content">
             <div class="header-top">
@@ -498,7 +492,7 @@
             </nav>
 
             <div class="search-container">
-                <span class="search-icon">ð</span>
+                <span class="search-icon">🔍</span>
                 <input 
                     type="text" 
                     class="search-box" 
@@ -537,11 +531,11 @@
 
                             <div class="card-body">
                                 <h4>Organization Introduction</h4>
-                                <p>Beddinghouse is a Dutch family business with decades of experience in bed and bath textiles. From their headquarters in Lisse, they design duvet covers, pillowcases, towels, kimonos, and related products. Production takes place entirely with external suppliersâprimarily in Pakistanâwhere their own staff supervise quality and compliance with social and ethical standards.</p>
+                                <p>Beddinghouse is a Dutch family business with decades of experience in bed and bath textiles. From their headquarters in Lisse, they design duvet covers, pillowcases, towels, kimonos, and related products. Production takes place entirely with external suppliers—primarily in Pakistan—where their own staff supervise quality and compliance with social and ethical standards.</p>
                                 
                                 <p>The company operates in both B2C markets (via their own webshop and major platforms like Bol.com and Amazon) and B2B sectors, creating designs for leading brands such as VT Wonen and Oilily. They're also experimenting with new business models, including a consignment pilot at 130 Beter Bed stores and a circular concept called Circular Dreams for returned and second-chance items.</p>
                                 
-                                <p>Beddinghouse currently generates approximately â¬20 million in revenue with ambitions to grow to â¬40 million within five to ten years. The organization has about fifty employees and is actively looking to expand warehouse capacity to facilitate logistical growth.</p>
+                                <p>Beddinghouse currently generates approximately €20 million in revenue with ambitions to grow to €40 million within five to ten years. The organization has about fifty employees and is actively looking to expand warehouse capacity to facilitate logistical growth.</p>
 
                                 <h4>How We Got This Assignment</h4>
                                 <p>The selection of a new ERP system was guided by Skopos, an external party that supports companies with package and partner selections. During this process, multiple vendors and implementation partners were considered. Scheer Nederland was ultimately selected for its business-like, honest working style and strong content-focused chemistry during presales sessions.</p>
@@ -625,7 +619,7 @@
                                     <li>Real-time inventory visibility across all channels and locations</li>
                                     <li>Functional MRP replacing manual Excel planning</li>
                                     <li>Seamless B2B and B2C order processing through single system</li>
-                                    <li>Standardized processes enabling efficient scaling to â¬40M revenue</li>
+                                    <li>Standardized processes enabling efficient scaling to €40M revenue</li>
                                     <li>Transparent integrations with clear error handling and monitoring</li>
                                     <li>Foundation for new business models (consignment, circular economy)</li>
                                     <li>Compliance readiness for future sustainability reporting requirements</li>
@@ -671,7 +665,7 @@ BEDDINGHOUSE KEY CHARACTERISTICS:
 - Challenge: 15-year-old ECC stuck with customization
 - Solution: S/4HANA Cloud Public Edition
 - Timeline: Oct 2025 - Oct 2026 go-live
-- Revenue: â¬20M â â¬40M ambition
+- Revenue: €20M → €40M ambition
 - Employees: ~50
 
 USE CASES WHERE BEDDINGHOUSE APPLIES:
@@ -684,12 +678,12 @@ USE CASES WHERE BEDDINGHOUSE APPLIES:
 7. New business model experimentation (consignment, circular)
 
 HOW TO REFERENCE:
-"We're working with a Dutch textiles company that faced similar challengesâa 15-year-old ECC installation that had become a maintenance burden. They operate both B2B and B2C channels, manage production in Pakistan, and needed to scale from â¬20M to â¬40M. The key lesson was that integration complexity dominated the timelineânot the ERP configuration itself."
+"We're working with a Dutch textiles company that faced similar challenges—a 15-year-old ECC installation that had become a maintenance burden. They operate both B2B and B2C channels, manage production in Pakistan, and needed to scale from €20M to €40M. The key lesson was that integration complexity dominated the timeline—not the ERP configuration itself."
 
 WHAT NOT TO SAY:
-- Don't claim Beddinghouse is "similar size" unless prospect is â¬15-25M revenue
+- Don't claim Beddinghouse is "similar size" unless prospect is €15-25M revenue
 - Don't reference if prospect is single-channel or purely B2B
-- Don't use if customization is expectedâBeddinghouse went strict fit-to-standard
+- Don't use if customization is expected—Beddinghouse went strict fit-to-standard
 
 VALIDATION:
 Confirm prospect has omnichannel complexity, external dependencies, or is replacing legacy SAP before using Beddinghouse as reference.</div>
@@ -849,7 +843,7 @@ USE CASES WHERE BOL.COM APPLIES:
 7. Dual supplier-customer relationship complexity
 
 HOW TO REFERENCE:
-"We implemented finance for one of the Netherlands' largest e-commerce platforms processing 2.5 million transactions monthly. The challenge wasn't SAPâit was rebuilding their entire GL structure from scratch while keeping 70 autonomous development teams operational. We created 'recipe books' for every transaction stream, which became the foundation for all integrations."
+"We implemented finance for one of the Netherlands' largest e-commerce platforms processing 2.5 million transactions monthly. The challenge wasn't SAP—it was rebuilding their entire GL structure from scratch while keeping 70 autonomous development teams operational. We created 'recipe books' for every transaction stream, which became the foundation for all integrations."
 
 WHAT NOT TO SAY:
 - Don't reference Bol.com for full ERP scope (was finance-only)
@@ -889,7 +883,7 @@ Confirm prospect has similar scale (1M+ monthly transactions), finance complexit
                                 <h4>Organization Introduction</h4>
                                 <p>FineField is an innovative manufacturer focused on harvesting machines for blueberries. The company originated from the Driessen brothers in 2012 and has grown from a pioneering startup to a recognized player in agricultural technology. Their robotic harvesters use advanced vision systems and AI to autonomously pick blueberries with speed and care that match or exceed manual labor.</p>
                                 
-                                <p>FineField operates with approximately 25-30 employees and generates estimated revenue of â¬10-15 million. The company is in strong growth mode, expanding from the Netherlands to international markets including North America. They combine machine manufacturing with ongoing service contracts, spare parts supply, and machine upgrades.</p>
+                                <p>FineField operates with approximately 25-30 employees and generates estimated revenue of €10-15 million. The company is in strong growth mode, expanding from the Netherlands to international markets including North America. They combine machine manufacturing with ongoing service contracts, spare parts supply, and machine upgrades.</p>
                                 
                                 <p>The business model includes selling machines outright, leasing arrangements, and service-based models where FineField maintains ownership and charges per harvested kilogram. This creates complex requirements for project-based manufacturing, asset management, and service logistics.</p>
 
@@ -1016,7 +1010,7 @@ You are positioning FineField as a reference for prospects in manufacturing comp
 
 FINEFIELD KEY CHARACTERISTICS:
 - Industry: Agritech Robotics Manufacturing
-- Scale: 25-30 employees, â¬10-15M revenue
+- Scale: 25-30 employees, €10-15M revenue
 - Challenge: Project-based manufacturing + service operations
 - Solution: S/4HANA Cloud Public with Project System
 - Business Model: Direct sales, leasing, usage-based service
@@ -1031,7 +1025,7 @@ USE CASES WHERE FINEFIELD APPLIES:
 7. Startup to scale-up ERP transitions
 
 HOW TO REFERENCE:
-"We're implementing for a Dutch robotics company that manufactures autonomous blueberry harvesters. Each machine is essentially a custom project, and they support three different revenue modelsâdirect sales, leasing, and harvest-based fees. The challenge was building project manufacturing capability while preparing for North American expansion, all with a 25-person team."
+"We're implementing for a Dutch robotics company that manufactures autonomous blueberry harvesters. Each machine is essentially a custom project, and they support three different revenue models—direct sales, leasing, and harvest-based fees. The challenge was building project manufacturing capability while preparing for North American expansion, all with a 25-person team."
 
 WHAT NOT TO SAY:
 - Don't reference for volume production (FineField is project-based)
@@ -1128,7 +1122,7 @@ USE CASES:
 - Export-intensive operations
 
 HOW TO REFERENCE:
-"We're working with the world's largest horseshoe manufacturerâa family business since 1906 that exports to 60 countries. The challenge was modernizing their ERP while preserving deep manufacturing knowledge and preparing for next-generation leadership."
+"We're working with the world's largest horseshoe manufacturer—a family business since 1906 that exports to 60 countries. The challenge was modernizing their ERP while preserving deep manufacturing knowledge and preparing for next-generation leadership."
 
 VALIDATION:
 Use for prospects with specialized products, family business dynamics, or extensive export operations.</div>
@@ -1233,7 +1227,7 @@ USE CASES:
 - Clean-core + extension architecture
 
 HOW TO REFERENCE:
-"We built an innovation management solution for a sugar production company's IP division using S/4HANA Cloud with extensive BTP extensions. They manage research projects, patents, and university partnerships with a 10-person teamâproving that clean-core plus BTP can handle highly specialized workflows."
+"We built an innovation management solution for a sugar production company's IP division using S/4HANA Cloud with extensive BTP extensions. They manage research projects, patents, and university partnerships with a 10-person team—proving that clean-core plus BTP can handle highly specialized workflows."
 
 VALIDATION:
 Use for prospects requiring significant BTP work, innovation management, or demonstrating clean-core extension capabilities.</div>
@@ -1265,7 +1259,7 @@ Use for prospects requiring significant BTP work, innovation management, or demo
 
                             <div class="card-body">
                                 <h4>Organization Introduction</h4>
-                                <p>Pon Automotive is one of the leading automotive groups in the Netherlands, representing premium brands including Volkswagen, Audi, SEAT, Å KODA, Porsche, and Bentley. They operate an extensive dealer network handling vehicle sales, after-sales service, and parts distribution. The after-sales division manages hundreds of thousands of parts orders annually across dozens of dealer locations.</p>
+                                <p>Pon Automotive is one of the leading automotive groups in the Netherlands, representing premium brands including Volkswagen, Audi, SEAT, ŠKODA, Porsche, and Bentley. They operate an extensive dealer network handling vehicle sales, after-sales service, and parts distribution. The after-sales division manages hundreds of thousands of parts orders annually across dozens of dealer locations.</p>
 
                                 <h4>How We Got This Assignment</h4>
                                 <p>Pon Automotive's after-sales operations ran on aging AS/400 systems that couldn't support modern dealer requirements or provide the real-time visibility needed for parts availability and service scheduling. They required integrated systems for parts distribution, dealer ordering, service planning, and warranty claims processing. Scheer was selected for automotive industry understanding and proven dealer network implementations.</p>
@@ -1349,7 +1343,7 @@ USE CASES:
 - Multi-brand support requirements
 
 HOW TO REFERENCE:
-"We're implementing after-sales operations for one of the Netherlands' largest automotive dealer networks representing VW Group brands. The complexity isn't just the parts volumeâit's managing decades of part number supersessions, dealer ordering patterns, and service kit configurations while retiring their AS/400 systems."
+"We're implementing after-sales operations for one of the Netherlands' largest automotive dealer networks representing VW Group brands. The complexity isn't just the parts volume—it's managing decades of part number supersessions, dealer ordering patterns, and service kit configurations while retiring their AS/400 systems."
 
 VALIDATION:
 Use for prospects with dealer/distributor networks, automotive industry, or complex parts distribution requiring advanced ATP.</div>
@@ -1499,7 +1493,7 @@ USE CASES:
 - Project-based cost tracking
 
 HOW TO REFERENCE:
-"We're working with The Ocean Cleanupâthe organization removing plastic from oceans worldwide. They had virtually no standardized processes and no ERP experience. We started with a minimal Source-to-Pay implementation to build foundation, and they're now ready for Phase 3 with inventory management. The key lesson: small, concrete steps work better than big-bang approaches for organizations new to ERP."
+"We're working with The Ocean Cleanup—the organization removing plastic from oceans worldwide. They had virtually no standardized processes and no ERP experience. We started with a minimal Source-to-Pay implementation to build foundation, and they're now ready for Phase 3 with inventory management. The key lesson: small, concrete steps work better than big-bang approaches for organizations new to ERP."
 
 WHAT NOT TO SAY:
 - Don't reference for mature organizations (TOC had low process maturity)
