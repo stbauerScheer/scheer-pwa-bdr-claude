@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Test â Scheer IDS</title>
+<style>
+  /* ââ ONLY playbook-specific styles ââ */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--blue);
+    color: #ffffff;
+    border-color: var(--blue);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin: 20px 0 30px;
+  }
+  .stat {
+    text-align: center;
+    padding: 18px 10px;
+    background: var(--bg-light);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .card-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+</style>
+<link rel="stylesheet" href="../shared/playbook.css">
+</head>
+<body>
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+  <a href="../../index.html" class="pb-header-back">← Back to Playbooks</a>
+  <span class="pb-header-title">Style Test</span>
+</div>
+
+  <!-- âââââââââââ HERO âââââââââââ -->
+  <header>
+    <div class="wrap">
+      <h1>Style Test Playbook</h1>
+      <p>Validate all master CSS components. This header should have white text on the blue gradient.</p>
+      <a href="#">Example link â should also be white</a>
+      <nav>
+        <ul>
+          <li><a href="#stats">Stats</a></li>
+          <li><a href="#customers">Customers</a></li>
+          <li><a href="#alerts">Alerts</a></li>
+          <li><a href="#table">Table</a></li>
+          <li><a href="#forms">Forms</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- âââââââââââ SEARCH BAR âââââââââââ -->
+  <div class="wrap search-filter-wrap">
+    <input type="text" id="searchInput" placeholder="Search customers, industries, solutions..." oninput="filterCards()">
+    <select id="segmentFilter" onchange="filterCards()">
+      <option value="">All Segments</option>
+      <option value="Product Centric">Product Centric</option>
+      <option value="Service Centric">Service Centric</option>
+      <option value="Finance Centric">Finance Centric</option>
+    </select>
+  </div>
+
+  <main>
+    <div class="wrap">
+
+      <!-- âââââââââââ SECTION: STATS âââââââââââ -->
+      <h2 id="stats">Dashboard Overview</h2>
+      <p class="section-intro">Key metrics at a glance. These stat boxes use playbook-specific styling on top of the master CSS variables.</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-number">42</div>
+          <div class="stat-label">Total Customers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">8</div>
+          <div class="stat-label">Industries</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Implementations</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">â¬6M</div>
+          <div class="stat-label">Revenue Target</div>
+        </div>
+      </div>
+
+      <!-- âââââââââââ SECTION: CUSTOMERS âââââââââââ -->
+      <h2 id="customers">Customer Portfolio</h2>
+      <p class="section-intro">Complete customer overview with labels (regular weight) and values (bold). Filter by segment or search by name.</p>
+
+      <!-- Filter buttons -->
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setSegment('')">All</button>
+        <button class="filter-btn" onclick="setSegment('Product Centric')">Product Centric</button>
+        <button class="filter-btn" onclick="setSegment('Service Centric')">Service Centric</button>
+        <button class="filter-btn" onclick="setSegment('Finance Centric')">Finance Centric</button>
+      </div>
+
+      <div class="card-count" id="cardCount">Showing 8 customers</div>
+
+      <div class="grid" id="cardGrid">
+
+        <article class="card" data-segment="Service Centric">
+          <span class="badge">Live</span>
+          <h3>Advanced Systems Group EMEA B.V.</h3>
+          <span class="label">Description</span>
+          <p class="val">Technology integration and managed services</p>
+          <span class="label">Industry</span>
+          <p class="val">IT & Professional Services</p>
+          <span class="label">Segment</span>
+          <p class="val">Service Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Finance Centric">
+          <span class="badge badge-warning">In Progress</span>
+          <h3>Aramco Overseas Company BV</h3>
+          <span class="label">Description</span>
+          <p class="val">European HQ for Aramco</p>
+          <span class="label">Industry</span>
+          <p class="val">Energy</p>
+          <span class="label">Segment</span>
+          <p class="val">Finance Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge badge-success">Reference</span>
+          <h3>Baker and Baker Netherlands Holding BV</h3>
+          <span class="label">Description</span>
+          <p class="val">Bakery products manufacturer</p>
+          <span class="label">Industry</span>
+          <p class="val">Food Manufacturing</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS CRM</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge">Live</span>
+          <h3>Beddinghouse BV</h3>
+          <span class="label">Description</span>
+          <p class="val">Bedding and textiles</p>
+          <span class="label">Industry</span>
+          <p class="val">Consumer Goods</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Service Centric">
+          <span class="badge">Live</span>
+          <h3>Brand Loyalty International BV</h3>
+          <span class="label">Description</span>
+          <p class="val">Loyalty and retail marketing solutions</p>
+          <span class="label">Industry</span>
+          <p class="val">Marketing Services</p>
+          <span class="label">Segment</span>
+          <p class="val">Service Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge">Live</span>
+          <h3>Coty</h3>
+          <span class="label">Description</span>
+          <p class="val">Cosmetics & beauty</p>
+          <span class="label">Industry</span>
+          <p class="val">Beauty</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SAP ERP</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge badge-warning">In Progress</span>
+          <h3>CSM Bakery Solutions Europe Holding B.V.</h3>
+          <span class="label">Description</span>
+          <p class="val">Supplier of bakery ingredients and solutions</p>
+          <span class="label">Industry</span>
+          <p class="val">Food Manufacturing</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SAP ERP</p>
+        </article>
+
+        <article class="card" data-segment="Service Centric">
+          <span class="badge badge-success">Reference</span>
+          <h3>Asito B.V.</h3>
+          <span class="label">Description</span>
+          <p class="val">Cleaning and facility services</p>
+          <span class="label">Industry</span>
+          <p class="val">Facilities Management</p>
+          <span class="label">Segment</span>
+          <p class="val">Service Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+      </div>
+
+      <!-- âââââââââââ SECTION: ALERTS âââââââââââ -->
+      <h2 id="alerts">Alert Styles</h2>
+      <p class="section-intro">Three alert variants for different message types.</p>
+
+      <div class="alert alert-info">
+        <strong>Info:</strong> 15 implementations completed in 2025. All customers are on S/4HANA Cloud Public Edition.
+      </div>
+
+      <div class="alert alert-success">
+        <strong>Success:</strong> Registry updated â 6 playbooks now active in the system.
+      </div>
+
+      <div class="alert alert-error">
+        <strong>Attention:</strong> SAP ECC end-of-support deadline is 2027. Accelerate migration pipeline.
+      </div>
+
+      <!-- âââââââââââ SECTION: TAGS âââââââââââ -->
+      <h2>Tag Styles</h2>
+      <div class="tag-row">
+        <span class="tag">S/4HANA Cloud</span>
+        <span class="tag">Retail</span>
+        <span class="tag">Consumer Goods</span>
+        <span class="tag">Dutch Market</span>
+        <span class="tag">â¬50-300M Revenue</span>
+      </div>
+
+      <!-- âââââââââââ SECTION: TABLE âââââââââââ -->
+      <h2 id="table">Implementation Overview</h2>
+      <p class="section-intro">Table styling with striped rows and hover highlight.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Industry</th>
+            <th>Solution</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Advanced Systems Group</td>
+            <td>IT & Professional Services</td>
+            <td>SaaS ERP</td>
+            <td><span class="badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Baker and Baker</td>
+            <td>Food Manufacturing</td>
+            <td>SaaS CRM</td>
+            <td><span class="badge badge-success">Reference</span></td>
+          </tr>
+          <tr>
+            <td>Aramco Overseas</td>
+            <td>Energy</td>
+            <td>SaaS ERP</td>
+            <td><span class="badge badge-warning">In Progress</span></td>
+          </tr>
+          <tr>
+            <td>Coty</td>
+            <td>Beauty</td>
+            <td>SAP ERP</td>
+            <td><span class="badge">Live</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- âââââââââââ SECTION: BLOCKQUOTE âââââââââââ -->
+      <h2>Blockquote</h2>
+      <blockquote>
+        "Scheer IDS delivered our S/4HANA Cloud migration in record time. Their focus on Public Edition meant zero compromises."
+      </blockquote>
+
+      <!-- âââââââââââ SECTION: FORMS âââââââââââ -->
+      <h2 id="forms">Variable Form</h2>
+      <p class="section-intro">Orange-bordered form for editable variables and inputs.</p>
+
+      <div class="variable-form">
+        <h3>Customize Output</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div>
+            <label>Company Name</label>
+            <input type="text" placeholder="Enter company name">
+          </div>
+          <div>
+            <label>Industry</label>
+            <select>
+              <option>Consumer Goods</option>
+              <option>Food Manufacturing</option>
+              <option>Retail</option>
+              <option>Energy</option>
+            </select>
+          </div>
+          <div>
+            <label>Revenue Range</label>
+            <input type="text" placeholder="â¬50M - â¬300M">
+          </div>
+          <div>
+            <label>Segment</label>
+            <select>
+              <option>Product Centric</option>
+              <option>Service Centric</option>
+              <option>Finance Centric</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:10px;">
+          <button class="button-primary">Generate Report</button>
+          <button class="button-secondary">Reset</button>
+        </div>
+      </div>
+
+      <!-- âââââââââââ SECTION: BUTTONS âââââââââââ -->
+      <h2>Button Styles</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px;">
+        <button class="button-primary">Primary (Blue)</button>
+        <button class="button-success">Success (Green)</button>
+        <button class="button-warning">Warning (Orange)</button>
+        <button class="button-secondary">Secondary (Grey)</button>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+  function filterCards() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const segment = document.getElementById('segmentFilter').value;
+    const cards = document.querySelectorAll('#cardGrid .card');
+    let visible = 0;
+
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const seg = card.dataset.segment || '';
+      const matchSearch = !query || text.includes(query);
+      const matchSegment = !segment || seg === segment;
+      const show = matchSearch && matchSegment;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    document.getElementById('cardCount').textContent = `Showing ${visible} customer${visible !== 1 ? 's' : ''}`;
+
+    // Update filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+  }
+
+  function setSegment(seg) {
+    document.getElementById('segmentFilter').value = seg;
+    filterCards();
+    // Highlight active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      const btnSeg = btn.textContent === 'All' ? '' : btn.textContent;
+      btn.classList.toggle('active', btnSeg === seg);
+    });
+  }
+</script>
+
+</body>
+</html>

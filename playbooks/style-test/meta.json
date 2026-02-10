@@ -1,0 +1,7 @@
+{
+  "id": "style-test",
+  "title": "Style Test",
+  "description": "Validate all master CSS components",
+  "status": "active",
+  "path": "playbooks/style-test/index.html"
+}

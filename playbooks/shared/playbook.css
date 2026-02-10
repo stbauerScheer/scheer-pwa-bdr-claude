@@ -128,6 +128,25 @@ header .sub {
   line-height: 1.5;
 }
 
+.pb-hero a,
+header a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: border-color var(--transition);
+}
+
+.pb-hero a:hover,
+header a:hover {
+  border-color: #ffffff;
+}
+
+.pb-hero p,
+header p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+}
+
 /* ── Hero Navigation ── */
 .pb-hero nav ul,
 header nav ul {
@@ -225,6 +244,31 @@ strong {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 14px;
   margin-bottom: 24px;
+}
+
+/* ══════════════════════════════════════
+   CARD LABELS & VALUES
+   ══════════════════════════════════════ */
+.label {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.label:first-of-type {
+  margin-top: 12px;
+}
+
+.val {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
 }
 
 /* ══════════════════════════════════════

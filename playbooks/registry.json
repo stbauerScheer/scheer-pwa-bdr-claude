@@ -1,38 +1,10 @@
 [
   {
-    "id": "customer-cases",
-    "title": "Customer Cases",
-    "description": "Reference stories and proof points",
+    "id": "bd-interactive",
+    "title": "Why Scheer Branding Playbook",
+    "description": "Business development — interactive branding guide",
     "status": "active",
-    "path": "playbooks/customer-cases/index.html"
-  },
-  {
-    "id": "snl-customer-names",
-    "title": "Customer Projects from 2012",
-    "description": "Overview Customer Projecta",
-    "status": "active",
-    "path": "playbooks/snl-customer-names/index.html"
-  },
-  {
-    "id": "ai-tools-overview",
-    "title": "Overview of handy AI tools",
-    "description": "Quick Overview of AI tools including link , purpose and Pricing info",
-    "status": "active",
-    "path": "playbooks/ai-tools-overview/index.html"
-  },
-  {
-    "id": "authentic-leadership",
-    "title": "Scheer Authority Leadership Campaign | Playbook",
-    "description": "Overview Authentic Leadership",
-    "status": "active",
-    "path": "playbooks/authentic-leadership/index.html"
-  },
-  {
-    "id": "4",
-    "title": "Scheer IDS NL - Internal Customer Cases | Playbook",
-    "description": "Overview Internal Customer Cases",
-    "status": "active",
-    "path": "playbooks/4/index.html"
+    "path": "playbooks/bd-interactive/index.html"
   },
   {
     "id": "branding",
@@ -42,10 +14,17 @@
     "path": "playbooks/branding/index.html"
   },
   {
-    "id": "bd-interactive",
-    "title": "Why Scheer Branding Playbook",
-    "description": "Business development — interactive branding guide",
+    "id": "customer-cases",
+    "title": "Customer Cases",
+    "description": "Reference stories and proof points",
     "status": "active",
-    "path": "playbooks/bd-interactive/index.html"
+    "path": "playbooks/customer-cases/index.html"
+  },
+  {
+    "id": "style-test",
+    "title": "Style Test",
+    "description": "Validate all master CSS components",
+    "status": "active",
+    "path": "playbooks/style-test/index.html"
   }
 ]
