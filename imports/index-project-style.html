@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Test - Scheer IDS</title>
+<style>
+  /* ONLY playbook-specific styles */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--blue);
+    color: #ffffff;
+    border-color: var(--blue);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin: 20px 0 30px;
+  }
+  .stat {
+    text-align: center;
+    padding: 18px 10px;
+    background: var(--bg-light);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .card-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+</style>
+<link rel="stylesheet" href="playbook.css">
+</head>
+<body>
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+  <a href="../../index.html" class="pb-header-back">← Back to Playbooks</a>
+  <span class="pb-header-title">Style Test</span>
+</div>
+
+  <header>
+    <div class="wrap">
+      <h1>Style Test Playbook</h1>
+      <p>Validate all master CSS components. All text in this header should be white.</p>
+      <a href="#">Example link - should also be white</a>
+      <nav>
+        <ul>
+          <li><a href="#stats">Stats</a></li>
+          <li><a href="#customers">Customers</a></li>
+          <li><a href="#alerts">Alerts</a></li>
+          <li><a href="#table">Table</a></li>
+          <li><a href="#forms">Forms</a></li>
+          <li><a href="#project">Project Style</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap search-filter-wrap">
+    <input type="text" id="searchInput" placeholder="Search customers, industries, solutions..." oninput="filterCards()">
+    <select id="segmentFilter" onchange="filterCards()">
+      <option value="">All Segments</option>
+      <option value="Product Centric">Product Centric</option>
+      <option value="Service Centric">Service Centric</option>
+      <option value="Finance Centric">Finance Centric</option>
+    </select>
+  </div>
+
+  <main>
+    <div class="wrap">
+
+      <h2 id="stats">Dashboard Overview</h2>
+      <p class="section-intro">Key metrics at a glance. Stat boxes use playbook-specific styling on top of master CSS variables.</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-number">42</div>
+          <div class="stat-label">Total Customers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">8</div>
+          <div class="stat-label">Industries</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Implementations</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">EUR 6M</div>
+          <div class="stat-label">Revenue Target</div>
+        </div>
+      </div>
+
+      <h2 id="customers">Customer Portfolio</h2>
+      <p class="section-intro">Labels are bold, values are regular weight. Filter by segment or search by name.</p>
+
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setSegment('')">All</button>
+        <button class="filter-btn" onclick="setSegment('Product Centric')">Product Centric</button>
+        <button class="filter-btn" onclick="setSegment('Service Centric')">Service Centric</button>
+        <button class="filter-btn" onclick="setSegment('Finance Centric')">Finance Centric</button>
+      </div>
+
+      <div class="card-count" id="cardCount">Showing 8 customers</div>
+
+      <div class="grid" id="cardGrid">
+
+        <article class="card" data-segment="Service Centric">
+          <span class="badge">Live</span>
+          <h3>Advanced Systems Group EMEA B.V.</h3>
+          <span class="label">Description</span>
+          <p class="val">Technology integration and managed services</p>
+          <span class="label">Industry</span>
+          <p class="val">IT and Professional Services</p>
+          <span class="label">Segment</span>
+          <p class="val">Service Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Finance Centric">
+          <span class="badge badge-warning">In Progress</span>
+          <h3>Aramco Overseas Company BV</h3>
+          <span class="label">Description</span>
+          <p class="val">European HQ for Aramco</p>
+          <span class="label">Industry</span>
+          <p class="val">Energy</p>
+          <span class="label">Segment</span>
+          <p class="val">Finance Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge badge-success">Reference</span>
+          <h3>Baker and Baker Netherlands Holding BV</h3>
+          <span class="label">Description</span>
+          <p class="val">Bakery products manufacturer</p>
+          <span class="label">Industry</span>
+          <p class="val">Food Manufacturing</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS CRM</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge">Live</span>
+          <h3>Beddinghouse BV</h3>
+          <span class="label">Description</span>
+          <p class="val">Bedding and textiles</p>
+          <span class="label">Industry</span>
+          <p class="val">Consumer Goods</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Service Centric">
+          <span class="badge">Live</span>
+          <h3>Brand Loyalty International BV</h3>
+          <span class="label">Description</span>
+          <p class="val">Loyalty and retail marketing solutions</p>
+          <span class="label">Industry</span>
+          <p class="val">Marketing Services</p>
+          <span class="label">Segment</span>
+          <p class="val">Service Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge">Live</span>
+          <h3>Coty</h3>
+          <span class="label">Description</span>
+          <p class="val">Cosmetics and beauty</p>
+          <span class="label">Industry</span>
+          <p class="val">Beauty</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SAP ERP</p>
+        </article>
+
+        <article class="card" data-segment="Product Centric">
+          <span class="badge badge-warning">In Progress</span>
+          <h3>CSM Bakery Solutions Europe Holding B.V.</h3>
+          <span class="label">Description</span>
+          <p class="val">Supplier of bakery ingredients and solutions</p>
+          <span class="label">Industry</span>
+          <p class="val">Food Manufacturing</p>
+          <span class="label">Segment</span>
+          <p class="val">Product Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SAP ERP</p>
+        </article>
+
+        <article class="card" data-segment="Service Centric">
+          <span class="badge badge-success">Reference</span>
+          <h3>Asito B.V.</h3>
+          <span class="label">Description</span>
+          <p class="val">Cleaning and facility services</p>
+          <span class="label">Industry</span>
+          <p class="val">Facilities Management</p>
+          <span class="label">Segment</span>
+          <p class="val">Service Centric</p>
+          <span class="label">Solution</span>
+          <p class="val">SaaS ERP</p>
+        </article>
+
+      </div>
+
+      <h2 id="alerts">Alert Styles</h2>
+      <p class="section-intro">Three alert variants for different message types.</p>
+
+      <div class="alert alert-info">
+        <strong>Info:</strong> 15 implementations completed in 2025. All customers are on S/4HANA Cloud Public Edition.
+      </div>
+      <div class="alert alert-success">
+        <strong>Success:</strong> Registry updated - 6 playbooks now active in the system.
+      </div>
+      <div class="alert alert-error">
+        <strong>Attention:</strong> SAP ECC end-of-support deadline is 2027. Accelerate migration pipeline.
+      </div>
+
+      <h2>Tag Styles</h2>
+      <div class="tag-row">
+        <span class="tag">S/4HANA Cloud</span>
+        <span class="tag">Retail</span>
+        <span class="tag">Consumer Goods</span>
+        <span class="tag">Dutch Market</span>
+        <span class="tag">EUR 50-300M Revenue</span>
+      </div>
+
+      <h2 id="table">Implementation Overview</h2>
+      <p class="section-intro">Table styling with striped rows and hover highlight.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Industry</th>
+            <th>Solution</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Advanced Systems Group</td>
+            <td>IT and Professional Services</td>
+            <td>SaaS ERP</td>
+            <td><span class="badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Baker and Baker</td>
+            <td>Food Manufacturing</td>
+            <td>SaaS CRM</td>
+            <td><span class="badge badge-success">Reference</span></td>
+          </tr>
+          <tr>
+            <td>Aramco Overseas</td>
+            <td>Energy</td>
+            <td>SaaS ERP</td>
+            <td><span class="badge badge-warning">In Progress</span></td>
+          </tr>
+          <tr>
+            <td>Coty</td>
+            <td>Beauty</td>
+            <td>SAP ERP</td>
+            <td><span class="badge">Live</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Blockquote</h2>
+      <blockquote>
+        "Scheer IDS delivered our S/4HANA Cloud migration in record time. Their focus on Public Edition meant zero compromises."
+      </blockquote>
+
+      <h2 id="forms">Variable Form</h2>
+      <p class="section-intro">Orange-bordered form for editable variables and inputs.</p>
+
+      <div class="variable-form">
+        <h3>Customize Output</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div>
+            <label>Company Name</label>
+            <input type="text" placeholder="Enter company name">
+          </div>
+          <div>
+            <label>Industry</label>
+            <select>
+              <option>Consumer Goods</option>
+              <option>Food Manufacturing</option>
+              <option>Retail</option>
+              <option>Energy</option>
+            </select>
+          </div>
+          <div>
+            <label>Revenue Range</label>
+            <input type="text" placeholder="EUR 50M - EUR 300M">
+          </div>
+          <div>
+            <label>Segment</label>
+            <select>
+              <option>Product Centric</option>
+              <option>Service Centric</option>
+              <option>Finance Centric</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:10px;">
+          <button class="button-primary">Generate Report</button>
+          <button class="button-secondary">Reset</button>
+        </div>
+      </div>
+
+      <h2>Button Styles</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px;">
+        <button class="button-primary">Primary (Blue)</button>
+        <button class="button-success">Success (Green)</button>
+        <button class="button-warning">Warning (Orange)</button>
+        <button class="button-secondary">Secondary (Grey)</button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           NEW: PROJECT STYLE - Structured Document Layout
+           ═══════════════════════════════════════════════════════════ -->
+
+      <h2 id="project" style="margin-top: 60px; font-size: 28px; color: var(--orange);">Project Style - Structured Documents</h2>
+      <p class="section-intro">Full-width card sections for H2 headings with H3 subsections. Perfect for project documentation, implementation guides, and structured content.</p>
+
+      <div class="project-doc">
+        
+        <h1 class="project-title">SAP S/4HANA Cloud Public Edition Implementation</h1>
+        <p class="project-subtitle">Complete project documentation for retail and consumer goods implementation at Baker & Baker Netherlands. This example demonstrates the Project Style layout with structured sections.</p>
+
+        <!-- Section 1: Standard -->
+        <section class="project-section">
+          <h2>Project Overview</h2>
+          <p>This implementation project aims to migrate Baker & Baker Netherlands from their legacy SAP ECC system to SAP S/4HANA Cloud Public Edition. The project scope includes Order-to-Cash, Procure-to-Pay, and Record-to-Report processes.</p>
+          
+          <h3>Key Objectives</h3>
+          <ul>
+            <li>Migrate from SAP ECC 6.0 to S/4HANA Cloud Public Edition</li>
+            <li>Implement fit-to-standard processes with minimal customization</li>
+            <li>Complete go-live within 6 months</li>
+            <li>Achieve 95% process automation in core business flows</li>
+          </ul>
+
+          <h3>Project Team</h3>
+          <p>The implementation is led by Scheer IDS with a dedicated team of 8 consultants specializing in retail and food manufacturing. Key stakeholders from Baker & Baker include the CFO, IT Director, and Process Owners from Finance, Procurement, and Sales.</p>
+        </section>
+
+        <!-- Section 2: Highlighted -->
+        <section class="project-section section-highlight">
+          <h2><span class="section-number">1</span>Discovery & Design Phase</h2>
+          <p>The discovery phase focuses on understanding current business processes and mapping them to SAP best practices. This phase is critical for ensuring a smooth fit-to-standard implementation.</p>
+
+          <h3>Workshop Schedule</h3>
+          <ul>
+            <li>Week 1-2: Order-to-Cash workshops (Sales Order Management, Billing, Revenue Recognition)</li>
+            <li>Week 3-4: Procure-to-Pay workshops (Purchase Requisition, Purchase Order, Invoice Verification)</li>
+            <li>Week 5-6: Record-to-Report workshops (General Ledger, Financial Closing, Reporting)</li>
+            <li>Week 7-8: Integration and cross-process scenarios</li>
+          </ul>
+
+          <h3>Deliverables</h3>
+          <p>Each workshop produces detailed process flow documents, gap analysis reports, and configuration specifications. All deliverables are maintained in Confluence with version control and stakeholder approval workflows.</p>
+
+          <div class="project-subsection">
+            <h3>Workshop Methodology</h3>
+            <p>We follow a three-phase approach for each workshop:</p>
+            <ol>
+              <li><strong>Baseline Presentation:</strong> Present SAP standard process flows</li>
+              <li><strong>Gap Discussion:</strong> Identify gaps between standard and current state</li>
+              <li><strong>Solution Design:</strong> Design solutions within Public Edition constraints</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Section 3: Success variant -->
+        <section class="project-section section-success">
+          <h2><span class="section-number">2</span>Configuration & Testing</h2>
+          <p>Configuration is performed directly in the SAP S/4HANA Cloud Public Edition system following approved design specifications. All configurations are documented and tested using predefined test scenarios.</p>
+
+          <h3>Configuration Workstreams</h3>
+          <ul>
+            <li>Organizational Structure (Company Code, Plants, Storage Locations)</li>
+            <li>Master Data Templates (Material Master, Customer Master, Vendor Master)</li>
+            <li>Process-specific Configuration (SD, MM, FI, CO)</li>
+            <li>Output Management and Forms</li>
+            <li>Authorization Roles and Security</li>
+          </ul>
+
+          <h3>Testing Strategy</h3>
+          <p>We implement a comprehensive testing approach with three distinct phases:</p>
+          <ul>
+            <li><strong>Unit Testing:</strong> Individual configuration elements tested by consultants</li>
+            <li><strong>Integration Testing:</strong> End-to-end process flows tested with real data</li>
+            <li><strong>User Acceptance Testing:</strong> Business users validate processes in realistic scenarios</li>
+          </ul>
+        </section>
+
+        <!-- Section 4: Warning variant -->
+        <section class="project-section section-warning">
+          <h2><span class="section-number">3</span>Data Migration Strategy</h2>
+          <p>Data migration is one of the most critical success factors. We follow SAP's recommended migration approach using standard migration tools and templates provided in S/4HANA Cloud Public Edition.</p>
+
+          <h3>Migration Objects</h3>
+          <ul>
+            <li>Material Master (15,000 materials including recipes and BOMs)</li>
+            <li>Customer Master (2,500 customers with full credit data)</li>
+            <li>Vendor Master (800 vendors including payment terms)</li>
+            <li>Open Sales Orders (500 open orders at cutover)</li>
+            <li>Open Purchase Orders (300 open POs at cutover)</li>
+            <li>Financial Balances (GL balances and open items)</li>
+          </ul>
+
+          <h3>Migration Approach</h3>
+          <div class="alert alert-warning" style="margin-top: 16px;">
+            <strong>Critical Path Item:</strong> Data migration rehearsals must be completed 4 weeks before go-live. Any delays in data preparation will impact the overall timeline.
+          </div>
+          <p>We perform three migration cycles: Initial Load (8 weeks before go-live), Delta Load (4 weeks before go-live), and Final Cutover Load (go-live weekend).</p>
+        </section>
+
+        <!-- Section 5: Standard -->
+        <section class="project-section">
+          <h2><span class="section-number">4</span>Training & Change Management</h2>
+          <p>User adoption is critical for project success. We develop role-based training materials and conduct hands-on training sessions for all user groups.</p>
+
+          <h3>Training Approach</h3>
+          <ul>
+            <li>Role-based training curricula (Order Processor, Buyer, Accountant, etc.)</li>
+            <li>Train-the-trainer sessions for power users</li>
+            <li>Hands-on practice in dedicated training system</li>
+            <li>Quick reference guides and video tutorials</li>
+            <li>Post-go-live support and coaching</li>
+          </ul>
+
+          <h3>Change Impact Assessment</h3>
+          <p>The migration to S/4HANA Cloud introduces significant changes to daily work processes. Key changes include:</p>
+          <ul>
+            <li>Modern Fiori user interface replacing classic SAP GUI</li>
+            <li>Simplified approval workflows with automated routing</li>
+            <li>Real-time reporting replacing batch-based reports</li>
+            <li>Mobile access for field sales and warehouse staff</li>
+          </ul>
+        </section>
+
+        <!-- Section 6: Highlighted -->
+        <section class="project-section section-highlight">
+          <h2><span class="section-number">5</span>Go-Live & Support</h2>
+          <p>Go-live is planned for a weekend to minimize business disruption. We provide 24/7 hypercare support for the first two weeks post-go-live.</p>
+
+          <h3>Go-Live Checklist</h3>
+          <ul>
+            <li>Final data migration executed and validated</li>
+            <li>All interfaces tested and operational</li>
+            <li>User authorizations reviewed and activated</li>
+            <li>Support team on standby (onsite + remote)</li>
+            <li>Rollback plan documented and tested</li>
+            <li>Communication plan activated for all stakeholders</li>
+          </ul>
+
+          <div class="project-subsection">
+            <h3>Hypercare Phase</h3>
+            <p>The hypercare phase lasts 2 weeks post-go-live with the following support structure:</p>
+            <ul>
+              <li><strong>Week 1:</strong> Full consulting team onsite, 24/7 support</li>
+              <li><strong>Week 2:</strong> Core team onsite during business hours, 8/5 remote support</li>
+              <li><strong>Week 3-4:</strong> Transition to standard support with weekly status meetings</li>
+            </ul>
+          </div>
+
+          <h3>Success Metrics</h3>
+          <p>Project success is measured against these key performance indicators:</p>
+          <ul>
+            <li>System availability > 99.5% during go-live week</li>
+            <li>User satisfaction score > 4.0/5.0 after first week</li>
+            <li>Critical incidents resolved within 4 hours</li>
+            <li>All business processes operational within 48 hours of go-live</li>
+          </ul>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+<script>
+  function filterCards() {
+    var query = document.getElementById('searchInput').value.toLowerCase();
+    var segment = document.getElementById('segmentFilter').value;
+    var cards = document.querySelectorAll('#cardGrid .card');
+    var visible = 0;
+    cards.forEach(function(card) {
+      var text = card.textContent.toLowerCase();
+      var seg = card.dataset.segment || '';
+      var matchSearch = !query || text.indexOf(query) !== -1;
+      var matchSegment = !segment || seg === segment;
+      var show = matchSearch && matchSegment;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('cardCount').textContent = 'Showing ' + visible + ' customer' + (visible !== 1 ? 's' : '');
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+  }
+  function setSegment(seg) {
+    document.getElementById('segmentFilter').value = seg;
+    filterCards();
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      var btnSeg = btn.textContent === 'All' ? '' : btn.textContent;
+      btn.classList.toggle('active', btnSeg === seg);
+    });
+  }
+</script>
+
+</body>
+</html>
