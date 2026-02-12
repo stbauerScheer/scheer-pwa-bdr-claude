@@ -1,56 +1,38 @@
-const CACHE_NAME = 'scheer-playbooks-v1';
+var CACHE_NAME = 'scheer-playbooks-v2';
 
-const SHELL_ASSETS = [
+var SHELL_ASSETS = [
   './',
   './index.html',
   './manifest.json'
 ];
 
 // Install: cache the app shell
-self.addEventListener('install', (event) => {
+self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_ASSETS))
+    caches.open(CACHE_NAME).then(function(cache) { return cache.addAll(SHELL_ASSETS); })
   );
   self.skipWaiting();
 });
 
-// Activate: clean old caches
-self.addEventListener('activate', (event) => {
+// Activate: clean ALL old caches
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+    caches.keys().then(function(keys) {
+      return Promise.all(keys.filter(function(k) { return k !== CACHE_NAME; }).map(function(k) { return caches.delete(k); }));
+    })
   );
   self.clients.claim();
 });
 
-// Fetch: network-first for playbooks, cache-first for shell
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // Playbook content & meta.json: network first, fallback to cache
-  if (url.pathname.includes('/playbooks/')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
-  // App shell: cache first, fallback to network
+// Fetch: ALWAYS network-first, cache only as offline fallback
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+    fetch(event.request)
+      .then(function(response) {
+        var clone = response.clone();
+        caches.open(CACHE_NAME).then(function(cache) { cache.put(event.request, clone); });
         return response;
-      });
-    })
+      })
+      .catch(function() { return caches.match(event.request); })
   );
 });
