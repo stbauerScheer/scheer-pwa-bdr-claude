@@ -177,31 +177,9 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
 }
 EOF
   echo -e "  ${GREEN}v${NC} meta.json aangemaakt"
+  echo -e "  ${BLUE}i${NC} registry.json wordt bijgewerkt door GitHub Action na push"
 
-  # 6. Update registry.json
-  REGISTRY="$PLAYBOOKS_DIR/registry.json"
-  if [ ! -f "$REGISTRY" ] || [ ! -s "$REGISTRY" ] || [ "$(cat "$REGISTRY")" = "[]" ]; then
-    echo "[" > "$REGISTRY"
-    echo "  {" >> "$REGISTRY"
-    echo "    \"id\": \"$PB_ID\"," >> "$REGISTRY"
-    echo "    \"title\": \"$PB_TITLE\"," >> "$REGISTRY"
-    echo "    \"description\": \"$PB_DESC\"," >> "$REGISTRY"
-    echo "    \"categories\": $PB_CATS_JSON," >> "$REGISTRY"
-    echo "    \"status\": \"active\"," >> "$REGISTRY"
-    echo "    \"path\": \"playbooks/$PB_ID/index.html\"" >> "$REGISTRY"
-    echo "  }" >> "$REGISTRY"
-    echo "]" >> "$REGISTRY"
-  else
-    # Insert before closing bracket
-    perl -i -pe '
-      if (/^\]/) {
-        print "  ,\n  {\n    \"id\": \"'"$PB_ID"'\",\n    \"title\": \"'"$PB_TITLE"'\",\n    \"description\": \"'"$PB_DESC"'\",\n    \"categories\": '"$PB_CATS_JSON"',\n    \"status\": \"active\",\n    \"path\": \"playbooks/'"$PB_ID"'/index.html\"\n  }\n";
-      }
-    ' "$REGISTRY"
-  fi
-  echo -e "  ${GREEN}v${NC} registry.json bijgewerkt"
-
-  # 7. Move to processed
+  # 6. Move to processed
   mkdir -p "$IMPORTS_DIR/.processed"
   mv "$HTML_FILE" "$IMPORTS_DIR/.processed/$FILENAME"
   echo -e "  ${GREEN}v${NC} -> imports/.processed/"
