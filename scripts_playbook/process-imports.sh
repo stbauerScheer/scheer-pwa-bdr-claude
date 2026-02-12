@@ -7,10 +7,8 @@
 # Push via GitHub Desktop after running.
 #
 # Usage:
-#   ./scripts/process-imports.sh
+#   ./scripts_playbook/process-imports.sh
 # ──────────────────────────────────────────────
-
-set -e
 
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
@@ -26,9 +24,9 @@ SHARED_CSS="../shared/playbook.css"
 PROCESSED=0
 
 echo ""
-echo -e "${BLUE}┌─────────────────────────────────────┐${NC}"
-echo -e "${BLUE}│  Scheer IDS — Process Imports        │${NC}"
-echo -e "${BLUE}└─────────────────────────────────────┘${NC}"
+echo -e "${BLUE}+-------------------------------------+${NC}"
+echo -e "${BLUE}|  Scheer IDS - Process Imports        |${NC}"
+echo -e "${BLUE}+-------------------------------------+${NC}"
 echo ""
 
 if [ ! -d "$IMPORTS_DIR" ]; then
@@ -40,7 +38,7 @@ if [ ! -f "$PLAYBOOKS_DIR/shared/playbook.css" ]; then
   exit 1
 fi
 
-# ── Find HTML files ──
+# -- Find HTML files --
 HTML_FILES=()
 while IFS= read -r -d '' file; do
   HTML_FILES+=("$file")
@@ -56,7 +54,7 @@ fi
 echo -e "Gevonden: ${GREEN}${#HTML_FILES[@]}${NC} bestand(en)"
 echo ""
 
-# ── Helper: inject CSS link using perl ──
+# -- Helper: inject CSS link --
 inject_css() {
   local FILE="$1"
   perl -i -pe '
@@ -68,23 +66,23 @@ inject_css() {
   ' "$FILE"
 }
 
-# ── Helper: inject header using perl ──
+# -- Helper: inject header --
 inject_header() {
   local FILE="$1"
   local TITLE="$2"
   perl -i -0pe '
-    s/(<body[^>]*>)/$1\n<!-- Scheer Playbook Header -->\n<div class="pb-header">\n  <a href="..\/..\/index.html" class="pb-header-back">\x{2190} Back to Playbooks<\/a>\n  <span class="pb-header-title">'"$TITLE"'<\/span>\n<\/div>/s;
+    s/(<body[^>]*>)/$1\n<!-- Scheer Playbook Header -->\n<div class="pb-header">\n  <a href="..\/..\/index.html" class="pb-header-back"><- Back to Playbooks<\/a>\n  <span class="pb-header-title">'"$TITLE"'<\/span>\n<\/div>/s;
   ' "$FILE"
 }
 
-# ── Process each file ──
+# -- Process each file --
 for HTML_FILE in "${HTML_FILES[@]}"; do
   FILENAME=$(basename "$HTML_FILE")
-  echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+  echo -e "${BLUE}=====================================${NC}"
   echo -e "${BLUE}Bestand:${NC} $FILENAME"
   echo ""
 
-  EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | sed 's/ — .*$//' | xargs)
+  EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | xargs)
   if [ -n "$EXTRACTED_TITLE" ]; then
     echo -e "  Gevonden titel: ${GREEN}$EXTRACTED_TITLE${NC}"
   fi
@@ -96,7 +94,7 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   PB_ID=$(echo "$PB_ID" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
 
   if [ -d "$PLAYBOOKS_DIR/$PB_ID" ]; then
-    echo -e "  ${ORANGE}⚠ playbooks/$PB_ID/ bestaat al${NC}"
+    echo -e "  ${ORANGE}! playbooks/$PB_ID/ bestaat al${NC}"
     read -rp "  Overschrijven? (y/N): " OVERWRITE
     if [[ ! "$OVERWRITE" =~ ^[Yy]$ ]]; then
       echo -e "  ${ORANGE}Overgeslagen.${NC}"
@@ -109,61 +107,113 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   if [ -z "$PB_TITLE" ]; then
     read -rp "  Titel (verplicht): " PB_TITLE
     if [ -z "$PB_TITLE" ]; then
-      echo -e "  ${RED}Geen titel — overgeslagen.${NC}"
+      echo -e "  ${RED}Geen titel - overgeslagen.${NC}"
       continue
     fi
   fi
 
   read -rp "  Beschrijving (optioneel): " PB_DESC
 
+  echo -e "  Categorieen (komma-gescheiden, bijv: sales,marketing,internal)"
+  echo -e "  Opties: sales, marketing, internal, consulting, training, templates, reference"
+  read -rp "  Categorieen: " PB_CATS_INPUT
+  # Format as JSON array
+  if [ -z "$PB_CATS_INPUT" ]; then
+    PB_CATS_JSON="[]"
+  else
+    PB_CATS_JSON="["
+    FIRST=true
+    IFS=',' read -ra CATS <<< "$PB_CATS_INPUT"
+    for CAT in "${CATS[@]}"; do
+      CAT=$(echo "$CAT" | xargs | tr '[:upper:]' '[:lower:]')
+      if [ -n "$CAT" ]; then
+        if [ "$FIRST" = true ]; then
+          FIRST=false
+        else
+          PB_CATS_JSON="$PB_CATS_JSON, "
+        fi
+        PB_CATS_JSON="$PB_CATS_JSON\"$CAT\""
+      fi
+    done
+    PB_CATS_JSON="$PB_CATS_JSON]"
+  fi
+
+  # 1. Copy HTML
   PB_DIR="$PLAYBOOKS_DIR/$PB_ID"
   mkdir -p "$PB_DIR"
   cp "$HTML_FILE" "$PB_DIR/index.html"
-  echo -e "  ${GREEN}✓${NC} HTML → playbooks/$PB_ID/index.html"
+  echo -e "  ${GREEN}v${NC} HTML -> playbooks/$PB_ID/index.html"
 
-  # Fix encoding (emoji, euro signs, bullets, em-dashes -> ASCII)
+  # 2. Fix encoding (non-fatal)
   if [ -f "$SCRIPT_DIR/fix-encoding.sh" ]; then
-    "$SCRIPT_DIR/fix-encoding.sh" "$PB_ID" 2>/dev/null
-    echo -e "  ${GREEN}✓${NC} Encoding opgeschoond"
+    "$SCRIPT_DIR/fix-encoding.sh" "$PB_ID" 2>/dev/null || echo -e "  ${ORANGE}!${NC} Encoding fix had warnings (non-fatal)"
   fi
 
+  # 3. Inject CSS link
   if grep -q "shared/playbook.css" "$PB_DIR/index.html"; then
-    echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
+    echo -e "  ${GREEN}v${NC} CSS link al aanwezig"
   else
     inject_css "$PB_DIR/index.html"
-    echo -e "  ${GREEN}✓${NC} Master CSS gelinkt"
+    echo -e "  ${GREEN}v${NC} Master CSS gelinkt"
   fi
 
+  # 4. Inject header
   if grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
-    echo -e "  ${GREEN}✓${NC} Header al aanwezig"
+    echo -e "  ${GREEN}v${NC} Header al aanwezig"
   else
     inject_header "$PB_DIR/index.html" "$PB_TITLE"
-    echo -e "  ${GREEN}✓${NC} Header geïnjecteerd"
+    echo -e "  ${GREEN}v${NC} Header geinjecteerd"
   fi
 
+  # 5. Create meta.json
   cat > "$PB_DIR/meta.json" <<EOF
 {
   "id": "$PB_ID",
   "title": "$PB_TITLE",
   "description": "$PB_DESC",
+  "categories": $PB_CATS_JSON,
   "status": "active",
   "path": "playbooks/$PB_ID/index.html"
 }
 EOF
-  echo -e "  ${GREEN}✓${NC} meta.json aangemaakt"
+  echo -e "  ${GREEN}v${NC} meta.json aangemaakt"
 
+  # 6. Update registry.json
+  REGISTRY="$PLAYBOOKS_DIR/registry.json"
+  if [ ! -f "$REGISTRY" ] || [ ! -s "$REGISTRY" ] || [ "$(cat "$REGISTRY")" = "[]" ]; then
+    echo "[" > "$REGISTRY"
+    echo "  {" >> "$REGISTRY"
+    echo "    \"id\": \"$PB_ID\"," >> "$REGISTRY"
+    echo "    \"title\": \"$PB_TITLE\"," >> "$REGISTRY"
+    echo "    \"description\": \"$PB_DESC\"," >> "$REGISTRY"
+    echo "    \"categories\": $PB_CATS_JSON," >> "$REGISTRY"
+    echo "    \"status\": \"active\"," >> "$REGISTRY"
+    echo "    \"path\": \"playbooks/$PB_ID/index.html\"" >> "$REGISTRY"
+    echo "  }" >> "$REGISTRY"
+    echo "]" >> "$REGISTRY"
+  else
+    # Insert before closing bracket
+    perl -i -pe '
+      if (/^\]/) {
+        print "  ,\n  {\n    \"id\": \"'"$PB_ID"'\",\n    \"title\": \"'"$PB_TITLE"'\",\n    \"description\": \"'"$PB_DESC"'\",\n    \"categories\": '"$PB_CATS_JSON"',\n    \"status\": \"active\",\n    \"path\": \"playbooks/'"$PB_ID"'/index.html\"\n  }\n";
+      }
+    ' "$REGISTRY"
+  fi
+  echo -e "  ${GREEN}v${NC} registry.json bijgewerkt"
+
+  # 7. Move to processed
   mkdir -p "$IMPORTS_DIR/.processed"
   mv "$HTML_FILE" "$IMPORTS_DIR/.processed/$FILENAME"
-  echo -e "  ${GREEN}✓${NC} → imports/.processed/"
+  echo -e "  ${GREEN}v${NC} -> imports/.processed/"
 
   PROCESSED=$((PROCESSED + 1))
   echo ""
 done
 
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}=====================================${NC}"
 echo -e "${GREEN}$PROCESSED playbook(s) verwerkt.${NC}"
 echo ""
 if [ "$PROCESSED" -gt 0 ]; then
-  echo -e "  ${BLUE}→ Open GitHub Desktop om te committen en pushen.${NC}"
+  echo -e "  ${BLUE}-> Open GitHub Desktop om te committen en pushen.${NC}"
 fi
 echo ""

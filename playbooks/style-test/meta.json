@@ -1,0 +1,8 @@
+{
+  "id": "style-test",
+  "title": "Style Test",
+  "description": "Style Test",
+  "categories": ["test"],
+  "status": "active",
+  "path": "playbooks/style-test/index.html"
+}

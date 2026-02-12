@@ -7,11 +7,9 @@
 # Push via GitHub Desktop after running.
 #
 # Usage:
-#   ./scripts/apply-styles.sh           (all playbooks)
-#   ./scripts/apply-styles.sh branding  (single playbook)
+#   ./scripts_playbook/apply-styles.sh           (all playbooks)
+#   ./scripts_playbook/apply-styles.sh branding  (single playbook)
 # ──────────────────────────────────────────────
-
-set -e
 
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
@@ -27,9 +25,9 @@ PROCESSED=0
 SKIPPED=0
 
 echo ""
-echo -e "${BLUE}┌─────────────────────────────────────────┐${NC}"
-echo -e "${BLUE}│  Scheer IDS — Apply Master Styles        │${NC}"
-echo -e "${BLUE}└─────────────────────────────────────────┘${NC}"
+echo -e "${BLUE}+-------------------------------------+${NC}"
+echo -e "${BLUE}|  Scheer IDS - Apply Master Styles    |${NC}"
+echo -e "${BLUE}+-------------------------------------+${NC}"
 echo ""
 
 if [ ! -f "$PLAYBOOKS_DIR/shared/playbook.css" ]; then
@@ -62,7 +60,7 @@ inject_header() {
   local TITLE="$2"
   perl -i -0pe '
     unless (m/class="pb-header"/) {
-      s/(<body[^>]*>)/$1\n<!-- Scheer Playbook Header -->\n<div class="pb-header">\n  <a href="..\/..\/index.html" class="pb-header-back">\x{2190} Back to Playbooks<\/a>\n  <span class="pb-header-title">'"$TITLE"'<\/span>\n<\/div>/s;
+      s/(<body[^>]*>)/$1\n<!-- Scheer Playbook Header -->\n<div class="pb-header">\n  <a href="..\/..\/index.html" class="pb-header-back"><- Back to Playbooks<\/a>\n  <span class="pb-header-title">'"$TITLE"'<\/span>\n<\/div>/s;
     }
   ' "$FILE"
 }
@@ -82,7 +80,7 @@ for PB_ID in "${TARGETS[@]}"; do
   PB_FILE="$PLAYBOOKS_DIR/$PB_ID/index.html"
 
   if [ ! -f "$PB_FILE" ]; then
-    echo -e "${ORANGE}⚠ $PB_ID/index.html not found — skipped${NC}"
+    echo -e "${ORANGE}! $PB_ID/index.html not found - skipped${NC}"
     SKIPPED=$((SKIPPED + 1))
     continue
   fi
@@ -98,37 +96,27 @@ for PB_ID in "${TARGETS[@]}"; do
   fi
 
   if grep -q "shared/playbook.css" "$PB_FILE"; then
-    echo -e "  ${GREEN}✓${NC} CSS link al aanwezig"
+    echo -e "  ${GREEN}v${NC} CSS link al aanwezig"
   else
     inject_css "$PB_FILE"
-    echo -e "  ${GREEN}✓${NC} CSS link geïnjecteerd"
-  fi
-
-  if grep -q 'id="scheer-pb-header"' "$PB_FILE"; then
-    perl -i -pe 's/.*id="scheer-pb-header".*\n?//' "$PB_FILE"
-    echo -e "  ${GREEN}✓${NC} Oude inline header verwijderd"
-  fi
-
-  if grep -q 'Back to Playbooks' "$PB_FILE" && ! grep -q 'class="pb-header"' "$PB_FILE"; then
-    perl -i -pe 's/.*Back to Playbooks.*\n?//' "$PB_FILE"
-    echo -e "  ${GREEN}✓${NC} Oude back-link verwijderd"
+    echo -e "  ${GREEN}v${NC} CSS link geinjecteerd"
   fi
 
   if grep -q 'class="pb-header"' "$PB_FILE"; then
-    echo -e "  ${GREEN}✓${NC} Standaard header al aanwezig"
+    echo -e "  ${GREEN}v${NC} Standaard header al aanwezig"
   else
     inject_header "$PB_FILE" "$PB_TITLE"
-    echo -e "  ${GREEN}✓${NC} Standaard header geïnjecteerd"
+    echo -e "  ${GREEN}v${NC} Standaard header geinjecteerd"
   fi
 
   PROCESSED=$((PROCESSED + 1))
   echo ""
 done
 
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}=====================================${NC}"
 echo -e "${GREEN}$PROCESSED verwerkt${NC}, $SKIPPED overgeslagen"
 echo ""
 if [ "$PROCESSED" -gt 0 ]; then
-  echo -e "  ${BLUE}→ Open GitHub Desktop om te committen en pushen.${NC}"
+  echo -e "  ${BLUE}-> Open GitHub Desktop om te committen en pushen.${NC}"
 fi
 echo ""
