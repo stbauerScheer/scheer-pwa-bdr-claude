@@ -1,0 +1,8 @@
+{
+  "id": "example-project-playbook",
+  "title": "Example Project Playbook",
+  "description": "Example Project Playbook",
+  "categories": ["test"],
+  "status": "active",
+  "path": "playbooks/example-project-playbook/index.html"
+}
