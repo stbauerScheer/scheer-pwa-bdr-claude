@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nurturing Campaign Retail B2B 2026 - Scheer IDS</title>
+<style>
+ /* Activity cards binnen theme sections */
+ .activity-card {
+ background: var(--bg);
+ border: 1px solid var(--line);
+ border-radius: var(--radius-md);
+ padding: 18px;
+ margin: 12px 0;
+ transition: all var(--transition);
+ }
+ 
+ .activity-card:hover {
+ border-color: var(--blue);
+ box-shadow: 0 2px 8px rgba(41, 150, 204, 0.15);
+ }
+ 
+ .activity-card h3 {
+ margin-top: 0;
+ font-size: 15px;
+ color: var(--dunkelblau);
+ }
+ 
+ /* Stats grid */
+ .stats-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 16px;
+ margin: 24px 0 40px;
+ }
+ 
+ .stat-box {
+ background: var(--bg-light);
+ border: 1px solid var(--line);
+ border-radius: var(--radius-md);
+ padding: 20px;
+ text-align: center;
+ }
+ 
+ .stat-number {
+ font-size: 32px;
+ font-weight: 700;
+ color: var(--blue);
+ display: block;
+ }
+ 
+ .stat-label {
+ font-size: 13px;
+ color: var(--text-muted);
+ margin-top: 6px;
+ }
+ 
+ /* Theme number badge */
+ .theme-number {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ width: 36px;
+ height: 36px;
+ background: var(--blue);
+ color: white;
+ border-radius: 50%;
+ font-size: 15px;
+ font-weight: 700;
+ margin-right: 12px;
+ }
+ 
+ /* Filter section */
+ .filter-section {
+ background: var(--bg-light);
+ border: 1px solid var(--line);
+ border-radius: var(--radius-md);
+ padding: 20px;
+ margin: 20px 0;
+ }
+ 
+ .filter-row {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+ gap: 16px;
+ margin-bottom: 16px;
+ }
+ 
+ .filter-group {
+ display: flex;
+ flex-direction: column;
+ gap: 6px;
+ }
+ 
+ .filter-section label {
+ font-size: 12px;
+ font-weight: 600;
+ color: var(--dunkelblau);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ }
+ 
+ .filter-section select {
+ width: 100%;
+ }
+ 
+ .filter-summary {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding-top: 12px;
+ border-top: 1px solid var(--line);
+ margin-top: 12px;
+ }
+ 
+ .reset-filters {
+ background: var(--dunkelgrau);
+ color: white;
+ border: none;
+ padding: 8px 16px;
+ border-radius: var(--radius-sm);
+ font-size: 13px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all var(--transition);
+ }
+ 
+ .reset-filters:hover {
+ background: #545b62;
+ }
+ 
+ /* Activity count badge */
+ .activity-count {
+ display: inline-block;
+ background: var(--badge-bg);
+ color: var(--blue);
+ padding: 4px 10px;
+ border-radius: 12px;
+ font-size: 12px;
+ font-weight: 600;
+ margin-left: 8px;
+ }
+ 
+ /* Month indicator in activity card */
+ .month-tag {
+ display: inline-block;
+ background: rgba(106, 116, 127, 0.1);
+ color: var(--dunkelgrau);
+ padding: 3px 8px;
+ border-radius: 4px;
+ font-size: 11px;
+ font-weight: 600;
+ margin-bottom: 8px;
+ }
+</style>
+<link rel="stylesheet" href="playbook.css">
+<link rel="stylesheet" href="../shared/playbook.css">
+</head>
+<body>
+
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+ <a href="../../index.html" class="pb-header-back"><- Back to Playbooks</a>
+ <span class="pb-header-title">Nurturing Campaign 2026</span>
+</div>
+
+<header>
+ <div class="wrap">
+ <h1>Nurturing Campaign Retail B2B 2026</h1>
+ <p>Content marketing strategie georganiseerd per thema voor SAP S/4HANA Cloud retail- en consumer goods prospects</p>
+ <nav>
+ <ul>
+ <li><a href="#overview">Overzicht</a></li>
+ <li><a href="#themes">Thema's</a></li>
+ <li><a href="#awareness">Awareness</a></li>
+ <li><a href="#education">Education</a></li>
+ <li><a href="#engagement">Engagement</a></li>
+ <li><a href="#conversion">Conversion</a></li>
+ </ul>
+ </nav>
+ </div>
+</header>
+
+<main>
+ <div class="wrap">
+
+ <h2 id="overview">Campagne Overzicht</h2>
+ <p class="section-intro">12 thematische campagnes met elk 2 touchpoints, strategisch georganiseerd van awareness naar conversatie.</p>
+
+ <div class="stats-grid">
+ <div class="stat-box">
+ <span class="stat-number">12</span>
+ <span class="stat-label">Thema's</span>
+ </div>
+ <div class="stat-box">
+ <span class="stat-number">24</span>
+ <span class="stat-label">Activiteiten</span>
+ </div>
+ <div class="stat-box">
+ <span class="stat-number">9</span>
+ <span class="stat-label">Persona's</span>
+ </div>
+ <div class="stat-box">
+ <span class="stat-number">7</span>
+ <span class="stat-label">Media Kanalen</span>
+ </div>
+ </div>
+
+ <!-- Filter Section -->
+ <div class="filter-section">
+ <div class="filter-row">
+ <div class="filter-group">
+ <label for="personaFilter">Filter op Persona</label>
+ <select id="personaFilter" onchange="filterActivities()">
+ <option value="">Alle Personas</option>
+ <option value="Management / IT">Management / IT</option>
+ <option value="Operations / Finance">Operations / Finance</option>
+ <option value="IT / Operations">IT / Operations</option>
+ <option value="IT / Management">IT / Management</option>
+ <option value="IT / Finance">IT / Finance</option>
+ <option value="Finance">Finance</option>
+ <option value="Management">Management</option>
+ <option value="Directie">Directie</option>
+ <option value="Sales alignment">Sales alignment</option>
+ </select>
+ </div>
+ 
+ <div class="filter-group">
+ <label for="themaFilter">Filter op Thema</label>
+ <select id="themaFilter" onchange="filterActivities()">
+ <option value="">Alle Thema's</option>
+ <option value="Fundament & herkenning">Fundament & herkenning</option>
+ <option value="End-to-end retailprocessen">End-to-end retailprocessen</option>
+ <option value="Procesbeheersing zonder complexiteit">Procesbeheersing zonder complexiteit</option>
+ <option value="Fit-to-standard keuzes">Fit-to-standard keuzes</option>
+ <option value="ERP toekomstvastheid">ERP toekomstvastheid</option>
+ <option value="Van maatwerk naar standaard">Van maatwerk naar standaard</option>
+ <option value="Retail finance sturing">Retail finance sturing</option>
+ <option value="Internationale groei">Internationale groei</option>
+ <option value="Beheersbare groei">Beheersbare groei</option>
+ <option value="Innovatie & ERP fundament">Innovatie & ERP fundament</option>
+ <option value="Retail ERP roadmap">Retail ERP roadmap</option>
+ <option value="Vooruitblik & borging">Vooruitblik & borging</option>
+ </select>
+ </div>
+ 
+ <div class="filter-group">
+ <label for="mediumFilter">Filter op Medium</label>
+ <select id="mediumFilter" onchange="filterActivities()">
+ <option value="">Alle Media</option>
+ <option value="Website">Website</option>
+ <option value="E-mail">E-mail</option>
+ <option value="LinkedIn">LinkedIn</option>
+ <option value="Website + LinkedIn">Website + LinkedIn</option>
+ <option value="Event + E-mail">Event + E-mail</option>
+ <option value="Landingpage">Landingpage</option>
+ <option value="Intern">Intern</option>
+ </select>
+ </div>
+ </div>
+ 
+ <div class="filter-summary">
+ <span id="activityCount" style="font-size: 13px; color: var(--text-muted);">Showing 24 activiteiten across 12 thema's</span>
+ <button class="reset-filters" onclick="resetFilters()">Reset Filters</button>
+ </div>
+ </div>
+
+ <h2 id="themes">Thematische Campagnes</h2>
+
+ <!-- AWARENESS FASE -->
+ <h2 id="awareness" style="margin-top: 50px; color: var(--orange);">Fase 1: Awareness & Recognition</h2>
+
+ <!-- Thema 1: Fundament & herkenning -->
+ <section class="project-section" data-thema="Fundament & herkenning">
+ <h2><span class="theme-number">1</span>Fundament & herkenning<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Management / IT" data-thema="Fundament & herkenning" data-medium="Website + LinkedIn">
+ <span class="month-tag">Januari</span>
+ <span class="badge">Thought leadership artikel</span>
+ <h3>Retailcomplexiteit: Proces over Groei</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management / IT</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website + LinkedIn</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Retailcomplexiteit ontstaat niet door groei, maar door versnipperde processen en historische IT-keuzes.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a thought leadership article for retail executives explaining why operational complexity is usually the result of fragmented processes and legacy ERP landscapes, not business growth itself. Use a pragmatic tone and position process discipline as the foundation for control and future scalability.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Management / IT" data-thema="Fundament & herkenning" data-medium="E-mail">
+ <span class="month-tag">Januari</span>
+ <span class="badge badge-warning">Nurture mail</span>
+ <h3>Herkenning Creëren: Complexiteit Dagelijks</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management / IT</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Herkenning creëren rond dagelijkse complexiteit zonder direct over technologie te praten.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a short nurture email referencing the article on retail complexity. Focus on recognition and reflection, not on solutions or products. Invite the reader to read the article for context.</p>
+ </div>
+ </section>
+
+ <!-- Thema 2: End-to-end retailprocessen -->
+ <section class="project-section" data-thema="End-to-end retailprocessen">
+ <h2><span class="theme-number">2</span>End-to-end retailprocessen<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Operations / Finance" data-thema="End-to-end retailprocessen" data-medium="Website">
+ <span class="month-tag">Februari</span>
+ <span class="badge">Explain artikel</span>
+ <h3>End-to-End Inzicht: Van Reactief naar Proactief</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Operations / Finance</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Zonder end-to-end inzicht blijven retailorganisaties reactief sturen op kosten en voorraad.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Meer inzicht krijgen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write an explanatory article for operations and finance leaders showing how lack of end-to-end process integration impacts margins, inventory accuracy, and financial predictability in retail organisations.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Operations / Finance" data-thema="End-to-end retailprocessen" data-medium="LinkedIn">
+ <span class="month-tag">Februari</span>
+ <span class="badge badge-success">LinkedIn post</span>
+ <h3>Concrete Voorbeelden over Abstracte Verhalen</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Operations / Finance</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">LinkedIn</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Eén concreet voorbeeld zegt meer dan abstracte ERP-verhalen.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Create a LinkedIn post highlighting one concrete example of how missing end-to-end process insight causes daily operational issues in retail. Reference the article subtly.</p>
+ </div>
+ </section>
+
+ <!-- Thema 3: Procesbeheersing zonder complexiteit -->
+ <section class="project-section" data-thema="Procesbeheersing zonder complexiteit">
+ <h2><span class="theme-number">3</span>Procesbeheersing zonder complexiteit<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="IT / Operations" data-thema="Procesbeheersing zonder complexiteit" data-medium="Event + E-mail">
+ <span class="month-tag">Maart</span>
+ <span class="badge">Online sessie</span>
+ <h3>Meer Controle, Minder Lagen</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Operations</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Event + E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing / Sales</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Meer controle vraagt om standaardisatie, niet om extra lagen en maatwerk.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Inschrijving sessie</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Prepare an online session description explaining how retail organisations can regain process control without increasing ERP complexity. Focus on principles, not tools or demos.</p>
+ </div>
+
+ <div class="activity-card" data-persona="IT / Operations" data-thema="Procesbeheersing zonder complexiteit" data-medium="E-mail">
+ <span class="month-tag">Maart</span>
+ <span class="badge badge-warning">Follow-up mail</span>
+ <h3>Reflectie Leidt tot Gesprek</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Operations</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">BDR</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Reflectie na inhoud leidt tot gesprek, niet tot verkoop.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Sparringsgesprek</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a personal follow-up email after the session, inviting the recipient to reflect on their own ERP landscape and offering a sparring conversation with a process expert.</p>
+ </div>
+ </section>
+
+ <!-- EDUCATION FASE -->
+ <h2 id="education" style="margin-top: 50px; color: var(--orange);">Fase 2: Education & Trust Building</h2>
+
+ <!-- Thema 4: Fit-to-standard keuzes -->
+ <section class="project-section" data-thema="Fit-to-standard keuzes">
+ <h2><span class="theme-number">4</span>Fit-to-standard keuzes<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="IT / Management" data-thema="Fit-to-standard keuzes" data-medium="Website">
+ <span class="month-tag">April</span>
+ <span class="badge">Thought leadership artikel</span>
+ <h3>Maatwerk Belemmert Schaalbaarheid</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Maatwerk voelt veilig, maar belemmert innovatie en schaalbaarheid.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Checklist downloaden</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a strategic article for CIOs and executives explaining why fit-to-standard approaches outperform customisation in retail ERP over time. Address common objections honestly.</p>
+ </div>
+
+ <div class="activity-card" data-persona="IT / Management" data-thema="Fit-to-standard keuzes" data-medium="E-mail">
+ <span class="month-tag">April</span>
+ <span class="badge badge-warning">Nurture mail</span>
+ <h3>Besluitvorming met Structuur</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Besluitvorming ondersteunen met structuur, niet met meningen.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Checklist downloaden</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a nurture email introducing a fit-to-standard checklist as a decision-support tool for IT and management, positioning it as neutral and practical.</p>
+ </div>
+ </section>
+
+ <!-- Thema 5: ERP toekomstvastheid -->
+ <section class="project-section" data-thema="ERP toekomstvastheid">
+ <h2><span class="theme-number">5</span>ERP toekomstvastheid<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="IT / Finance" data-thema="ERP toekomstvastheid" data-medium="Landingpage">
+ <span class="month-tag">Mei</span>
+ <span class="badge">Checklist</span>
+ <h3>Toekomstvastheid = Beheersbaarheid</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Finance</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Landingpage</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Toekomstvastheid betekent beheersbaarheid, niet alleen moderne technologie.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Download</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Create a checklist that helps IT and finance leaders assess whether their current ERP landscape can support future retail requirements such as growth, compliance, and innovation.</p>
+ </div>
+
+ <div class="activity-card" data-persona="IT / Finance" data-thema="ERP toekomstvastheid" data-medium="E-mail">
+ <span class="month-tag">Mei</span>
+ <span class="badge badge-warning">Follow-up mail</span>
+ <h3>Checklist Opent Prioriteitsgesprek</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Finance</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">BDR</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Een checklist opent het gesprek over prioriteiten.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Gesprek plannen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a follow-up email referencing the completed checklist and inviting the reader to discuss outcomes and implications in a short conversation.</p>
+ </div>
+ </section>
+
+ <!-- Thema 6: Van maatwerk naar standaard -->
+ <section class="project-section" data-thema="Van maatwerk naar standaard">
+ <h2><span class="theme-number">6</span>Van maatwerk naar standaard<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="IT / Management" data-thema="Van maatwerk naar standaard" data-medium="Website">
+ <span class="month-tag">Juni</span>
+ <span class="badge badge-success">Klantcase</span>
+ <h3>Praktijkvoorbeelden Bouwen Vertrouwen</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Praktijkvoorbeelden bouwen vertrouwen in standaardisatie.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Meer weten</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a customer case describing a retail organisation that moved from heavy customisation to a standard ERP approach, focusing on decision-making and results rather than technology.</p>
+ </div>
+
+ <div class="activity-card" data-persona="IT / Management" data-thema="Van maatwerk naar standaard" data-medium="LinkedIn">
+ <span class="month-tag">Juni</span>
+ <span class="badge badge-success">LinkedIn post</span>
+ <h3>Eén Les uit de Praktijk</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">IT / Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">LinkedIn</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Eén les uit de praktijk is genoeg.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Case lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Create a LinkedIn post highlighting one clear lesson learned from the customer case about reducing ERP complexity through standardisation.</p>
+ </div>
+ </section>
+
+ <!-- ENGAGEMENT FASE -->
+ <h2 id="engagement" style="margin-top: 50px; color: var(--orange);">Fase 3: Engagement & Dialogue</h2>
+
+ <!-- Thema 7: Retail finance sturing -->
+ <section class="project-section" data-thema="Retail finance sturing">
+ <h2><span class="theme-number">7</span>Retail finance sturing<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Finance" data-thema="Retail finance sturing" data-medium="Website">
+ <span class="month-tag">Juli</span>
+ <span class="badge">Thought leadership artikel</span>
+ <h3>Finance Kan Pas Sturen Met Integratie</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Finance</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Finance kan pas sturen als processen en data samenkomen.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a thought leadership article for finance leaders explaining how integrated retail processes enable real-time steering on margins, inventory, and cash flow.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Finance" data-thema="Retail finance sturing" data-medium="E-mail">
+ <span class="month-tag">Juli</span>
+ <span class="badge badge-warning">Nurture mail</span>
+ <h3>Finance Herkent Stuurproblemen</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Finance</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Finance herkent zich in dagelijkse stuurproblemen.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a concise nurture email highlighting a typical finance challenge in retail and linking it to the thought leadership article for deeper insight.</p>
+ </div>
+ </section>
+
+ <!-- Thema 8: Internationale groei -->
+ <section class="project-section" data-thema="Internationale groei">
+ <h2><span class="theme-number">8</span>Internationale groei<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Management / IT" data-thema="Internationale groei" data-medium="Website">
+ <span class="month-tag">Augustus</span>
+ <span class="badge">Use case artikel</span>
+ <h3>Internationale Groei Vraagt Standaardisatie</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management / IT</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Internationale groei vraagt om standaardisatie zonder lokale verstarring.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Roadmap downloaden</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a use case article explaining how retail organisations can scale internationally using a standard ERP core while respecting local requirements.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Management / IT" data-thema="Internationale groei" data-medium="LinkedIn">
+ <span class="month-tag">Augustus</span>
+ <span class="badge badge-success">LinkedIn post</span>
+ <h3>Internationale Groei Mislukt Door IT</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management / IT</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">LinkedIn</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Internationale groei mislukt vaak door IT, niet door markt.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Create a LinkedIn post sharing a short insight on why ERP standardisation is critical for international retail expansion, referencing the article.</p>
+ </div>
+ </section>
+
+ <!-- Thema 9: Beheersbare groei -->
+ <section class="project-section" data-thema="Beheersbare groei">
+ <h2><span class="theme-number">9</span>Beheersbare groei<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Management" data-thema="Beheersbare groei" data-medium="Event + E-mail">
+ <span class="month-tag">September</span>
+ <span class="badge">Roundtable</span>
+ <h3>Groei Vraagt om Bestuurbaarheid</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Event + E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Sales</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Groei vraagt om bestuurbaarheid, niet om heroïek.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Aanmelden</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write an invitation for a management roundtable focused on controlled growth in retail, emphasising peer discussion and experience sharing.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Management" data-thema="Beheersbare groei" data-medium="E-mail">
+ <span class="month-tag">September</span>
+ <span class="badge badge-warning">Follow-up mail</span>
+ <h3>Goed Gesprek Volgt op Herkenning</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">BDR</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Een goed gesprek volgt op herkenning.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">1-op-1 gesprek</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a follow-up email after the roundtable inviting participants to a one-on-one conversation to discuss their specific growth challenges.</p>
+ </div>
+ </section>
+
+ <!-- CONVERSION FASE -->
+ <h2 id="conversion" style="margin-top: 50px; color: var(--orange);">Fase 4: Conversion & Planning</h2>
+
+ <!-- Thema 10: Innovatie & ERP fundament -->
+ <section class="project-section" data-thema="Innovatie & ERP fundament">
+ <h2><span class="theme-number">10</span>Innovatie & ERP fundament<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Management / IT" data-thema="Innovatie & ERP fundament" data-medium="Website">
+ <span class="month-tag">Oktober</span>
+ <span class="badge">Thought leadership artikel</span>
+ <h3>Innovatie Werkt Alleen Met Stabiele Kern</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management / IT</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Innovatie werkt alleen met een stabiele ERP-kern.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a thought leadership article explaining why innovation initiatives in retail often fail without a stable and standardised ERP foundation. Avoid hype, focus on reality.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Management / IT" data-thema="Innovatie & ERP fundament" data-medium="LinkedIn">
+ <span class="month-tag">Oktober</span>
+ <span class="badge badge-success">LinkedIn post</span>
+ <h3>Innovatie Zonder Basis Vergroot Risico</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management / IT</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">LinkedIn</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Innovatie zonder basis vergroot risico's.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Artikel lezen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Create a LinkedIn post with a strong but realistic statement about innovation and ERP foundations, linking to the article.</p>
+ </div>
+ </section>
+
+ <!-- Thema 11: Retail ERP roadmap -->
+ <section class="project-section" data-thema="Retail ERP roadmap">
+ <h2><span class="theme-number">11</span>Retail ERP roadmap<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Management" data-thema="Retail ERP roadmap" data-medium="Website">
+ <span class="month-tag">November</span>
+ <span class="badge">Roadmap artikel</span>
+ <h3>Roadmap Voorkomt Ad-Hoc Beslissingen</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Website</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Marketing</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Een roadmap voorkomt ad-hoc ERP-beslissingen.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Roadmap sessie</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a roadmap article outlining a phased, realistic ERP transformation approach for retail organisations over multiple years.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Management" data-thema="Retail ERP roadmap" data-medium="E-mail">
+ <span class="month-tag">November</span>
+ <span class="badge badge-warning">Nurture mail</span>
+ <h3>Roadmaps Nodigen Uit tot Dialoog</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Management</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Sales</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Roadmaps nodigen uit tot dialoog.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Gesprek plannen</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write a sales-oriented but non-pushy nurture email inviting management to discuss their ERP roadmap based on the article.</p>
+ </div>
+ </section>
+
+ <!-- Thema 12: Vooruitblik & borging -->
+ <section class="project-section" data-thema="Vooruitblik & borging">
+ <h2><span class="theme-number">12</span>Vooruitblik & borging<span class="activity-count">2 activiteiten</span></h2>
+ 
+ <div class="activity-card" data-persona="Directie" data-thema="Vooruitblik & borging" data-medium="E-mail">
+ <span class="month-tag">December</span>
+ <span class="badge">Executive mail</span>
+ <h3>Continuïteit Vraagt om Bewuste Keuzes</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Directie</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">E-mail</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Sales</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Continuïteit vraagt om bewuste keuzes aan de top.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Kennismakingsgesprek</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Write an executive-level email reflecting on the year and highlighting why ERP governance and clarity should be board-level topics going forward.</p>
+ </div>
+
+ <div class="activity-card" data-persona="Sales alignment" data-thema="Vooruitblik & borging" data-medium="Intern">
+ <span class="month-tag">December</span>
+ <span class="badge badge-success">Interne review</span>
+ <h3>Consistent Opvolgen Belangrijker Dan Nieuwe Leads</h3>
+ 
+ <span class="label">Persona</span>
+ <p class="val">Sales alignment (intern)</p>
+ 
+ <span class="label">Medium</span>
+ <p class="val">Intern</p>
+ 
+ <span class="label">Rol</span>
+ <p class="val">Sales</p>
+ 
+ <span class="label">Kernboodschap</span>
+ <p class="val">Consistent opvolgen is belangrijker dan nieuwe leads.</p>
+ 
+ <span class="label">CTA</span>
+ <p class="val">Gerichte opvolging</p>
+ 
+ <span class="label">Content Prompt</span>
+ <p class="val" style="font-size: 13px; font-style: italic;">Prepare an internal sales review document aligning active accounts, content touchpoints, and follow-up actions for the new year.</p>
+ </div>
+ </section>
+
+ </div>
+</main>
+
+<script>
+ function filterActivities() {
+ const personaFilter = document.getElementById('personaFilter').value;
+ const themaFilter = document.getElementById('themaFilter').value;
+ const mediumFilter = document.getElementById('mediumFilter').value;
+ 
+ const sections = document.querySelectorAll('.project-section');
+ let totalVisible = 0;
+ let visibleThemes = 0;
+ 
+ sections.forEach(section => {
+ const sectionThema = section.dataset.thema;
+ 
+ // Check if section matches thema filter
+ const matchSectionThema = !themaFilter || sectionThema === themaFilter;
+ 
+ if (!matchSectionThema) {
+ section.style.display = 'none';
+ return;
+ }
+ 
+ const activities = section.querySelectorAll('.activity-card');
+ let visibleInSection = 0;
+ 
+ activities.forEach(activity => {
+ const persona = activity.dataset.persona;
+ const medium = activity.dataset.medium;
+ 
+ const matchPersona = !personaFilter || persona === personaFilter;
+ const matchMedium = !mediumFilter || medium === mediumFilter;
+ 
+ if (matchPersona && matchMedium) {
+ activity.style.display = '';
+ visibleInSection++;
+ totalVisible++;
+ } else {
+ activity.style.display = 'none';
+ }
+ });
+ 
+ // Hide section if no activities visible
+ if (visibleInSection === 0) {
+ section.style.display = 'none';
+ } else {
+ section.style.display = '';
+ visibleThemes++;
+ // Update activity count badge
+ const badge = section.querySelector('.activity-count');
+ if (badge) {
+ badge.textContent = `${visibleInSection} activiteit${visibleInSection !== 1 ? 'en' : ''}`;
+ }
+ }
+ });
+ 
+ // Update total count
+ document.getElementById('activityCount').textContent = 
+ `Showing ${totalVisible} activiteiten across ${visibleThemes} thema${visibleThemes !== 1 ? "'s" : ''}`;
+ }
+ 
+ function resetFilters() {
+ document.getElementById('personaFilter').value = '';
+ document.getElementById('themaFilter').value = '';
+ document.getElementById('mediumFilter').value = '';
+ filterActivities();
+ }
+</script>
+
+</body>
+</html>

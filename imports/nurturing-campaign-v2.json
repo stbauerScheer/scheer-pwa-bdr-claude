@@ -1,0 +1,103 @@
+{
+  "title": "Nurturing Campaign Retail B2B 2026",
+  "description": "Thematische content marketing strategie voor SAP S/4HANA Cloud retail- en consumer goods prospects in de Nederlandse markt. 12 thematische campagnes met elk 2 touchpoints, georganiseerd van awareness naar conversatie.",
+  "version": "1.0",
+  "lastUpdated": "2026-02-12",
+  "author": "Scheer IDS Netherlands",
+  "category": "Marketing",
+  "tags": [
+    "Nurturing Campaign",
+    "Content Marketing",
+    "Retail",
+    "B2B",
+    "SAP S/4HANA Cloud",
+    "Lead Generation",
+    "Thought Leadership"
+  ],
+  "audience": [
+    "Marketing Team",
+    "BDR",
+    "Sales",
+    "Management"
+  ],
+  "status": "active",
+  "language": "nl",
+  "campaignDetails": {
+    "duration": "12 months (2026)",
+    "totalActivities": 24,
+    "activitiesPerMonth": 2,
+    "targetPersonas": [
+      "Management / IT",
+      "Operations / Finance",
+      "IT / Operations",
+      "IT / Management",
+      "IT / Finance",
+      "Finance",
+      "Management",
+      "Directie"
+    ],
+    "contentFormats": [
+      "Thought leadership artikel",
+      "Nurture mail",
+      "Explain artikel",
+      "LinkedIn post",
+      "Online sessie",
+      "Follow-up mail",
+      "Checklist",
+      "Klantcase",
+      "Use case artikel",
+      "Roundtable",
+      "Roadmap artikel",
+      "Executive mail",
+      "Interne review"
+    ],
+    "themes": [
+      "Fundament & herkenning",
+      "End-to-end retailprocessen",
+      "Procesbeheersing zonder complexiteit",
+      "Fit-to-standard keuzes",
+      "ERP toekomstvastheid",
+      "Van maatwerk naar standaard",
+      "Retail finance sturing",
+      "Internationale groei",
+      "Beheersbare groei",
+      "Innovatie & ERP fundament",
+      "Retail ERP roadmap",
+      "Vooruitblik & borging"
+    ]
+  },
+  "quarters": [
+    {
+      "quarter": "Q1",
+      "months": ["Januari", "Februari", "Maart"],
+      "focus": "Awareness & Recognition"
+    },
+    {
+      "quarter": "Q2",
+      "months": ["April", "Mei", "Juni"],
+      "focus": "Education & Trust Building"
+    },
+    {
+      "quarter": "Q3",
+      "months": ["Juli", "Augustus", "September"],
+      "focus": "Engagement & Dialogue"
+    },
+    {
+      "quarter": "Q4",
+      "months": ["Oktober", "November", "December"],
+      "focus": "Conversion & Planning"
+    }
+  ],
+  "requirements": [
+    "playbook.css master stylesheet",
+    "Marketing automation platform (HubSpot/ActiveCampaign)",
+    "Content creation resources",
+    "LinkedIn company page",
+    "Website landing pages"
+  ],
+  "relatedPlaybooks": [
+    "SAP S/4HANA Cloud Implementation Guide",
+    "Retail Customer Portfolio",
+    "Fit-to-Standard Workshop Methodology"
+  ]
+}
