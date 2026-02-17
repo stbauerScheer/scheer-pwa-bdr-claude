@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Article Finder - Scheer IDS Content Navigator</title>
+    <style>
+        :root {
+            --primary-dark: #1a2332;
+            --primary-blue: #2563eb;
+            --accent-orange: #f59e0b;
+            --surface-light: #f8fafc;
+            --surface-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-subtle: #e2e8f0;
+            --success-green: #10b981;
+            --shadow-soft: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-hover: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--surface-light) 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: var(--surface-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .filters-section {
+            background: var(--surface-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            position: relative;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-select, .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-subtle);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            background: var(--surface-light);
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:focus, .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-container {
+            position: relative;
+            grid-column: 1 / -1;
+        }
+
+        .search-input {
+            padding-left: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .results-section {
+            background: var(--surface-card);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .results-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .article-card {
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.25rem;
+            background: var(--surface-light);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .article-url {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.75rem;
+            word-break: break-all;
+        }
+
+        .article-url:hover {
+            text-decoration: underline;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .meta-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .meta-tag.domain {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .meta-tag.subject {
+            background: var(--accent-orange);
+            color: white;
+            border-color: var(--accent-orange);
+        }
+
+        .meta-tag.customer-story {
+            background: var(--success-green);
+            color: white;
+            border-color: var(--success-green);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .filter-actions {
+                justify-content: center;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-subtle);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Website Article Finder</h1>
+            <p class="subtitle">Navigate Scheer IDS content across all domains and categories</p>
+        </header>
+
+        <section class="filters-section">
+            <div class="filters-grid">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="globalSearch" placeholder="Search URLs, subjects, or any content...">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="domainFilter">Domain</label>
+                    <select class="filter-select" id="domainFilter">
+                        <option value="">All Domains</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="subjectFilter">Subject</label>
+                    <select class="filter-select" id="subjectFilter">
+                        <option value="">All Subjects</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="scheerFilter">Scheer</label>
+                    <select class="filter-select" id="scheerFilter">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="approachFilter">Approach</label>
+                    <select class="filter-select" id="approachFilter">
+                        <option value="">All Approaches</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="industryFilter">Industry</label>
+                    <select class="filter-select" id="industryFilter">
+                        <option value="">All Industries</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="eccFilter">ECC</label>
+                    <select class="filter-select" id="eccFilter">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="sapGeneralFilter">SAP General</label>
+                    <select class="filter-select" id="sapGeneralFilter">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="systemsFilter">Systems</label>
+                    <select class="filter-select" id="systemsFilter">
+                        <option value="">All Systems</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="customerStoryFilter">Customer Story</label>
+                    <select class="filter-select" id="customerStoryFilter">
+                        <option value="">All</option>
+                        <option value="Yes">Yes</option>
+                        <option value="">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn btn-primary" id="applyFilters">
+                    <span>🔍</span> Apply Filters
+                </button>
+                <button class="btn btn-secondary" id="clearFilters">
+                    <span>🔄</span> Clear All
+                </button>
+                <button class="btn btn-secondary" id="exportResults">
+                    <span>📋</span> Copy Results
+                </button>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount">Loading articles...</div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Filtering articles...</p>
+            </div>
+
+            <div class="results-grid" id="resultsGrid">
+                <!-- Results will be populated here -->
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">📝</div>
+                <h3>No articles found</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Article data
+        const articles = [
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/", subject: "Scheer", scheer: "Scheer", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/axel-kleinjan/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/ferry-bogaards/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/gerard-van-gent/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/harold-van-pelt/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/joost-van-lankveld/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/jordy/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/kennisbank/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/machiel-raaijmakers/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/marinahommersom/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/mark-van%20schaik/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/martijnmook/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/rodney-van%20rijen/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/stefan-bauer/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/author/stefanieschulkes/", subject: "Scheer Collega", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-10-redenen-kiezen-voor-saas-erp/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-benefit-to-standard-approach/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-bol-scheer-s4hana-public-edition/", subject: "Reference", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-calm-beheer-sap-4hana-cloud-erp/", subject: "ALM", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "ALM", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-calm-implement-s4hana-cloud-erp/", subject: "ALM", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "ALM", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-explore-dsm-twilmijs-journey-s4hana-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-grow-with-sap-initiatief-sap-s4hana-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-hybrid-sap-erp-model-sap-s4hana/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-in-beeld-retail-functionaliteit-s4hana-cloud/", subject: "MFT", scheer: "", approach: "", industry: "Retail", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-in-beeld-scanning-magazijnen-sap-s4hana-cloud-public-edition/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-ingredienten-succesvolle-saas-erp-implementatie/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-itp-service-centric-organisaties/", subject: "MFT", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-kerckhaert-scheer-implementeren-s4hc/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-klant-projectebn-app-game-changer-project-management-sales/", subject: "Explain", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-maatwerk-in-sap-s4hana-cloud-kan-dat/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-maatwerk-sap-s4hana-cloud/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-mogelijkeden-sap-btp-naast-s4hc/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-mythes-percepties-public-edition-sap-s4hana/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-nl-innovatie-maakindustrie-sap-readyset-manufacturing/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-nl-intelligent-erp-embedded-ai-game-changer/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-nl-verstoringen-supply-chain-s4hana/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-opensap-dsm-twilmij-sap-s4hana-cloud/", subject: "ECC", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-overstap-sap-ecc-sap-s4hana-cloud-public-edition/", subject: "ECC", scheer: "", approach: "", industry: "", ecc: "ECC", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-podcast-dsm-firmenichs-s4hana-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-process-automation-sap-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-s4hana-specials-h2-2023/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-s4hc-erp-varianten-snel-starten/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-s4hc-quality-management-production-in-process-inspections/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sap-build-process-automation-bedrijfsefficientie/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sap-ecc-s4hc-productiebedrijven-mogelijkheden/", subject: "ECC", scheer: "", approach: "", industry: "MFT", ecc: "ECC", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sap-erkent-scheer-grow-with-sap-partner/", subject: "MFT", scheer: "Scheer", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sap-qualified-partner-package-s4hana-cloud-manufacturing/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sap-s4hana-public-cloud-release-2308-nl/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-scheer-group-brand-scheer-ids/", subject: "Scheer", scheer: "Scheer", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sleutel-succesvolle-implementaties-sap-s4hana/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-solution-orders-5-kenmerken/", subject: "MFT", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-special-productie-s4hc-digital-manufacturing/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-sustainability-getting-started-s4hc/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-update-2302-public-edition-sap-s4hana-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-waarom-kiest-finefield-als-mkb-er-voor-het-grote-sap-cloud-erp/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-waarom-kiezen-bedrijven-public-edition-sap-s4hana-cloud/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-warehouse-management-binnen-sap-s4hana-cloud-public-edition/", subject: "ECC", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-webinar-replay-sap-ecc-naar-s4hana-public-cloud-voordelen-migratie/", subject: "ECC", scheer: "", approach: "", industry: "", ecc: "ECC", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-webinar-specials-2024-h1/", subject: "Scheer", scheer: "Scheer", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-webinar-specials-najaar-2025/", subject: "Scheer", scheer: "Scheer", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-webinars-agenda-s4hana-h2-2024/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog/", subject: "FIN", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/burgerista-sap-s4hana-finance-reference/", subject: "Overview", scheer: "", approach: "", industry: "FIN", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/cloud-mindset-blogs/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/contact/", subject: "MFT", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/csm-bakery-solution-sap/", subject: "ECC", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/direct-solliciteren/", subject: "", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/disclaimer/", subject: "", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/download-requests/", subject: "MFT", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/download-sqp-saas-productie-s4hana/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/customer-story-kerckhaert-migreert-sap-ecc-sap-s4hana-cloud/", subject: "MFT", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/dsm-niaga-customer-reference-story/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/dsm-romer-klant-referentie-s4hc/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/ervaringen-sap-s4hana-cloud-business-transformaties/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/finance-led-erp-sap-cloud-erp/", subject: "MFT", scheer: "", approach: "", industry: "FIN", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/elopak-customer-reference-sap-ecc/", subject: "ECC", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/flipbook-young-professionals/", subject: "Scheer", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/humboldt-university-of-berlin-sap-s4-hana/", subject: "MFT", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/finefield-klantverhaal-sap-s4-cloud/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/in-beeld-professionele-diensten-diensten-transformeren-met-sap-cloud/", subject: "MFT", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-consumer-products-s4hc/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-manufacturing-s4hc/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-prof-services-s4hc/", subject: "Services", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-tech-services-s4hc/", subject: "Explain", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/kc-webinar-specials-sap-cloud-erp/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/", subject: "Scheer", scheer: "Scheer Collega", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/about-scheer-netherlands/", subject: "Scheer Collega", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-automated-testing-public-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "ALM", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-benefit-to-standard-approach/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-bol-scheer-s4hana-public-edition/", subject: "Explain", scheer: "", approach: "", industry: "FIN", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-calm-implement-s4hana-cloud-erp/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-calm-operations-s4hc-in-the-picture/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "ALM", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-customizations-sap-s4hana-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-efficiently-managing-customer-projects-special-sap-s4hana-cloud-app/", subject: "Explain", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-en-driving-innovation-with-sap-partner-qualified-solutions-readyset-manufacturing/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-en-mythes-perceptions-public-edition-sap-s4hana/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-en-podcast-dsm-firmenichs-s4hana-cloud/", subject: "Explain", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-en-webinars-agenda-s4hana-h2-2024/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-hybrid-sap-erp-model-to-serve-your-business/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-in-the-picture-professional-services-s4hana-cloud/", subject: "MFT", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-in-the-picture-professional-services/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-in-the-picture-scanning-s4hc/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-ingredients-successful-saas-erp-implementation/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-itp-service-centric-org-types/", subject: "Services", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-journey-early-adoption-to-endorsement-of-s4hc/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-kerckhaert-scheer-implementeren-s4hc/", subject: "MFT", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-opensap-dsm-twilmij-sap-s4hana-cloud/", subject: "Explain", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-prepare-for-sap-s4hana-cloud/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-release-2402-update-sap-sd4hana-cloud/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-s4hc-erp-variants-fast-tracks/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-sap-btp-alongside-s4hc/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-sap-public-cloud-mindset-companies-need/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-sap-qualified-partner-package-s4hana-cloud-manufacturing/", subject: "Product Info", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-sap-s4hana-public-cloud-release-2308/", subject: "Product Info", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "Product Info", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-solution-orders-5-key-features/", subject: "MFT", scheer: "", approach: "", industry: "Services", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-sustainability-getting-started-s4hc/", subject: "", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-update-2302-public-edition-sap-s4hana-cloud/", subject: "MFT", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-warehouse-management-sap-s4hana-cloud-public-edition/", subject: "Explain", scheer: "", approach: "", industry: "MFT", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-webinar-specials-2024-h1/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-webinar-specials-fall-2025-agenda/", subject: "Explain", scheer: "", approach: "Explain", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/blog/", subject: "Explain", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/careers/", subject: "", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/contact/", subject: "Scheer", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".nl", address: "https://scheer-ids-nederland.nl/stork-implementeert-sap-cloud-erp/", subject: "Services", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: "Yes"},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/disclaimer/", subject: "Scheer", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/discovery-session-sign-up/", subject: "", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/download-requests/", subject: "Assets", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""},
+            {domain: ".com", address: "https://scheer-ids-netherlands.com/download-sqp-saas-productie-s4hana/", subject: "MFT", scheer: "", approach: "", industry: "", ecc: "", sapGeneral: "", systems: "", customerStory: ""}
+        ];
+
+        let filteredArticles = [...articles];
+
+        // Extract unique values for filters
+        function getUniqueValues(key) {
+            const values = [...new Set(articles.map(article => article[key]).filter(val => val))];
+            return values.sort();
+        }
+
+        // Populate filter options
+        function populateFilters() {
+            const filters = {
+                domainFilter: getUniqueValues('domain'),
+                subjectFilter: getUniqueValues('subject'),
+                scheerFilter: getUniqueValues('scheer'),
+                approachFilter: getUniqueValues('approach'),
+                industryFilter: getUniqueValues('industry'),
+                eccFilter: getUniqueValues('ecc'),
+                sapGeneralFilter: getUniqueValues('sapGeneral'),
+                systemsFilter: getUniqueValues('systems')
+            };
+
+            Object.entries(filters).forEach(([filterId, values]) => {
+                const select = document.getElementById(filterId);
+                values.forEach(value => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = value;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const searchTerm = document.getElementById('globalSearch').value.toLowerCase();
+            const domain = document.getElementById('domainFilter').value;
+            const subject = document.getElementById('subjectFilter').value;
+            const scheer = document.getElementById('scheerFilter').value;
+            const approach = document.getElementById('approachFilter').value;
+            const industry = document.getElementById('industryFilter').value;
+            const ecc = document.getElementById('eccFilter').value;
+            const sapGeneral = document.getElementById('sapGeneralFilter').value;
+            const systems = document.getElementById('systemsFilter').value;
+            const customerStory = document.getElementById('customerStoryFilter').value;
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultsGrid').style.display = 'none';
+            document.getElementById('noResults').style.display = 'none';
+
+            setTimeout(() => {
+                filteredArticles = articles.filter(article => {
+                    const matchesSearch = !searchTerm || 
+                        article.address.toLowerCase().includes(searchTerm) ||
+                        article.subject.toLowerCase().includes(searchTerm) ||
+                        article.scheer.toLowerCase().includes(searchTerm) ||
+                        article.approach.toLowerCase().includes(searchTerm) ||
+                        article.industry.toLowerCase().includes(searchTerm) ||
+                        article.ecc.toLowerCase().includes(searchTerm) ||
+                        article.sapGeneral.toLowerCase().includes(searchTerm) ||
+                        article.systems.toLowerCase().includes(searchTerm);
+
+                    return matchesSearch &&
+                           (!domain || article.domain === domain) &&
+                           (!subject || article.subject === subject) &&
+                           (!scheer || article.scheer === scheer) &&
+                           (!approach || article.approach === approach) &&
+                           (!industry || article.industry === industry) &&
+                           (!ecc || article.ecc === ecc) &&
+                           (!sapGeneral || article.sapGeneral === sapGeneral) &&
+                           (!systems || article.systems === systems) &&
+                           (customerStory === '' || article.customerStory === customerStory);
+                });
+
+                displayResults();
+                document.getElementById('loading').style.display = 'none';
+            }, 300);
+        }
+
+        // Display results
+        function displayResults() {
+            const resultsGrid = document.getElementById('resultsGrid');
+            const resultsCount = document.getElementById('resultsCount');
+            const noResults = document.getElementById('noResults');
+
+            resultsCount.textContent = `${filteredArticles.length} articles found`;
+
+            if (filteredArticles.length === 0) {
+                resultsGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            resultsGrid.style.display = 'block';
+            noResults.style.display = 'none';
+
+            resultsGrid.innerHTML = filteredArticles.map(article => `
+                <div class="article-card">
+                    <a href="${article.address}" target="_blank" class="article-url">${article.address}</a>
+                    <div class="article-meta">
+                        ${article.domain ? `<span class="meta-tag domain">${article.domain}</span>` : ''}
+                        ${article.subject ? `<span class="meta-tag subject">${article.subject}</span>` : ''}
+                        ${article.scheer ? `<span class="meta-tag">${article.scheer}</span>` : ''}
+                        ${article.approach ? `<span class="meta-tag">${article.approach}</span>` : ''}
+                        ${article.industry ? `<span class="meta-tag">${article.industry}</span>` : ''}
+                        ${article.ecc ? `<span class="meta-tag">${article.ecc}</span>` : ''}
+                        ${article.sapGeneral ? `<span class="meta-tag">${article.sapGeneral}</span>` : ''}
+                        ${article.systems ? `<span class="meta-tag">${article.systems}</span>` : ''}
+                        ${article.customerStory === 'Yes' ? `<span class="meta-tag customer-story">Customer Story</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Clear filters
+        function clearFilters() {
+            document.getElementById('globalSearch').value = '';
+            document.querySelectorAll('.filter-select').forEach(select => {
+                select.selectedIndex = 0;
+            });
+            filteredArticles = [...articles];
+            displayResults();
+        }
+
+        // Export results
+        function exportResults() {
+            const exportData = filteredArticles.map(article => 
+                `${article.domain}\t${article.address}\t${article.subject}\t${article.scheer}\t${article.approach}\t${article.industry}\t${article.ecc}\t${article.sapGeneral}\t${article.systems}\t${article.customerStory}`
+            ).join('\n');
+            
+            const header = 'Domain\tAddress\tSubject\tScheer\tApproach\tIndustry\tECC\tSAP General\tSystems\tCustomer Story\n';
+            const fullData = header + exportData;
+            
+            navigator.clipboard.writeText(fullData).then(() => {
+                const btn = document.getElementById('exportResults');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span>✅</span> Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(() => {
+                alert('Copy to clipboard failed. Please select and copy manually.');
+            });
+        }
+
+        // Event listeners
+        document.getElementById('applyFilters').addEventListener('click', applyFilters);
+        document.getElementById('clearFilters').addEventListener('click', clearFilters);
+        document.getElementById('exportResults').addEventListener('click', exportResults);
+        document.getElementById('globalSearch').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                applyFilters();
+            }
+        });
+
+        // Auto-apply filters when dropdown changes
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', applyFilters);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilters();
+            displayResults();
+        });
+    </script>
+</body>
+</html>
