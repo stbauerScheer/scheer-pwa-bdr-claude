@@ -32,14 +32,14 @@
     "path": "playbooks/nutturing-campaign-retail/index.html"
   },
   {
-    "id": "openai-test",
-    "title": "OpenAI test",
-    "description": "OpenAI test",
+    "id": "openai-retail",
+    "title": "OpenAI-Retail",
+    "description": "OpenAI-Retail",
     "categories": [
       "test"
     ],
     "status": "active",
-    "path": "playbooks/openai-test/index.html"
+    "path": "playbooks/openai-retail/index.html"
   },
   {
     "id": "retail-2026-campaigh",
