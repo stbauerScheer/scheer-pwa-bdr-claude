@@ -61,5 +61,16 @@
     ],
     "status": "active",
     "path": "playbooks/style-test/index.html"
+  },
+  {
+    "id": "website-article-finder",
+    "title": "Website Article Finder - Scheer IDS Content Navigator",
+    "description": "Website Article Finder",
+    "categories": [
+      "marketing",
+      "bdr"
+    ],
+    "status": "active",
+    "path": "playbooks/website-article-finder/index.html"
   }
 ]
