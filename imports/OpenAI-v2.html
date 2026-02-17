@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retail Net New Nurture Playbook</title>
+
+<style>
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 20px 0 30px;
+}
+.stat {
+  text-align: center;
+  padding: 18px 10px;
+  background: var(--bg-light);
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.stat-number {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--blue);
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.card-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.filter-btn.active {
+  background: var(--blue);
+  color: #ffffff;
+  border-color: var(--blue);
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <h1>Retail Net New Nurture Playbook</h1>
+  <p>Interne campagne-architectuur voor net new retailers zonder SAP-achtergrond.</p>
+</div>
+
+<div class="wrap search-filter-wrap">
+  <input type="text" id="searchInput" placeholder="Zoek op fase, rol of inhoud..." oninput="filterCards()">
+</div>
+
+<main>
+<div class="wrap">
+
+<div class="stat-row">
+  <div class="stat">
+    <div class="stat-number">6</div>
+    <div class="stat-label">Fases</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Doelrollen</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">18</div>
+    <div class="stat-label">Rolboodschappen</div>
+  </div>
+</div>
+
+<div class="filter-row">
+  <button class="filter-btn active" onclick="setRole('')">Alle Rollen</button>
+  <button class="filter-btn" onclick="setRole('CEO')">CEO / COO</button>
+  <button class="filter-btn" onclick="setRole('CFO')">CFO</button>
+  <button class="filter-btn" onclick="setRole('CTO')">CTO / IT</button>
+</div>
+
+<div class="card-count" id="cardCount">Showing 6 of 6</div>
+
+<div class="grid" id="cardGrid">
+
+<!-- FASE 1 -->
+<article class="card" data-role="CEO CFO CTO">
+<span class="badge">Fase 1</span>
+<h3>Frictie zichtbaar maken</h3>
+
+<span class="label">Doel</span>
+<p class="val">Herkenning creeren, status quo onder druk zetten, geen oplossing pushen.</p>
+
+<span class="label">CEO / COO</span>
+<p class="val">Groei wordt geremd door interne complexiteit. Nieuwe kanalen voegen disproportioneel overhead toe. Groei is geen schaalbaarheid.</p>
+
+<span class="label">CFO</span>
+<p class="val">Margedruk door inefficiente processen. Verborgen kosten in maatwerk en integraties.</p>
+
+<span class="label">CTO / IT</span>
+<p class="val">Integraties stapelen zich op. IT wordt brandjesblusser in plaats van versneller.</p>
+
+<span class="label">CTA</span>
+<p class="val">Herkenbaar? Benieuwd hoe jullie dit ervaren?</p>
+</article>
+
+<!-- FASE 2 -->
+<article class="card" data-role="CEO CFO CTO">
+<span class="badge">Fase 2</span>
+<h3>Van symptoom naar fundering</h3>
+
+<span class="label">Doel</span>
+<p class="val">Shift van operationele irritatie naar architectuurvraag.</p>
+
+<span class="label">CEO / COO</span>
+<p class="val">Best-of-breed werkt tot een bepaalde schaal. Daarna vertraagt het innovatie.</p>
+
+<span class="label">CFO</span>
+<p class="val">Elke extra tool is een extra kostenlaag. Integraties zijn terugkerende kosten.</p>
+
+<span class="label">CTO / IT</span>
+<p class="val">Meer tools betekent exponentieel meer afhankelijkheden. Architectuur wordt fragiel.</p>
+
+<span class="label">CTA</span>
+<p class="val">Is jullie huidige setup schaalbaar voor de komende 5 jaar?</p>
+</article>
+
+<!-- FASE 3 -->
+<article class="card" data-role="CEO CFO CTO">
+<span class="badge">Fase 3</span>
+<h3>Best practices boven maatwerk</h3>
+
+<span class="label">Doel</span>
+<p class="val">De mythe ontkrachten dat processen uniek zijn.</p>
+
+<span class="label">CEO / COO</span>
+<p class="val">Uniek is je merk, niet je voorraadproces. Standaardisatie versnelt expansie.</p>
+
+<span class="label">CFO</span>
+<p class="val">Minder maatwerk betekent voorspelbare kosten en lagere TCO.</p>
+
+<span class="label">CTO / IT</span>
+<p class="val">Minder custom code betekent minder technische schuld en stabiele upgrades.</p>
+
+<span class="label">CTA</span>
+<p class="val">Hoeveel maatwerk zit er in jullie kritieke processen?</p>
+</article>
+
+<!-- FASE 4 -->
+<article class="card" data-role="CEO CFO CTO">
+<span class="badge">Fase 4</span>
+<h3>Business AI als ingebouwde versneller</h3>
+
+<span class="label">Doel</span>
+<p class="val">AI positioneren als logisch gevolg van een goede fundering.</p>
+
+<span class="label">CEO / COO</span>
+<p class="val">AI-forecasting voorkomt oversupply en ondersteunt assortimentskeuzes.</p>
+
+<span class="label">CFO</span>
+<p class="val">Automatische factuurmatching en predictieve cashflow forecasting.</p>
+
+<span class="label">CTO / IT</span>
+<p class="val">AI werkt alleen met consistente data en gestandaardiseerde processen.</p>
+
+<span class="label">CTA</span>
+<p class="val">Waar zien jullie de meeste voorspelbaarheidsuitdaging?</p>
+</article>
+
+<!-- FASE 5 -->
+<article class="card" data-role="CEO CFO CTO">
+<span class="badge">Fase 5</span>
+<h3>Complexiteitsreductie als strategische keuze</h3>
+
+<span class="label">Doel</span>
+<p class="val">Complexiteit framen als structurele margedrainer.</p>
+
+<span class="label">CEO / COO</span>
+<p class="val">Minder complexiteit betekent snellere expansie en minder afhankelijkheid.</p>
+
+<span class="label">CFO</span>
+<p class="val">Minder verborgen IT-kosten en minder escalatierisico.</p>
+
+<span class="label">CTO / IT</span>
+<p class="val">Minder integraties, minder beheerlast, minder partnerafhankelijkheid.</p>
+
+<span class="label">CTA</span>
+<p class="val">Zullen we jullie complexiteitsprofiel in kaart brengen?</p>
+</article>
+
+<!-- FASE 6 -->
+<article class="card" data-role="CEO CFO CTO">
+<span class="badge">Fase 6</span>
+<h3>Micro commitment</h3>
+
+<span class="label">Doel</span>
+<p class="val">Laagdrempelige eerste strategische stap zonder salesdruk.</p>
+
+<span class="label">CEO / COO</span>
+<p class="val">Strategische architectuursparring.</p>
+
+<span class="label">CFO</span>
+<p class="val">TCO en complexiteitsanalyse.</p>
+
+<span class="label">CTO / IT</span>
+<p class="val">Architectuur quick scan.</p>
+
+<span class="label">CTA</span>
+<p class="val">Zal ik 3 concrete observaties delen in 20 minuten?</p>
+</article>
+
+</div>
+</div>
+</main>
+
+<script>
+
+function filterCards() {
+  var query = document.getElementById("searchInput").value.toLowerCase();
+  var cards = document.querySelectorAll("#cardGrid .card");
+  var visible = 0;
+
+  cards.forEach(function(card) {
+    var text = card.textContent.toLowerCase();
+    var show = !query || text.indexOf(query) !== -1;
+    card.style.display = show ? "" : "none";
+    if (show) visible++;
+  });
+
+  document.getElementById("cardCount").textContent =
+    "Showing " + visible + " of " + cards.length;
+}
+
+function setRole(role) {
+  var cards = document.querySelectorAll("#cardGrid .card");
+  var buttons = document.querySelectorAll(".filter-btn");
+  var visible = 0;
+
+  cards.forEach(function(card) {
+    var match = !role || card.dataset.role.indexOf(role) !== -1;
+    card.style.display = match ? "" : "none";
+    if (match) visible++;
+  });
+
+  buttons.forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
+  event.target.classList.add("active");
+
+  document.getElementById("cardCount").textContent =
+    "Showing " + visible + " of " + cards.length;
+}
+
+</script>
+
+</body>
+</html>
