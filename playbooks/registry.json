@@ -32,6 +32,16 @@
     "path": "playbooks/nutturing-campaign-retail/index.html"
   },
   {
+    "id": "openai-test",
+    "title": "OpenAI test",
+    "description": "OpenAI test",
+    "categories": [
+      "test"
+    ],
+    "status": "active",
+    "path": "playbooks/openai-test/index.html"
+  },
+  {
     "id": "retail-2026-campaigh",
     "title": "Retail 2026 Campaign",
     "description": "Next actions for Retail Camopaign",
