@@ -7,90 +7,96 @@
 
 <style>
 .stat-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 14px;
-  margin: 20px 0 30px;
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+ gap: 14px;
+ margin: 20px 0 30px;
 }
 .stat {
-  text-align: center;
-  padding: 18px 10px;
-  background: var(--bg-light);
-  border-radius: 10px;
-  border: 1px solid var(--line);
+ text-align: center;
+ padding: 18px 10px;
+ background: var(--bg-light);
+ border-radius: 10px;
+ border: 1px solid var(--line);
 }
 .stat-number {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--blue);
+ font-size: 26px;
+ font-weight: 700;
+ color: var(--blue);
 }
 .stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 4px;
+ font-size: 12px;
+ color: var(--text-muted);
+ margin-top: 4px;
 }
 .card-count {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 14px;
+ font-size: 12px;
+ color: var(--text-muted);
+ margin-bottom: 14px;
 }
 .filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 18px;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 6px;
+ margin-bottom: 18px;
 }
 .filter-btn {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  color: var(--text-muted);
-  font-size: 12px;
-  cursor: pointer;
+ padding: 6px 14px;
+ border-radius: 20px;
+ border: 1px solid var(--line);
+ background: var(--bg);
+ color: var(--text-muted);
+ font-size: 12px;
+ cursor: pointer;
 }
 .filter-btn.active {
-  background: var(--blue);
-  color: #ffffff;
-  border-color: var(--blue);
+ background: var(--blue);
+ color: #ffffff;
+ border-color: var(--blue);
 }
 </style>
+<link rel="stylesheet" href="../shared/playbook.css">
 </head>
 
 <body>
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+  <a href="../../index.html" class="pb-header-back"><- Back to Playbooks</a>
+  <span class="pb-header-title">OpenAI-Retail</span>
+</div>
 
 <div class="wrap">
-  <h1>Retail Net New Nurture Playbook</h1>
-  <p>Interne campagne-architectuur voor net new retailers zonder SAP-achtergrond.</p>
+ <h1>Retail Net New Nurture Playbook</h1>
+ <p>Interne campagne-architectuur voor net new retailers zonder SAP-achtergrond.</p>
 </div>
 
 <div class="wrap search-filter-wrap">
-  <input type="text" id="searchInput" placeholder="Zoek op fase, rol of inhoud..." oninput="filterCards()">
+ <input type="text" id="searchInput" placeholder="Zoek op fase, rol of inhoud..." oninput="filterCards()">
 </div>
 
 <main>
 <div class="wrap">
 
 <div class="stat-row">
-  <div class="stat">
-    <div class="stat-number">6</div>
-    <div class="stat-label">Fases</div>
-  </div>
-  <div class="stat">
-    <div class="stat-number">3</div>
-    <div class="stat-label">Doelrollen</div>
-  </div>
-  <div class="stat">
-    <div class="stat-number">18</div>
-    <div class="stat-label">Rolboodschappen</div>
-  </div>
+ <div class="stat">
+ <div class="stat-number">6</div>
+ <div class="stat-label">Fases</div>
+ </div>
+ <div class="stat">
+ <div class="stat-number">3</div>
+ <div class="stat-label">Doelrollen</div>
+ </div>
+ <div class="stat">
+ <div class="stat-number">18</div>
+ <div class="stat-label">Rolboodschappen</div>
+ </div>
 </div>
 
 <div class="filter-row">
-  <button class="filter-btn active" onclick="setRole('')">Alle Rollen</button>
-  <button class="filter-btn" onclick="setRole('CEO')">CEO / COO</button>
-  <button class="filter-btn" onclick="setRole('CFO')">CFO</button>
-  <button class="filter-btn" onclick="setRole('CTO')">CTO / IT</button>
+ <button class="filter-btn active" onclick="setRole('')">Alle Rollen</button>
+ <button class="filter-btn" onclick="setRole('CEO')">CEO / COO</button>
+ <button class="filter-btn" onclick="setRole('CFO')">CFO</button>
+ <button class="filter-btn" onclick="setRole('CTO')">CTO / IT</button>
 </div>
 
 <div class="card-count" id="cardCount">Showing 6 of 6</div>
@@ -230,40 +236,40 @@
 <script>
 
 function filterCards() {
-  var query = document.getElementById("searchInput").value.toLowerCase();
-  var cards = document.querySelectorAll("#cardGrid .card");
-  var visible = 0;
+ var query = document.getElementById("searchInput").value.toLowerCase();
+ var cards = document.querySelectorAll("#cardGrid .card");
+ var visible = 0;
 
-  cards.forEach(function(card) {
-    var text = card.textContent.toLowerCase();
-    var show = !query || text.indexOf(query) !== -1;
-    card.style.display = show ? "" : "none";
-    if (show) visible++;
-  });
+ cards.forEach(function(card) {
+ var text = card.textContent.toLowerCase();
+ var show = !query || text.indexOf(query) !== -1;
+ card.style.display = show ? "" : "none";
+ if (show) visible++;
+ });
 
-  document.getElementById("cardCount").textContent =
-    "Showing " + visible + " of " + cards.length;
+ document.getElementById("cardCount").textContent =
+ "Showing " + visible + " of " + cards.length;
 }
 
 function setRole(role) {
-  var cards = document.querySelectorAll("#cardGrid .card");
-  var buttons = document.querySelectorAll(".filter-btn");
-  var visible = 0;
+ var cards = document.querySelectorAll("#cardGrid .card");
+ var buttons = document.querySelectorAll(".filter-btn");
+ var visible = 0;
 
-  cards.forEach(function(card) {
-    var match = !role || card.dataset.role.indexOf(role) !== -1;
-    card.style.display = match ? "" : "none";
-    if (match) visible++;
-  });
+ cards.forEach(function(card) {
+ var match = !role || card.dataset.role.indexOf(role) !== -1;
+ card.style.display = match ? "" : "none";
+ if (match) visible++;
+ });
 
-  buttons.forEach(function(btn) {
-    btn.classList.remove("active");
-  });
+ buttons.forEach(function(btn) {
+ btn.classList.remove("active");
+ });
 
-  event.target.classList.add("active");
+ event.target.classList.add("active");
 
-  document.getElementById("cardCount").textContent =
-    "Showing " + visible + " of " + cards.length;
+ document.getElementById("cardCount").textContent =
+ "Showing " + visible + " of " + cards.length;
 }
 
 </script>
