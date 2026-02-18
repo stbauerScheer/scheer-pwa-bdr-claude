@@ -1,0 +1,8 @@
+{
+  "id": "snl-website-content",
+  "title": "Scheer Nederland Website Article Finder",
+  "description": "Overview of content published on Dutsch en English  Website",
+  "categories": ["online"],
+  "status": "active",
+  "path": "playbooks/snl-website-content/index.html"
+}

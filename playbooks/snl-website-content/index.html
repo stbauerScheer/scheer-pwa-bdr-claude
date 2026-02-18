@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Website Article Finder - Scheer IDS Playbooks</title>
+ <link rel="stylesheet" href="../shared/playbook.css">
+ <style>
+ /* ONLY playbook-specific styles */
+ .search-filter-wrap {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 14px;
+ padding: 20px;
+ background: var(--bg);
+ border-bottom: 1px solid var(--line);
+ align-items: center;
+ }
+
+ .search-filter-wrap input[type="search"] {
+ flex: 1;
+ min-width: 300px;
+ }
+
+ .search-filter-wrap select {
+ min-width: 160px;
+ }
+
+ .results-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 16px;
+ }
+
+ .results-count {
+ font-size: 14px;
+ color: var(--text-muted);
+ font-weight: 600;
+ }
+
+ .article-card {
+ background: var(--card-bg);
+ border: 1px solid var(--line);
+ border-radius: var(--radius-xl);
+ padding: 16px;
+ margin-bottom: 12px;
+ transition: all var(--transition);
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+ }
+
+ .article-card:hover {
+ border-color: var(--blue);
+ box-shadow: 0 4px 12px rgba(41, 150, 204, 0.2);
+ transform: translateY(-1px);
+ }
+
+ .article-url {
+ display: block;
+ color: var(--blue);
+ text-decoration: none;
+ font-size: 14px;
+ font-weight: 600;
+ margin-bottom: 10px;
+ word-break: break-all;
+ }
+
+ .article-url:hover {
+ text-decoration: underline;
+ }
+
+ .article-domain {
+ display: inline-block;
+ background: var(--dunkelblau);
+ color: white;
+ font-size: 11px;
+ font-weight: 500;
+ padding: 3px 8px;
+ border-radius: 12px;
+ margin-bottom: 8px;
+ }
+
+ .article-tags {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 6px;
+ }
+
+ .tag-oval {
+ font-size: 11px;
+ font-weight: 500;
+ padding: 4px 12px;
+ border-radius: 20px;
+ background: var(--badge-bg);
+ color: var(--blue);
+ border: 1px solid rgba(41, 150, 204, 0.25);
+ white-space: nowrap;
+ }
+
+ .tag-oval.tag-blog {
+ background: var(--blue);
+ color: white;
+ border-color: var(--blue);
+ }
+
+ .tag-oval.tag-cust-case {
+ background: var(--success);
+ color: white;
+ border-color: var(--success);
+ }
+
+ .tag-oval.tag-scheer {
+ background: var(--orange);
+ color: white;
+ border-color: var(--orange);
+ }
+
+ .tag-oval.tag-ecc {
+ background: var(--dunkelrot);
+ color: white;
+ border-color: var(--dunkelrot);
+ }
+
+ .no-results {
+ text-align: center;
+ padding: 40px 20px;
+ color: var(--text-muted);
+ }
+
+ .spinner-container {
+ display: none;
+ text-align: center;
+ padding: 40px;
+ }
+
+ .spinner-container.show {
+ display: block;
+ }
+
+ @media (max-width: 768px) {
+ .search-filter-wrap {
+ flex-direction: column;
+ align-items: stretch;
+ }
+ 
+ .search-filter-wrap input {
+ min-width: unset;
+ }
+ }
+ </style>
+</head>
+<body>
+ <!-- Scheer Playbook Header -->
+ <div class="pb-header">
+ <a href="../../index.html" class="pb-header-back"><- Back to Playbooks</a>
+ <span class="pb-header-title">Website Article Finder</span>
+ </div>
+
+ <!-- Hero Header -->
+ <header>
+ <div class="wrap">
+ <h1>Website Article Finder</h1>
+ <p>Find the right content across Scheer IDS domains - filter by domain, tags, or search URLs directly</p>
+ <nav>
+ <ul>
+ <li><a href="#search">Search</a></li>
+ <li><a href="#results">Results</a></li>
+ </ul>
+ </nav>
+ </div>
+ </header>
+
+ <!-- Search & Filter Section -->
+ <div class="search-filter-wrap" id="search">
+ <input type="search" id="urlSearch" placeholder="Search URLs...">
+ <select id="domainFilter">
+ <option value="">All Domains</option>
+ </select>
+ <select id="tagFilter">
+ <option value="">All Tags</option>
+ </select>
+ <button class="button-primary" id="clearFilters">Clear</button>
+ </div>
+
+ <main>
+ <div class="wrap">
+ <h2 id="results">Results</h2>
+ 
+ <div class="results-header">
+ <div class="results-count" id="resultsCount">Loading articles...</div>
+ <button class="button-success" id="exportResults"> Copy Results</button>
+ </div>
+
+ <div class="spinner-container" id="loading">
+ <div class="spinner"></div>
+ <p>Searching articles...</p>
+ </div>
+
+ <div id="resultsContainer">
+ <!-- Results will be populated here -->
+ </div>
+
+ <div class="no-results" id="noResults" style="display: none;">
+ <h3>No articles found</h3>
+ <p>Try adjusting your search or filters</p>
+ </div>
+ </div>
+ </main>
+
+ <script>
+ // Article data with new structure
+ const articles = [
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-10-redenen-kiezen-voor-saas-erp/", tags: "Blog,Explain Implementation,,Implementation,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-benefit-to-standard-approach/", tags: "Blog,Explain Implementation,,Implementation,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-bol-scheer-s4hana-public-edition/", tags: "Blog,Reference,,,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-calm-beheer-sap-4hana-cloud-erp/", tags: "Blog,ALM,,CALM,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-calm-implement-s4hana-cloud-erp/", tags: "Blog,ALM,,CALM,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-explore-dsm-twilmijs-journey-s4hana-cloud/", tags: "Blog,Product Info,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-grow-with-sap-initiatief-sap-s4hana-cloud/", tags: "Blog,Product Info,,Product Info,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-hybrid-sap-erp-model-sap-s4hana/", tags: "Blog,Product Info,,Product Info,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-in-beeld-retail-functionaliteit-s4hana-cloud/", tags: "Blog,MFT,,,Retail"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-in-beeld-scanning-magazijnen-sap-s4hana-cloud-public-edition/", tags: "Blog,MFT,,,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-ingredienten-succesvolle-saas-erp-implementatie/", tags: "Blog,Explain Implementation,,Implementation,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-itp-service-centric-organisaties/", tags: "Blog,MFT,,,Services"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-kerckhaert-scheer-implementeren-s4hc/", tags: "Blog,MFT,,,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-klant-projectebn-app-game-changer-project-management-sales/", tags: "Blog,Explain Implementation,,Implementation,Services"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-maatwerk-in-sap-s4hana-cloud-kan-dat/", tags: "Blog,Explain Implementation,,Implementation,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-maatwerk-sap-s4hana-cloud/", tags: "Blog,Explain Implementation,,Implementation,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-opensap-dsm-twilmij-sap-s4hana-cloud/", tags: "Blog,ECC,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-overstap-sap-ecc-sap-s4hana-cloud-public-edition/", tags: "Blog,ECC,,ECC to S4HC,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-podcast-dsm-firmenichs-s4hana-cloud/", tags: "Blog,Product Info,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-waarom-kiest-finefield-als-mkb-er-voor-het-grote-sap-cloud-erp/", tags: "Blog,MFT,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/burgerista-sap-s4hana-finance-reference/", tags: "Page,Overview,,Cust Case,FIN"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/csm-bakery-solution-sap/", tags: "Page,ECC,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/customer-story-kerckhaert-migreert-sap-ecc-sap-s4hana-cloud/", tags: "Page,MFT,,Cust Case,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/dsm-niaga-customer-reference-story/", tags: "Page,MFT,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/dsm-romer-klant-referentie-s4hc/", tags: "Page,MFT,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/elopak-customer-reference-sap-ecc/", tags: "Page,ECC,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/finefield-klantverhaal-sap-s4-cloud/", tags: "Page,MFT,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/klant-referenties/", tags: "Page,Reference,,Cust Case,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/stork-implementeert-sap-cloud-erp/", tags: "Page,Services,,Cust Case,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/twilmij-customer-story-sap-s4-cloud/", tags: "Page,MFT,,Cust Case,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/vsl-implementeert-sap-business-bydesign/", tags: "Page,Services,,Cust Case,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/lp-migratie-sap-ecc-sap-s4hana-cloud/", tags: "Landing Page,ECC,,Explain,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/", tags: "Page,About Scheer,Scheer,,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/over-scheer-nederland/", tags: "Page,About Scheer,Scheer,Explain,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/scheer-partnerships/", tags: "Page,About Scheer,Scheer,,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/blog-scheer-group-brand-scheer-ids/", tags: "Blog,About Scheer,Scheer,,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/flipbook-young-professionals/", tags: "Page,About Scheer,Scheer,,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/kc-webinar-specials-sap-cloud-erp/", tags: "Knowlegde Center,Explain,,SAP Cloud ERP,"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/kc-webinar-specials-sap-cloud-erp/kc-ws-cat-industry-solutions/", tags: "Knowlegde Center,FIN,,Central Invoice,general"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/kc-webinar-specials-sap-cloud-erp/kc-ws-cat-industry-solutions/kc-demo-central-invoice-management/", tags: "Knowlegde Center,general,,Insight to Action,FIN"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-manufacturing-s4hc/", tags: "Page,MFT,,,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-consumer-products-s4hc/", tags: "Page,MFT,,,MFT"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-prof-services-s4hc/", tags: "Page,Services,,,Services"},
+ {domain: ".nl", address: "https://scheer-ids-nederland.nl/industry-tech-services-s4hc/", tags: "Page,Services,,,Services"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/", tags: "Page,About Scheer,Scheer,,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/about-scheer-netherlands/", tags: "Page,About Scher Collega,Scheer Collega,,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-automated-testing-public-cloud/", tags: "Blog,Product Info,,CALM,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-benefit-to-standard-approach/", tags: "Blog,Explain,,Explain,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-bol-scheer-s4hana-public-edition/", tags: "Blog,Explain,,,FIN"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-calm-implement-s4hana-cloud-erp/", tags: "Blog,Explain,,Explain,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-calm-operations-s4hc-in-the-picture/", tags: "Blog,Product Info,,CALM,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/blog-customizations-sap-s4hana-cloud/", tags: "Blog,Product Info,,Product Info,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/customer-references-public-cloud/", tags: "Page,About Scheer,Scheer,Cust Case,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/dsm-niaga-sap-reference-story/", tags: "Page,MFT,,Cust Case,MFT"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/ihealth-customer-s4-public-cloud/", tags: "Page,MFT,,Cust Case,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/industry-consumer-products-s4hc/", tags: "Page,MFT,,,MFT"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/industry-manufacturing-s4hc/", tags: "Page,Explain,,,MFT"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/industry-prof-services-s4hc/", tags: "Page,Services,,,Services"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/industry-tech-services-s4hc/", tags: "Page,Services,,,Services"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/manthey-customer-s4-public-cloud/", tags: "Page,MFT,,Cust Case,MFT"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/mastervolt-sap-cloud-erp-reference-story/", tags: "Page,About Scheer,Scheer,Cust Case,MFT"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/lp-migrate-sap-ecc-sap-s4hana-cloud/", tags: "Landing Page,ECC,,Product Info,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/sap-ecc-product-contract-license-conversion/", tags: "Page,ECC,,Product Info,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/scheer-partnerships/", tags: "Page,About Scheer,Scheer,,"},
+ {domain: ".com", address: "https://scheer-ids-netherlands.com/scheer-opens-office-zagreb-croatia-news/", tags: "Page,About Scheer,Scheer,,"}
+ ];
+
+ let filteredArticles = [...articles];
+ let allTags = [];
+
+ // Parse tags from comma-separated strings and get unique tags
+ function parseAndGetAllTags() {
+ const tagSet = new Set();
+ articles.forEach(article => {
+ if (article.tags) {
+ const tags = article.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+ tags.forEach(tag => tagSet.add(tag));
+ }
+ });
+ allTags = Array.from(tagSet).sort();
+ }
+
+ // Parse tags for a single article
+ function parseTags(tagString) {
+ if (!tagString) return [];
+ return tagString.split(',').map(tag => tag.trim()).filter(tag => tag);
+ }
+
+ // Get CSS class for tag styling
+ function getTagClass(tag) {
+ const lowerTag = tag.toLowerCase();
+ if (lowerTag === 'blog') return 'tag-blog';
+ if (lowerTag === 'cust case') return 'tag-cust-case';
+ if (lowerTag.includes('scheer')) return 'tag-scheer';
+ if (lowerTag === 'ecc' || lowerTag.includes('ecc')) return 'tag-ecc';
+ return '';
+ }
+
+ // Populate filter dropdowns
+ function populateFilters() {
+ parseAndGetAllTags();
+ 
+ // Populate domain filter
+ const domains = [...new Set(articles.map(article => article.domain))].sort();
+ const domainSelect = document.getElementById('domainFilter');
+ domains.forEach(domain => {
+ const option = document.createElement('option');
+ option.value = domain;
+ option.textContent = domain;
+ domainSelect.appendChild(option);
+ });
+
+ // Populate tag filter
+ const tagSelect = document.getElementById('tagFilter');
+ allTags.forEach(tag => {
+ const option = document.createElement('option');
+ option.value = tag;
+ option.textContent = tag;
+ tagSelect.appendChild(option);
+ });
+ }
+
+ // Apply filters
+ function applyFilters() {
+ const searchTerm = document.getElementById('urlSearch').value.toLowerCase();
+ const selectedDomain = document.getElementById('domainFilter').value;
+ const selectedTag = document.getElementById('tagFilter').value;
+
+ document.getElementById('loading').classList.add('show');
+ document.getElementById('resultsContainer').style.display = 'none';
+ document.getElementById('noResults').style.display = 'none';
+
+ setTimeout(() => {
+ filteredArticles = articles.filter(article => {
+ const matchesSearch = !searchTerm || article.address.toLowerCase().includes(searchTerm);
+ const matchesDomain = !selectedDomain || article.domain === selectedDomain;
+ const matchesTag = !selectedTag || parseTags(article.tags).includes(selectedTag);
+
+ return matchesSearch && matchesDomain && matchesTag;
+ });
+
+ displayResults();
+ document.getElementById('loading').classList.remove('show');
+ }, 200);
+ }
+
+ // Display results
+ function displayResults() {
+ const resultsContainer = document.getElementById('resultsContainer');
+ const resultsCount = document.getElementById('resultsCount');
+ const noResults = document.getElementById('noResults');
+
+ resultsCount.textContent = `${filteredArticles.length} articles found`;
+
+ if (filteredArticles.length === 0) {
+ resultsContainer.style.display = 'none';
+ noResults.style.display = 'block';
+ return;
+ }
+
+ resultsContainer.style.display = 'block';
+ noResults.style.display = 'none';
+
+ resultsContainer.innerHTML = filteredArticles.map(article => {
+ const tags = parseTags(article.tags);
+ const tagElements = tags.map(tag => 
+ `<span class="tag-oval ${getTagClass(tag)}">${tag}</span>`
+ ).join('');
+
+ return `
+ <div class="article-card">
+ <span class="article-domain">${article.domain}</span>
+ <a href="${article.address}" target="_blank" class="article-url">${article.address}</a>
+ <div class="article-tags">
+ ${tagElements}
+ </div>
+ </div>
+ `;
+ }).join('');
+ }
+
+ // Clear filters
+ function clearFilters() {
+ document.getElementById('urlSearch').value = '';
+ document.getElementById('domainFilter').selectedIndex = 0;
+ document.getElementById('tagFilter').selectedIndex = 0;
+ filteredArticles = [...articles];
+ displayResults();
+ }
+
+ // Export results
+ function exportResults() {
+ const exportData = filteredArticles.map(article => 
+ `${article.domain}\t${article.address}\t"${article.tags}"`
+ ).join('\n');
+ 
+ const header = 'Domain\tAddress\tTags\n';
+ const fullData = header + exportData;
+ 
+ navigator.clipboard.writeText(fullData).then(() => {
+ showToast('Results copied to clipboard!');
+ }).catch(() => {
+ alert('Copy failed. Please select manually.');
+ });
+ }
+
+ function showToast(message) {
+ const toast = document.createElement('div');
+ toast.className = 'alert alert-success';
+ toast.textContent = message;
+ toast.style.position = 'fixed';
+ toast.style.top = '20px';
+ toast.style.right = '20px';
+ toast.style.zIndex = '10000';
+ document.body.appendChild(toast);
+ setTimeout(() => document.body.removeChild(toast), 3000);
+ }
+
+ // Event listeners
+ document.getElementById('clearFilters').addEventListener('click', clearFilters);
+ document.getElementById('exportResults').addEventListener('click', exportResults);
+ 
+ // Real-time filtering
+ document.getElementById('urlSearch').addEventListener('input', applyFilters);
+ document.getElementById('domainFilter').addEventListener('change', applyFilters);
+ document.getElementById('tagFilter').addEventListener('change', applyFilters);
+
+ // Initialize
+ document.addEventListener('DOMContentLoaded', () => {
+ populateFilters();
+ displayResults();
+ });
+ </script>
+</body>
+</html>
