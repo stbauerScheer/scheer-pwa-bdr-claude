@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheer IDS — Playbooks</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2996cc">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* ── Scheer Brand (leidend, NIET VERANDEREN) ── */
+      --dunkelblau: #05618d;
+      --blue: #2996cc;
+      --orange: #ef7c00;
+      --secondary: #6c757d;
+
+      /* ── Status ── */
+      --success: #28a745;
+      --warning: #ff9800;
+
+      /* ── Neutrals (uit style guide) ── */
+      --bg: #ffffff;
+      --bg-light: #f8f9fa;
+      --text-dark: #333333;
+      --text-muted: #555555;
+      --text-light: #6c757d;
+      --border: #e0e0e0;
+      --border-light: #dee2e6;
+
+      /* ── Radii (uit style guide) ── */
+      --radius-sm: 6px;
+      --radius-lg: 12px;
+      --transition: 0.3s ease;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text-dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ════════════════════════════════════════
+       Navigation — Light, secondary color
+       ════════════════════════════════════════ */
+    .nav-column {
+      width: 15%;
+      min-width: 220px;
+      max-width: 280px;
+      background: var(--bg-light);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .nav-header {
+      padding: 0;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--dunkelblau) 100%);
+      color: white;
+    }
+
+    .nav-header-inner {
+      padding: 22px 20px 18px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+
+    .nav-logo-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--orange);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-subtitle {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .nav-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .nav-list::-webkit-scrollbar { width: 3px; }
+    .nav-list::-webkit-scrollbar-track { background: transparent; }
+    .nav-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .nav-item {
+      display: block;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 1px solid transparent;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: var(--bg);
+      border-color: var(--border);
+    }
+
+    .nav-item.active {
+      background: var(--bg);
+      border-color: var(--blue);
+      box-shadow: 0 2px 8px rgba(41, 150, 204, 0.12);
+    }
+
+    .nav-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .nav-item.active .nav-item-title {
+      color: var(--blue);
+    }
+
+    .nav-item-desc {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .nav-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border-light);
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .nav-count {
+      font-variant-numeric: tabular-nums;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* ════════════════════════════════════════
+       Content Area — White
+       ════════════════════════════════════════ */
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .welcome {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: var(--bg);
+    }
+
+    .welcome-inner {
+      text-align: center;
+      max-width: 440px;
+      animation: fadeUp 0.5s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--blue), var(--dunkelblau));
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 24px rgba(5, 97, 141, 0.2);
+    }
+
+    .welcome-icon svg {
+      width: 26px;
+      height: 26px;
+      color: white;
+    }
+
+    .welcome h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--dunkelblau);
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .detail-view {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .detail-view.visible {
+      display: flex;
+    }
+
+    .detail-header {
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .detail-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dunkelblau);
+    }
+
+    .detail-desc {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 1px;
+    }
+
+    .detail-open-btn {
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      background: var(--blue);
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-open-btn:hover {
+      background: #1e7aa8;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(41, 150, 204, 0.4);
+    }
+
+    .detail-frame-wrap {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .detail-frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+    }
+
+    .nav-loading {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 8px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .nav-loading-text {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .nav-error {
+      padding: 16px;
+      font-size: 12px;
+      color: var(--orange);
+      text-align: center;
+    }
+
+    .nav-clear-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      padding: 0;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: 11px;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: color var(--transition);
+      opacity: 0.6;
+    }
+
+    .nav-clear-btn:hover {
+      color: var(--blue);
+      opacity: 1;
+    }
+
+    .nav-clear-btn svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .nav-clear-btn.done {
+      color: var(--success);
+      opacity: 1;
+    }
+
+    .nav-links {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-links-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      padding: 4px 6px;
+    }
+
+    .nav-link-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 6px;
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+
+    .nav-link-item:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .nav-link-item svg {
+      width: 14px;
+      height: 14px;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .nav-link-desc {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-top: 1px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-column { min-width: 180px; max-width: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="nav-column">
+      <div class="nav-header">
+        <div class="nav-header-inner">
+          <div class="nav-logo">
+            <div class="nav-logo-mark">S</div>
+            <span class="nav-logo-text">Scheer IDS</span>
+          </div>
+          <div class="nav-subtitle">Playbooks</div>
+        </div>
+      </div>
+
+      <div class="nav-list" id="navList">
+        <div class="nav-loading">
+          <div class="spinner"></div>
+          <div class="nav-loading-text">Laden...</div>
+        </div>
+      </div>
+
+      <div class="nav-links" id="navLinks"></div>
+
+      <div class="nav-footer">
+        <span class="nav-count" id="navCount">0</span> playbooks beschikbaar
+        <br>
+        <button class="nav-clear-btn" id="clearCacheBtn" title="Cache en service worker wissen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M5 6v14a2 2 0 002 2h10a2 2 0 002-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          Clear cache
+        </button>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <div class="welcome" id="welcomeView">
+        <div class="welcome-inner">
+          <div class="welcome-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+          </div>
+          <h1>Kies een playbook</h1>
+          <p>Selecteer een playbook in het menu links om de inhoud te bekijken. Elk playbook is ook standalone te openen.</p>
+        </div>
+      </div>
+
+      <div class="detail-view" id="detailView">
+        <div class="detail-header">
+          <div>
+            <div class="detail-title" id="detailTitle">—</div>
+            <div class="detail-desc" id="detailDesc">—</div>
+          </div>
+          <a class="detail-open-btn" id="detailOpenBtn" href="#" target="_blank" rel="noopener">
+            Open standalone
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+        <div class="detail-frame-wrap">
+          <iframe id="detailFrame" title="Playbook content"></iframe>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      // ── Discovery ──
+      // Primary: reads from registry.json (auto-generated by GitHub Action)
+      // Fallback: scans individual meta.json files from PLAYBOOK_DIRS
+      const FALLBACK_DIRS = [
+        'branding',
+        'customer-cases',
+        'bd-interactive'
+      ];
+
+      const navList   = document.getElementById('navList');
+      const navCount  = document.getElementById('navCount');
+      const welcome   = document.getElementById('welcomeView');
+      const detail    = document.getElementById('detailView');
+      const dTitle    = document.getElementById('detailTitle');
+      const dDesc     = document.getElementById('detailDesc');
+      const dOpenBtn  = document.getElementById('detailOpenBtn');
+      const dFrame    = document.getElementById('detailFrame');
+
+      let playbooks = [];
+      let activeId  = null;
+
+      // ── Primary: load from registry.json ──
+      async function discoverFromRegistry() {
+        try {
+          const res = await fetch('playbooks/registry.json?t=' + Date.now(), {cache: 'no-store'});
+          if (!res.ok) return null;
+          const data = await res.json();
+          return Array.isArray(data) && data.length > 0 ? data : null;
+        } catch {
+          return null;
+        }
+      }
+
+      // ── Fallback: load individual meta.json files ──
+      async function discoverFromDirs() {
+        const results = await Promise.all(
+          FALLBACK_DIRS.map(async dir => {
+            try {
+              const res = await fetch(`playbooks/${dir}/meta.json`);
+              if (!res.ok) return null;
+              const meta = await res.json();
+              return meta.status === 'active' ? meta : null;
+            } catch { return null; }
+          })
+        );
+        return results.filter(Boolean);
+      }
+
+      // ── Combined discovery ──
+      async function discover() {
+        // Try registry first, fall back to individual meta.json
+        playbooks = await discoverFromRegistry() || await discoverFromDirs();
+        render();
+      }
+
+      function render() {
+        navList.innerHTML = '';
+        navCount.textContent = playbooks.length;
+        if (playbooks.length === 0) {
+          navList.innerHTML = '<div class="nav-error">Geen actieve playbooks gevonden.</div>';
+          return;
+        }
+        playbooks.forEach(pb => {
+          const el = document.createElement('div');
+          el.className = 'nav-item' + (pb.id === activeId ? ' active' : '');
+          el.innerHTML = `
+            <div class="nav-item-title">${esc(pb.title)}</div>
+            ${pb.description ? `<div class="nav-item-desc">${esc(pb.description)}</div>` : ''}
+          `;
+          el.addEventListener('click', () => select(pb));
+          navList.appendChild(el);
+        });
+      }
+
+      function select(pb) {
+        activeId = pb.id;
+        navList.querySelectorAll('.nav-item').forEach((el, i) => {
+          el.classList.toggle('active', playbooks[i].id === activeId);
+        });
+        welcome.style.display = 'none';
+        detail.classList.add('visible');
+        dTitle.textContent = pb.title;
+        dDesc.textContent  = pb.description || '';
+        dOpenBtn.href      = pb.path;
+        dFrame.src         = pb.path;
+      }
+
+      function esc(str) {
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+      }
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js').catch(() => {});
+      }
+
+      // ── Clear Cache Button ──
+      document.getElementById('clearCacheBtn').addEventListener('click', async () => {
+        const btn = document.getElementById('clearCacheBtn');
+        try {
+          // Unregister all service workers
+          var regs = await navigator.serviceWorker.getRegistrations();
+          for (var i = 0; i < regs.length; i++) { await regs[i].unregister(); }
+
+          // Clear all caches
+          var keys = await caches.keys();
+          for (var j = 0; j < keys.length; j++) { await caches.delete(keys[j]); }
+
+          // Visual feedback
+          btn.textContent = 'Gewist!';
+          btn.classList.add('done');
+
+          // Hard reload bypassing all cache
+          setTimeout(function() { window.location.href = window.location.pathname + '?cleared=' + Date.now(); }, 1000);
+        } catch (e) {
+          btn.textContent = 'Fout - probeer handmatig';
+        }
+      });
+
+      // ── External Links ──
+      async function loadLinks() {
+        var container = document.getElementById('navLinks');
+        try {
+          var res = await fetch('links.json?t=' + Date.now(), {cache: 'no-store'});
+          if (!res.ok) { container.style.display = 'none'; return; }
+          var links = await res.json();
+          if (!links.length) { container.style.display = 'none'; return; }
+
+          var html = '<div class="nav-links-title">Tools</div>';
+          var icons = {
+            link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>',
+            doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+            tool: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+            dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
+          };
+
+          for (var i = 0; i < links.length; i++) {
+            var link = links[i];
+            var icon = icons[link.icon] || icons.link;
+            html += '<a class="nav-link-item" href="' + link.url + '" target="_blank" rel="noopener">';
+            html += icon;
+            html += '<span>' + link.title;
+            if (link.description) {
+              html += '<span class="nav-link-desc">' + link.description + '</span>';
+            }
+            html += '</span></a>';
+          }
+          container.innerHTML = html;
+        } catch (e) {
+          container.style.display = 'none';
+        }
+      }
+
+      discover();
+      loadLinks();
+    })();
+  </script>
+</body>
+</html>
