@@ -21,16 +21,6 @@
     "path": "playbooks/index/index.html"
   },
   {
-    "id": "example-project-playbook",
-    "title": "Example Project Playbook",
-    "description": "Example Project Playbook",
-    "categories": [
-      "test"
-    ],
-    "status": "active",
-    "path": "playbooks/example-project-playbook/index.html"
-  },
-  {
     "id": "nutturing-campaign-retail",
     "title": "Nurturing Campaign Retail",
     "description": "Nurturing Plan Retails 2026",
