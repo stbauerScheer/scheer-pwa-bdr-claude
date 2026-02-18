@@ -373,6 +373,53 @@
       opacity: 1;
     }
 
+    .nav-links {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-links-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      padding: 4px 6px;
+    }
+
+    .nav-link-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 6px;
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+
+    .nav-link-item:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .nav-link-item svg {
+      width: 14px;
+      height: 14px;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .nav-link-desc {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-top: 1px;
+    }
+
     @media (max-width: 768px) {
       .nav-column { min-width: 180px; max-width: 180px; }
     }
@@ -394,9 +441,11 @@
       <div class="nav-list" id="navList">
         <div class="nav-loading">
           <div class="spinner"></div>
-          <div class="nav-loading-text">Laden…</div>
+          <div class="nav-loading-text">Laden...</div>
         </div>
       </div>
+
+      <div class="nav-links" id="navLinks"></div>
 
       <div class="nav-footer">
         <span class="nav-count" id="navCount">0</span> playbooks beschikbaar
@@ -567,7 +616,42 @@
         }
       });
 
+      // ── External Links ──
+      async function loadLinks() {
+        var container = document.getElementById('navLinks');
+        try {
+          var res = await fetch('links.json?t=' + Date.now(), {cache: 'no-store'});
+          if (!res.ok) { container.style.display = 'none'; return; }
+          var links = await res.json();
+          if (!links.length) { container.style.display = 'none'; return; }
+
+          var html = '<div class="nav-links-title">Tools</div>';
+          var icons = {
+            link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>',
+            doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+            tool: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+            dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
+          };
+
+          for (var i = 0; i < links.length; i++) {
+            var link = links[i];
+            var icon = icons[link.icon] || icons.link;
+            html += '<a class="nav-link-item" href="' + link.url + '" target="_blank" rel="noopener">';
+            html += icon;
+            html += '<span>' + link.title;
+            if (link.description) {
+              html += '<span class="nav-link-desc">' + link.description + '</span>';
+            }
+            html += '</span></a>';
+          }
+          container.innerHTML = html;
+        } catch (e) {
+          container.style.display = 'none';
+        }
+      }
+
       discover();
+      loadLinks();
     })();
   </script>
 </body>
