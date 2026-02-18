@@ -11,6 +11,16 @@
     "path": "playbooks/authentic-leadership/index.html"
   },
   {
+    "id": "index",
+    "title": "BDR INTERACTIVE",
+    "description": "BDR INTERACTIVE",
+    "categories": [
+      "bdr"
+    ],
+    "status": "active",
+    "path": "playbooks/index/index.html"
+  },
+  {
     "id": "example-project-playbook",
     "title": "Example Project Playbook",
     "description": "Example Project Playbook",
