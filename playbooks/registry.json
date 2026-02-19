@@ -42,6 +42,16 @@
     "path": "playbooks/openai-retail/index.html"
   },
   {
+    "id": "public-versus-private-facts",
+    "title": "Public Versus Private - The facts",
+    "description": "Overzicht van facts mbt Public en Private Edition",
+    "categories": [
+      "bdr"
+    ],
+    "status": "active",
+    "path": "playbooks/public-versus-private-facts/index.html"
+  },
+  {
     "id": "retail-2026-campaigh",
     "title": "Retail 2026 Campaign",
     "description": "Next actions for Retail Camopaign",
