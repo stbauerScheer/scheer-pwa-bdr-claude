@@ -1,0 +1,8 @@
+{
+  "id": "public-versus-private-cloud",
+  "title": "Public versus Private Edition",
+  "description": "Aspects of Public and Private Cloud",
+  "categories": ["product", "bdr"],
+  "status": "active",
+  "path": "playbooks/public-versus-private-cloud/index.html"
+}
