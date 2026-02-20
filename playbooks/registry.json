@@ -42,6 +42,17 @@
     "path": "playbooks/openai-retail/index.html"
   },
   {
+    "id": "public-versus-private-cloud",
+    "title": "Public versus Private Edition",
+    "description": "Aspects of Public and Private Cloud",
+    "categories": [
+      "product",
+      "bdr"
+    ],
+    "status": "active",
+    "path": "playbooks/public-versus-private-cloud/index.html"
+  },
+  {
     "id": "retail-2026-campaigh",
     "title": "Retail 2026 Campaign",
     "description": "Next actions for Retail Camopaign",
