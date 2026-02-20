@@ -54,12 +54,6 @@ fi
 echo -e "Gevonden: ${GREEN}${#HTML_FILES[@]}${NC} bestand(en)"
 echo ""
 
-# -- Helper: detect if HTML is a generated matrix playbook (clean UTF-8) --
-is_matrix_playbook() {
-  local FILE="$1"
-  grep -q "matrix-card\|asp-row\|sub-chk\|Create_playbook_from_Excel" "$FILE"
-}
-
 # -- Helper: inject CSS link --
 inject_css() {
   local FILE="$1"
@@ -88,18 +82,9 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   echo -e "${BLUE}Bestand:${NC} $FILENAME"
   echo ""
 
-  EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | sed 's/ | Scheer IDS//' | xargs)
+  EXTRACTED_TITLE=$(grep -o '<title>[^<]*</title>' "$HTML_FILE" | head -1 | sed 's/<title>//;s/<\/title>//' | sed 's/Scheer IDS - //' | xargs)
   if [ -n "$EXTRACTED_TITLE" ]; then
     echo -e "  Gevonden titel: ${GREEN}$EXTRACTED_TITLE${NC}"
-  fi
-
-  # Detect matrix playbook type
-  if is_matrix_playbook "$HTML_FILE"; then
-    echo -e "  Type: ${GREEN}Matrix Playbook${NC} (gegenereerd door Create_playbook_from_Excel.py)"
-    IS_MATRIX=true
-  else
-    echo -e "  Type: ${BLUE}Standaard Playbook${NC}"
-    IS_MATRIX=false
   fi
 
   DEFAULT_ID=$(echo "$FILENAME" | sed 's/\.html$//' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
@@ -159,12 +144,8 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
   cp "$HTML_FILE" "$PB_DIR/index.html"
   echo -e "  ${GREEN}v${NC} HTML -> playbooks/$PB_ID/index.html"
 
-  # 2. Fix encoding — SKIP for matrix playbooks (already clean UTF-8)
-  #    Running fix-encoding on matrix playbooks would corrupt content:
-  #    em-dashes (—), euro signs (€), and bullets in SAP text would be mangled.
-  if [ "$IS_MATRIX" = true ]; then
-    echo -e "  ${GREEN}v${NC} Encoding fix overgeslagen (matrix playbook is al schoon UTF-8)"
-  elif [ -f "$SCRIPT_DIR/fix-encoding.sh" ]; then
+  # 2. Fix encoding (non-fatal)
+  if [ -f "$SCRIPT_DIR/fix-encoding.sh" ]; then
     "$SCRIPT_DIR/fix-encoding.sh" "$PB_ID" 2>/dev/null || echo -e "  ${ORANGE}!${NC} Encoding fix had warnings (non-fatal)"
   fi
 
@@ -176,8 +157,8 @@ for HTML_FILE in "${HTML_FILES[@]}"; do
     echo -e "  ${GREEN}v${NC} Master CSS gelinkt"
   fi
 
-  # 4. Inject header — check for pb-header class (works for both old and new playbooks)
-  if grep -q 'class="pb-header"' "$PB_DIR/index.html"; then
+  # 4. Inject header
+  if grep -q "Back to Playbooks" "$PB_DIR/index.html"; then
     echo -e "  ${GREEN}v${NC} Header al aanwezig"
   else
     inject_header "$PB_DIR/index.html" "$PB_TITLE"
