@@ -42,15 +42,15 @@
     "path": "playbooks/openai-retail/index.html"
   },
   {
-    "id": "public-versus-private-facts",
-    "title": "Public versus Private Facts CheatSheet",
-    "description": "Overzicht Public en Private Edition",
+    "id": "public-versus-private-cheat-sheet",
+    "title": "Public versus Private Cheat",
+    "description": "Overzicht van de details en verschillen tussen de Public en de Private Edition",
     "categories": [
-      "pdr",
-      "product"
+      "product",
+      "bdr"
     ],
     "status": "active",
-    "path": "playbooks/public-versus-private-facts/index.html"
+    "path": "playbooks/public-versus-private-cheat-sheet/index.html"
   },
   {
     "id": "retail-2026-campaigh",
@@ -62,17 +62,6 @@
     ],
     "status": "active",
     "path": "playbooks/retail-2026-campaigh/index.html"
-  },
-  {
-    "id": "public-versus-private",
-    "title": "SAP S/4HANA Cloud: Public Edition vs. Private Edition | Scheer IDS",
-    "description": "Overview of all asspects of Public and Private Edition to explain to prosects",
-    "categories": [
-      "bdr",
-      "product"
-    ],
-    "status": "active",
-    "path": "playbooks/public-versus-private/index.html"
   },
   {
     "id": "snl-website-content",
