@@ -42,17 +42,6 @@
     "path": "playbooks/openai-retail/index.html"
   },
   {
-    "id": "public-versus-private-cheat-sheet",
-    "title": "Public versus Private Cheat",
-    "description": "Overzicht van de details en verschillen tussen de Public en de Private Edition",
-    "categories": [
-      "product",
-      "bdr"
-    ],
-    "status": "active",
-    "path": "playbooks/public-versus-private-cheat-sheet/index.html"
-  },
-  {
     "id": "retail-2026-campaigh",
     "title": "Retail 2026 Campaign",
     "description": "Next actions for Retail Camopaign",
