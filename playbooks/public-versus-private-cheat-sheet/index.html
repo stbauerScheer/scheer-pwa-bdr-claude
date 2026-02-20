@@ -6,1000 +6,162 @@
 <title>SAP S/4HANA Cloud: Public Edition vs. Private Edition | Scheer IDS</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-/* ═══════════════════════════════════════════════
- Scheer IDS - Playbook Master Stylesheet
- Version: 1.0
- 
- Include in every playbook:
- <link rel="stylesheet" href="../shared/playbook.css">
- ═══════════════════════════════════════════════ */
 
-/* ── Reset ── */
-*, *::before, *::after { box-sizing: border-box; }
-
-/* ── Scheer Brand Variables (NIET VERANDEREN) ── */
-:root {
- /* Primary Brand */
- --dunkelblau: #05618d;
- --blue: #2996cc;
- --orange: #ef7c00;
-
- /* Secondary */
- --dunkelgrau: #6a747f;
- --dunkelrot: #ac1e1c;
-
- /* Status */
- --success: #28a745;
- --warning: #ff9800;
-
- /* Backgrounds */
- --bg: #ffffff;
- --bg-light: #f8f9fa;
- --card-bg: #f8f9fa;
-
- /* Text */
- --text: #212529;
- --text-dark: #333333;
- --text-muted: #6c757d;
- --text-light: #555555;
-
- /* Borders */
- --line: #dee2e6;
- --border: #e0e0e0;
-
- /* Badges */
- --badge-bg: rgba(41, 150, 204, 0.15);
- --badge-text: #05618d;
-
- /* Radii */
- --radius-sm: 6px;
- --radius-md: 8px;
- --radius-lg: 12px;
- --radius-xl: 14px;
-
- /* Transitions */
- --transition: 0.2s ease;
-}
-
-/* ── Base ── */
-body {
- margin: 0;
- font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- background: var(--bg);
- color: var(--text);
- line-height: 1.6;
- font-size: 14px;
- -webkit-font-smoothing: antialiased;
-}
-
-/* ══════════════════════════════════════
- PLAYBOOK HEADER (sticky, uniform)
- ══════════════════════════════════════ */
-.pb-header {
- background: var(--bg);
- border-bottom: 1px solid var(--line);
- padding: 12px 20px;
- position: sticky;
- top: 0;
- z-index: 9999;
- display: flex;
- align-items: center;
- justify-content: space-between;
-}
-
-.pb-header-back {
- color: var(--blue);
- text-decoration: none;
- font-size: 13px;
- font-weight: 600;
- display: inline-flex;
- align-items: center;
- gap: 4px;
- transition: opacity var(--transition);
-}
-
-.pb-header-back:hover {
- opacity: 0.7;
-}
-
-.pb-header-title {
- font-size: 12px;
- color: var(--text-muted);
-}
-
-/* ══════════════════════════════════════
- PLAYBOOK HERO HEADER
- (gradient banner at top of playbook)
- ══════════════════════════════════════ */
-.pb-hero,
-header {
- padding: 28px 20px;
- border-bottom: 1px solid var(--line);
- background: linear-gradient(135deg, var(--blue) 0%, var(--dunkelblau) 100%);
- color: #ffffff;
-}
-
-.pb-hero h1,
-header h1 {
- margin: 0;
- font-size: 26px;
- color: #ffffff;
- font-weight: 700;
-}
-
-.pb-hero .sub,
-header .sub {
- margin-top: 8px;
- color: #ffffff;
- font-size: 13px;
- opacity: 0.9;
- line-height: 1.5;
-}
-
-.pb-hero a,
-header a {
- color: #ffffff !important;
- text-decoration: none;
- border-bottom: 1px solid rgba(255, 255, 255, 0.5);
- transition: border-color var(--transition);
-}
-
-.pb-hero a:hover,
-header a:hover {
- border-color: #ffffff;
-}
-
-.pb-hero p,
-header p {
- color: rgba(255, 255, 255, 0.9);
- margin-bottom: 8px;
-}
-
-.pb-hero *,
-header * {
- color: #ffffff;
-}
-
-/* ── Hero Navigation ── */
-.pb-hero nav ul,
-header nav ul {
- list-style: none;
- padding-left: 0;
- display: flex;
- flex-wrap: wrap;
- gap: 10px;
- margin-top: 14px;
-}
-
-.pb-hero nav a,
-header nav a {
- color: #ffffff;
- text-decoration: none;
- font-weight: 500;
- font-size: 13px;
- transition: all var(--transition);
- padding: 4px 10px;
- border-radius: 4px;
-}
-
-.pb-hero nav a:hover,
-header nav a:hover {
- background: rgba(255, 255, 255, 0.15);
-}
-
-/* ══════════════════════════════════════
- CONTENT WRAPPER
- ══════════════════════════════════════ */
-.wrap {
- max-width: 1100px;
- margin: 0 auto;
-}
-
-main,
-.pb-content {
- padding: 24px 20px 40px;
-}
-
-/* ══════════════════════════════════════
- TYPOGRAPHY
- ══════════════════════════════════════ */
-h2 {
- margin-top: 40px;
- margin-bottom: 16px;
- color: var(--blue);
- font-size: 20px;
- font-weight: 700;
-}
-
-h3 {
- margin-top: 0;
- font-size: 16px;
- color: var(--dunkelblau);
- font-weight: 600;
-}
-
-p {
- margin-bottom: 14px;
- line-height: 1.7;
- color: var(--text-light);
-}
-
-strong {
- color: var(--text);
- font-weight: 600;
-}
-
-/* ══════════════════════════════════════
- CARDS
- ══════════════════════════════════════ */
-.card {
- background: var(--card-bg);
- border: 1px solid var(--line);
- border-radius: var(--radius-xl);
- padding: 18px;
- transition: all var(--transition);
- box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.card:hover {
- border-color: var(--blue);
- box-shadow: 0 4px 12px rgba(41, 150, 204, 0.2);
- transform: translateY(-2px);
-}
-
-.card h3 {
- margin-top: 0;
-}
-
-/* Card Grid */
-.grid {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
- gap: 14px;
- margin-bottom: 24px;
-}
-
-/* ══════════════════════════════════════
- CARD LABELS & VALUES
- ══════════════════════════════════════ */
-.label {
- display: block;
- margin-top: 10px;
- font-size: 13px;
- font-weight: 700;
- color: var(--text);
- letter-spacing: 0.01em;
-}
-
-.label:first-of-type {
- margin-top: 12px;
-}
-
-.val {
- margin: 2px 0 0;
- font-size: 14px;
- font-weight: 400;
- color: var(--text-muted);
- line-height: 1.45;
-}
-
-/* ══════════════════════════════════════
- BADGES
- ══════════════════════════════════════ */
-.badge {
- display: inline-block;
- margin-bottom: 8px;
- font-size: 11px;
- padding: 4px 8px;
- border-radius: 999px;
- border: 1px solid var(--blue);
- color: var(--badge-text);
- background: var(--badge-bg);
- font-weight: 500;
-}
-
-.badge-success {
- border-color: var(--success);
- color: var(--success);
- background: rgba(40, 167, 69, 0.1);
-}
-
-.badge-warning {
- border-color: var(--orange);
- color: var(--orange);
- background: rgba(239, 124, 0, 0.1);
-}
-
-/* ══════════════════════════════════════
- BUTTONS (uit Style Guide)
- ══════════════════════════════════════ */
-.button,
-button {
- padding: 10px 20px;
- border-radius: var(--radius-sm);
- border: none;
- font-size: 14px;
- font-weight: 600;
- cursor: pointer;
- transition: all var(--transition);
- font-family: inherit;
-}
-
-.button-primary,
-button.primary {
- background: var(--blue);
- color: white;
-}
-
-.button-primary:hover,
-button.primary:hover {
- background: #1e7aa8;
- transform: translateY(-2px);
- box-shadow: 0 5px 15px rgba(41, 150, 204, 0.4);
-}
-
-.button-success,
-button.success {
- background: var(--success);
- color: white;
-}
-
-.button-success:hover,
-button.success:hover {
- background: #218838;
- transform: translateY(-2px);
- box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
-}
-
-.button-warning,
-button.warning {
- background: var(--orange);
- color: white;
-}
-
-.button-warning:hover,
-button.warning:hover {
- background: #d46d00;
- transform: translateY(-2px);
- box-shadow: 0 5px 15px rgba(239, 124, 0, 0.4);
-}
-
-.button-secondary,
-button.secondary {
- background: var(--dunkelgrau);
- color: white;
-}
-
-.button-secondary:hover,
-button.secondary:hover {
- background: #545b62;
- transform: translateY(-2px);
- box-shadow: 0 5px 15px rgba(106, 116, 127, 0.4);
-}
-
-/* ══════════════════════════════════════
- FORMS (uit Style Guide)
- ══════════════════════════════════════ */
-input[type="text"],
-input[type="email"],
-input[type="search"],
-select,
-textarea {
- width: 100%;
- padding: 10px 12px;
- border: 2px solid var(--border);
- border-radius: var(--radius-sm);
- font-size: 14px;
- font-family: inherit;
- color: var(--text);
- background: var(--bg);
- transition: border-color var(--transition);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
- outline: none;
- border-color: var(--blue);
- box-shadow: 0 0 0 3px rgba(41, 150, 204, 0.1);
-}
-
-label {
- font-size: 12px;
- font-weight: 600;
- color: var(--dunkelblau);
- text-transform: uppercase;
- letter-spacing: 0.5px;
- display: block;
- margin-bottom: 4px;
-}
-
-/* ══════════════════════════════════════
- SEARCH & FILTER BAR
- ══════════════════════════════════════ */
-.search-filter-wrap {
- display: flex;
- flex-wrap: wrap;
- gap: 10px;
- padding: 16px 20px;
- border-bottom: 1px solid var(--line);
- background: var(--bg-light);
-}
-
-.search-filter-wrap input {
- flex: 1;
- min-width: 260px;
-}
-
-.search-filter-wrap select {
- width: auto;
-}
-
-/* ══════════════════════════════════════
- SECTION INTRO (left-bordered text)
- ══════════════════════════════════════ */
-.section-intro {
- color: var(--text-muted);
- max-width: 900px;
- padding-left: 16px;
- border-left: 3px solid var(--blue);
- margin-bottom: 20px;
- line-height: 1.6;
- font-size: 14px;
-}
-
-/* ══════════════════════════════════════
- VARIABLE FORMS (orange border)
- ══════════════════════════════════════ */
-.variable-form {
- background: var(--bg);
- border: 2px solid var(--orange);
- border-radius: var(--radius-lg);
- padding: 20px;
- margin: 20px 0;
-}
-
-.variable-form h3 {
- margin-top: 0;
- color: var(--dunkelblau);
- font-size: 16px;
- margin-bottom: 16px;
-}
-
-/* ══════════════════════════════════════
- TABLES
- ══════════════════════════════════════ */
-table {
- width: 100%;
- border-collapse: collapse;
- margin: 16px 0;
- font-size: 14px;
-}
-
-th {
- background: var(--dunkelblau);
- color: white;
- padding: 10px 14px;
- text-align: left;
- font-weight: 600;
- font-size: 12px;
- text-transform: uppercase;
- letter-spacing: 0.03em;
-}
-
-td {
- padding: 10px 14px;
- border-bottom: 1px solid var(--line);
- color: var(--text-light);
-}
-
-tr:nth-child(even) {
- background: var(--bg-light);
-}
-
-tr:hover {
- background: var(--badge-bg);
-}
-
-/* ══════════════════════════════════════
- BLOCKQUOTES
- ══════════════════════════════════════ */
-blockquote {
- border-left: 3px solid var(--blue);
- padding: 16px 20px;
- margin: 20px 0;
- background: var(--badge-bg);
- border-radius: 0 var(--radius-md) var(--radius-md) 0;
- font-style: italic;
- color: var(--text-light);
-}
-
-/* ══════════════════════════════════════
- PROMPT / CODE BLOCKS
- ══════════════════════════════════════ */
-.prompt {
- white-space: pre-line;
- font-size: 13px;
- color: var(--text-muted);
- line-height: 1.6;
-}
-
-code {
- background: var(--bg-light);
- padding: 2px 6px;
- border-radius: 4px;
- font-size: 13px;
- color: var(--dunkelblau);
-}
-
-pre {
- background: var(--bg-light);
- border: 1px solid var(--line);
- border-radius: var(--radius-md);
- padding: 16px;
- overflow-x: auto;
- font-size: 13px;
- line-height: 1.5;
-}
-
-/* ══════════════════════════════════════
- ALERTS
- ══════════════════════════════════════ */
-.alert {
- padding: 14px 18px;
- border-radius: var(--radius-sm);
- margin: 16px 0;
- font-size: 14px;
-}
-
-.alert-success {
- background: #d4edda;
- border: 1px solid #c3e6cb;
- color: #155724;
-}
-
-.alert-error {
- background: #f8d7da;
- border: 1px solid #f5c6cb;
- color: #721c24;
-}
-
-.alert-info {
- background: var(--badge-bg);
- border: 1px solid rgba(41, 150, 204, 0.3);
- color: var(--dunkelblau);
-}
-
-/* ══════════════════════════════════════
- FOOTER (consistent across playbooks)
- ══════════════════════════════════════ */
-footer,
-.pb-footer {
- margin-top: 60px;
- padding: 24px 20px;
- background: var(--dunkelgrau);
- border-top: 1px solid var(--line);
- color: white;
-}
-
-footer .footer-title,
-.pb-footer .footer-title {
- color: var(--orange);
- font-size: 14px;
- font-weight: 600;
- margin-bottom: 12px;
-}
-
-footer .playbook-links a,
-.pb-footer .playbook-links a {
- color: #ffffff;
- text-decoration: none;
- font-size: 13px;
- padding: 6px 12px;
- border: 1px solid rgba(255, 255, 255, 0.3);
- border-radius: var(--radius-sm);
- transition: all var(--transition);
-}
-
-footer .playbook-links a:hover,
-.pb-footer .playbook-links a:hover {
- background: rgba(255, 255, 255, 0.15);
- border-color: rgba(255, 255, 255, 0.5);
-}
-
-footer .copyright,
-.pb-footer .copyright {
- color: rgba(255, 255, 255, 0.6);
- font-size: 12px;
- margin-top: 16px;
-}
-
-/* ══════════════════════════════════════
- SPINNER / LOADING
- ══════════════════════════════════════ */
-.spinner {
- border: 4px solid #f3f3f3;
- border-top: 4px solid var(--blue);
- border-radius: 50%;
- width: 40px;
- height: 40px;
- animation: pb-spin 0.8s linear infinite;
- margin: 20px auto;
-}
-
-@keyframes pb-spin {
- to { transform: rotate(360deg); }
-}
-
-/* ══════════════════════════════════════
- TAG ROW
- ══════════════════════════════════════ */
-.tag-row {
- display: flex;
- flex-wrap: wrap;
- gap: 8px;
- margin: 12px 0 20px;
-}
-
-.tag {
- font-size: 12px;
- font-weight: 500;
- padding: 4px 12px;
- border-radius: 20px;
- background: var(--badge-bg);
- color: var(--blue);
- border: 1px solid rgba(41, 150, 204, 0.25);
-}
-
-/* ══════════════════════════════════════
- PROJECT STYLE - Structured Documents
- Full-width cards for H2 sections
- ══════════════════════════════════════ */
-
-/* Project Container */
-.project-doc {
- max-width: 100%;
-}
-
-/* Project H1 - Main Title */
-.project-doc .project-title {
- font-size: 32px;
- font-weight: 700;
- color: var(--dunkelblau);
- margin: 0 0 12px 0;
- padding-bottom: 16px;
- border-bottom: 3px solid var(--blue);
-}
-
-/* Project Subtitle/Intro */
-.project-doc .project-subtitle {
- font-size: 16px;
- color: var(--text-muted);
- margin: 0 0 32px 0;
- line-height: 1.6;
-}
-
-/* H2 Section Card - Full Width */
-.project-section {
- background: var(--card-bg);
- border: 1px solid var(--line);
- border-left: 4px solid var(--blue);
- border-radius: var(--radius-lg);
- padding: 24px;
- margin: 24px 0;
- transition: all var(--transition);
-}
-
-.project-section:hover {
- box-shadow: 0 4px 16px rgba(41, 150, 204, 0.15);
- border-left-color: var(--orange);
-}
-
-/* H2 inside section card */
-.project-section h2 {
- margin-top: 0;
- margin-bottom: 16px;
- font-size: 22px;
- font-weight: 700;
- color: var(--dunkelblau);
- display: flex;
- align-items: center;
- gap: 12px;
-}
-
-.project-section h2::before {
- content: '';
- width: 4px;
- height: 28px;
- background: var(--blue);
- border-radius: 2px;
-}
-
-/* H3 inside section card */
-.project-section h3 {
- font-size: 16px;
- font-weight: 600;
- color: var(--dunkelblau);
- margin-top: 20px;
- margin-bottom: 10px;
- padding-left: 16px;
- border-left: 2px solid var(--line);
-}
-
-/* Paragraph spacing in project sections */
-.project-section p {
- margin-bottom: 12px;
- line-height: 1.7;
- color: var(--text-light);
-}
-
-.project-section p:last-child {
- margin-bottom: 0;
-}
-
-/* Lists in project sections */
-.project-section ul,
-.project-section ol {
- margin: 12px 0;
- padding-left: 24px;
-}
-
-.project-section li {
- margin-bottom: 8px;
- line-height: 1.6;
- color: var(--text-light);
-}
-
-/* Section with color variant */
-.project-section.section-highlight {
- background: linear-gradient(to right, rgba(41, 150, 204, 0.05), var(--card-bg));
- border-left-color: var(--orange);
-}
-
-.project-section.section-success {
- background: rgba(40, 167, 69, 0.03);
- border-left-color: var(--success);
-}
-
-.project-section.section-warning {
- background: rgba(239, 124, 0, 0.03);
- border-left-color: var(--orange);
-}
-
-/* Section number badge */
-.section-number {
- display: inline-flex;
- align-items: center;
- justify-content: center;
- width: 32px;
- height: 32px;
- background: var(--blue);
- color: white;
- border-radius: 50%;
- font-size: 14px;
- font-weight: 700;
- margin-right: 8px;
-}
-
-/* Sub-sections within project section */
-.project-subsection {
- background: var(--bg);
- border: 1px solid var(--line);
- border-radius: var(--radius-sm);
- padding: 16px;
- margin: 16px 0;
-}
-
-.project-subsection h3 {
- margin-top: 0;
- border-left: none;
- padding-left: 0;
-}
-
-/* ══════════════════════════════════════
- UTILITY
- ══════════════════════════════════════ */
-.text-blue { color: var(--blue); }
-.text-dark { color: var(--dunkelblau); }
-.text-orange { color: var(--orange); }
-.text-muted { color: var(--text-muted); }
-.text-center { text-align: center; }
-.mt-0 { margin-top: 0; }
-.mb-0 { margin-bottom: 0; }
-.hidden { display: none; }
-
-/* ══════════════════════════════════════
- RESPONSIVE
- ══════════════════════════════════════ */
-@media (max-width: 768px) {
- .grid {
- grid-template-columns: 1fr;
- }
-
- .pb-hero h1,
- header h1 {
- font-size: 22px;
- }
-
- .pb-hero nav ul,
- header nav ul {
- gap: 6px;
- }
-
- .search-filter-wrap {
- flex-direction: column;
- }
-
- .search-filter-wrap input {
- min-width: unset;
- }
-}
-
-/* ══════════════════════════════════════
- PRINT
- ══════════════════════════════════════ */
-@media print {
- .pb-header { display: none; }
- .pb-hero, header { background: var(--dunkelblau) !important; -webkit-print-color-adjust: exact; }
- .card { break-inside: avoid; }
- body { font-size: 12px; }
-}
-
-</style>
-<style>
-/* ── Playbook Matrix - component styles ── */
+/* ── Playbook Matrix - component styles (generated) ── */
 :root {
  --db:#05618d; --blue:#2996cc; --orange:#ef7c00; --dg:#6a747f;
  --bg:#fff; --bgl:#f8f9fa; --text:#212529; --tm:#6c757d; --tl:#555;
  --line:#dee2e6; --bdr:#e0e0e0; --bbg:rgba(41,150,204,.1);
  --r:6px; --rl:12px; --tr:.18s ease;
 }
-*,*::before,*::after{box-sizing:border-box;}
-body{margin:0;font-family:'Segoe UI',Tahoma,sans-serif;background:#eff1f4;color:var(--text);line-height:1.6;font-size:14px;}
-.nav{background:var(--bg);border-bottom:1px solid var(--line);padding:10px 24px;position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.06);}
-.nav-back{color:var(--blue);text-decoration:none;font-size:13px;font-weight:600;}
-.nav-title{font-size:12px;color:var(--tm);}
-header{padding:26px 24px 22px;background:linear-gradient(135deg,var(--blue) 0%,var(--db) 100%);}
-.hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;}
-header h1{margin:0 0 5px;font-size:22px;font-weight:700;color:#fff;}
-header p{margin:0;color:rgba(255,255,255,.88);font-size:13px;max-width:680px;}
-.btn-sel-all{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all var(--tr);white-space:nowrap;flex-shrink:0;align-self:center;}
-.btn-sel-all:hover{background:rgba(255,255,255,.28);}
-.btn-sel-all.active{background:rgba(239,124,0,.75);border-color:var(--orange);}
-.ctrl{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:44px;z-index:100;box-shadow:0 2px 7px rgba(0,0,0,.06);}
-.usage-strip{background:rgba(41,150,204,.07);border-bottom:1px solid rgba(41,150,204,.14);padding:6px 24px;font-size:12.5px;color:var(--db);}
-.usage-inner{max-width:1200px;margin:0 auto;}
-.sf-row{max-width:1200px;margin:0 auto;padding:9px 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
-.sw{flex:1;min-width:200px;position:relative;}
-.sw input{width:100%;padding:7px 12px 7px 32px;border:2px solid var(--bdr);border-radius:var(--r);font-size:13px;font-family:inherit;background:var(--bg);color:var(--text);transition:border-color var(--tr);}
-.sw input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,150,204,.08);}
-.sw-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--tm);pointer-events:none;}
-.chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
-.chip-label{font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.04em;}
-.chip{padding:4px 11px;border-radius:20px;border:1.5px solid var(--line);background:var(--bg);color:var(--tm);font-size:12px;font-weight:600;cursor:pointer;transition:all var(--tr);white-space:nowrap;position:relative;user-select:none;}
-.chip:hover{border-color:var(--blue);color:var(--blue);}
-.chip.on{background:var(--blue);color:#fff;border-color:var(--blue);}
-.chip .dot{display:none;width:7px;height:7px;background:var(--orange);border-radius:50%;position:absolute;top:-2px;right:-2px;border:1.5px solid #fff;}
-.chip.has-sel .dot{display:block;}
-.leg-row{max-width:1200px;margin:0 auto;padding:5px 24px 8px;display:flex;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);align-items:center;}
-.leg-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--tm);}
-.leg-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
-.rc{margin-left:auto;display:flex;gap:10px;align-items:center;}
-#rcCount{font-size:11px;color:var(--tm);}
-.rc button{font-size:12px;color:var(--blue);background:none;border:none;cursor:pointer;padding:0;font-family:inherit;}
-.rc button:hover{text-decoration:underline;}
-main{max-width:1200px;margin:0 auto;padding:18px 24px 120px;}
-.theme-sec{margin-bottom:22px;}
-.theme-hd{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;margin-bottom:6px;border-bottom:2px solid var(--line);}
-.t-icon{width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
-.theme-hd h2{margin:0;font-size:16px;font-weight:700;color:var(--db);flex:1;}
-.t-meta{font-size:11px;color:var(--tm);}
-.matrix-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--rl);overflow:hidden;margin-bottom:7px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow var(--tr),border-color var(--tr);}
-.matrix-card:hover{box-shadow:0 2px 10px rgba(41,150,204,.08);}
-.matrix-card.selected{border-color:var(--orange);box-shadow:0 0 0 2px rgba(239,124,0,.2);}
-.matrix-card.partial{border-color:rgba(239,124,0,.5);box-shadow:0 0 0 1px rgba(239,124,0,.12);}
-.subtopic-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--bgl);border-bottom:1px solid var(--line);user-select:none;}
-.subtopic-bar:hover{background:rgba(41,150,204,.04);}
-.sub-chk-group{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;min-width:44px;}
-.sub-chk{width:15px;height:15px;accent-color:var(--orange);cursor:pointer;}
-.sub-chk-lbl{font-size:9px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.02em;pointer-events:none;}
-.sub-divider{width:1px;height:28px;background:var(--line);flex-shrink:0;}
-.sub-expand{display:flex;align-items:center;gap:7px;flex:1;cursor:pointer;min-width:0;}
-.sub-lbl{font-size:12.5px;font-weight:700;color:var(--db);}
-.sub-meta{font-size:11px;color:var(--tm);white-space:nowrap;}
-.sel-bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--orange);color:#fff;white-space:nowrap;flex-shrink:0;}
-.par-bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:rgba(239,124,0,.14);color:#7d4800;white-space:nowrap;flex-shrink:0;}
-.chev{font-size:10px;color:var(--tm);transition:transform .18s;margin-left:auto;flex-shrink:0;}
-.matrix-card.collapsed .chev{transform:rotate(-90deg);}
-.matrix-card.collapsed .mx-body{display:none;}
-.mx-body{overflow-x:auto;}
-table.mx{width:100%;border-collapse:collapse;font-size:12.5px;}
-table.mx thead th{background:var(--db);color:#fff;padding:8px 11px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;text-align:left;border-right:1px solid rgba(255,255,255,.12);}
-table.mx thead th:nth-child(2){background:#1a6fa5;}
-table.mx thead th:nth-child(3){background:#2c3e50;}
-table.mx thead th:nth-child(4){background:#bf6200;}
-table.mx thead th:nth-child(5){background:var(--dg);}
-table.mx thead th:last-child{border-right:none;}
-.asp-row{border-bottom:1px solid var(--line);transition:opacity var(--tr);}
-.asp-row:last-child{border-bottom:none;}
-.asp-row:nth-child(even) td{background:rgba(248,249,250,.7);}
-.asp-row:hover td{background:var(--bbg);}
-.asp-row.desel{opacity:.3;}
-.asp-row.desel td{background:#fafafa !important;}
-table.mx td{padding:9px 11px;vertical-align:top;color:var(--tl);line-height:1.5;border-right:1px solid var(--line);font-size:12.5px;}
-table.mx td:last-child{border-right:none;}
-.asp-td{display:flex;align-items:flex-start;gap:7px;background:rgba(41,150,204,.035) !important;}
-.row-chk{width:13px;height:13px;accent-color:var(--orange);cursor:pointer;margin-top:3px;flex-shrink:0;}
-.asp-name{font-weight:700;color:var(--db);font-size:12px;line-height:1.45;}
-.td-col6{color:#7d4800;background:rgba(239,124,0,.035);}
-.td-fb{background:#fafafa;}
-textarea.fb{display:block;width:100%;min-height:50px;border:1px dashed var(--line);border-radius:4px;background:var(--bg);color:var(--tm);font-size:11.5px;padding:5px 6px;font-family:inherit;resize:vertical;transition:border-color var(--tr);}
-textarea.fb:focus{outline:none;border-color:var(--blue);}
-textarea.fb::placeholder{color:#ccc;}
-.sel-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);z-index:8000;background:var(--db);color:#fff;border-radius:40px;padding:10px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(5,97,141,.4);transition:transform .28s ease,opacity .28s ease;opacity:0;pointer-events:none;}
-.sel-bar.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:all;}
-.sb-count{font-size:13px;font-weight:700;}
-.sb-names{font-size:11px;opacity:.72;max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.btn-export{background:var(--orange);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
-.btn-export:hover{background:#d46d00;}
-.btn-desel{background:rgba(255,255,255,.18);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9000;display:none;align-items:center;justify-content:center;padding:16px;}
-.overlay.open{display:flex;}
-.modal{background:var(--bg);border-radius:14px;width:100%;max-width:660px;max-height:94vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.28);}
-.modal-head{padding:18px 22px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;}
-.modal-head h3{margin:0;font-size:16px;font-weight:700;color:var(--db);}
-.modal-head p{margin:3px 0 0;font-size:12px;color:var(--tm);}
-.modal-close{background:none;border:none;font-size:20px;color:var(--tm);cursor:pointer;padding:0;line-height:1;}
-.modal-body{padding:18px 22px;}
-.ms{margin-bottom:16px;}
-.ms > label{display:block;font-size:11px;font-weight:700;color:var(--db);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px;}
-.sel-list{background:var(--bgl);border:1px solid var(--line);border-radius:var(--r);max-height:130px;overflow-y:auto;}
-.sli{display:flex;align-items:center;gap:7px;padding:6px 11px;border-bottom:1px solid var(--line);font-size:12px;}
-.sli:last-child{border-bottom:none;}
-.sli-theme{font-size:10px;font-weight:700;padding:2px 6px;border-radius:8px;background:var(--bbg);color:var(--db);white-space:nowrap;flex-shrink:0;}
-.sli-name{color:var(--tl);flex:1;}
-.sli-count{font-size:11px;color:var(--tm);white-space:nowrap;}
-.col-picker{display:flex;gap:8px;flex-wrap:wrap;}
-.col-btn{flex:1;min-width:130px;padding:10px 12px;border-radius:var(--r);border:2px solid var(--line);background:var(--bg);cursor:pointer;transition:all var(--tr);display:flex;align-items:center;gap:8px;font-family:inherit;text-align:left;}
-.col-btn:hover{box-shadow:0 2px 6px rgba(0,0,0,.08);}
-.col-btn.on.col-pub{background:#1a6fa5;color:#fff;border-color:#1a6fa5;}
-.col-btn.on.col-priv{background:#2c3e50;color:#fff;border-color:#2c3e50;}
-.col-btn.on.col-sch{background:#bf6200;color:#fff;border-color:#bf6200;}
-.col-icon{font-size:16px;flex-shrink:0;}
-.col-label{font-size:12px;font-weight:700;display:block;}
-.col-sub{font-size:11px;opacity:.75;display:block;margin-top:1px;}
-.col-chk{margin-left:auto;font-size:14px;flex-shrink:0;}
-.fmt-row{display:flex;gap:6px;flex-wrap:wrap;}
-.fmt-btn{flex:1;min-width:110px;padding:8px;border-radius:var(--r);border:2px solid var(--line);background:var(--bg);color:var(--tm);font-size:12px;font-weight:700;cursor:pointer;transition:all var(--tr);font-family:inherit;text-align:center;}
-.fmt-btn.on,.fmt-btn:hover{border-color:var(--orange);color:var(--orange);background:rgba(239,124,0,.05);}
-.m-input{width:100%;padding:8px 10px;border:2px solid var(--bdr);border-radius:var(--r);font-size:13px;font-family:inherit;color:var(--text);transition:border-color var(--tr);}
-.m-input:focus{outline:none;border-color:var(--orange);}
-.m-ta{width:100%;min-height:80px;padding:8px 10px;border:2px solid var(--bdr);border-radius:var(--r);font-size:13px;font-family:inherit;color:var(--text);resize:vertical;transition:border-color var(--tr);}
-.m-ta:focus{outline:none;border-color:var(--orange);}
-.modal-foot{padding:12px 22px 18px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--line);align-items:center;}
-.modal-hint{font-size:11px;color:var(--tm);margin-right:auto;}
-.btn-ok{padding:9px 22px;background:var(--orange);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all var(--tr);}
-.btn-ok:hover{background:#d46d00;}
-.btn-cancel{padding:9px 16px;background:var(--bgl);color:var(--tm);border:1px solid var(--line);border-radius:var(--r);font-size:13px;cursor:pointer;font-family:inherit;}
-footer{padding:20px 24px;background:var(--dg);}
-footer .fw{max-width:1200px;margin:0 auto;}
-.ft-title{color:var(--orange);font-size:13px;font-weight:600;margin-bottom:4px;}
-.ft-copy{color:rgba(255,255,255,.45);font-size:11px;margin-top:6px;}
-@media(max-width:768px){
- header h1{font-size:18px;} table.mx{font-size:11px;}
- .sel-bar{width:96%;flex-wrap:wrap;border-radius:14px;bottom:10px;}
+*,*::before,*::after { box-sizing:border-box; }
+body { margin:0; font-family:"Segoe UI",Tahoma,sans-serif; background:#eff1f4; color:var(--text); line-height:1.6; font-size:14px; }
+.nav { background:var(--bg); border-bottom:1px solid var(--line); padding:10px 24px; position:sticky; top:0; z-index:9999; display:flex; align-items:center; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+.nav-back { color:var(--blue); text-decoration:none; font-size:13px; font-weight:600; }
+.nav-title { font-size:12px; color:var(--tm); }
+header { padding:26px 24px 22px; background:linear-gradient(135deg,var(--blue) 0%,var(--db) 100%); }
+.hero-inner { max-width:1200px; margin:0 auto; display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+header h1 { margin:0 0 5px; font-size:22px; font-weight:700; color:#fff; }
+header p { margin:0; color:rgba(255,255,255,.88); font-size:13px; max-width:680px; }
+.btn-sel-all { background:rgba(255,255,255,.16); color:#fff; border:1.5px solid rgba(255,255,255,.4); border-radius:8px; padding:8px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; flex-shrink:0; align-self:center; }
+.btn-sel-all:hover { background:rgba(255,255,255,.28); }
+.btn-sel-all.active { background:rgba(239,124,0,.75); border-color:var(--orange); }
+.ctrl { background:var(--bg); border-bottom:1px solid var(--line); position:sticky; top:44px; z-index:100; box-shadow:0 2px 7px rgba(0,0,0,.06); }
+.usage-strip { background:rgba(41,150,204,.07); border-bottom:1px solid rgba(41,150,204,.14); padding:6px 24px; font-size:12.5px; color:var(--db); }
+.usage-inner { max-width:1200px; margin:0 auto; }
+.sf-row { max-width:1200px; margin:0 auto; padding:9px 24px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.sw { flex:1; min-width:200px; position:relative; }
+.sw input { width:100%; padding:7px 12px 7px 32px; border:2px solid var(--bdr); border-radius:var(--r); font-size:13px; font-family:inherit; background:var(--bg); color:var(--text); }
+.sw input:focus { outline:none; border-color:var(--blue); }
+.sw-icon { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--tm); pointer-events:none; }
+.chips { display:flex; flex-wrap:wrap; gap:4px; align-items:center; }
+.chip-label { font-size:11px; font-weight:700; color:var(--tm); text-transform:uppercase; letter-spacing:.04em; }
+.chip { padding:4px 11px; border-radius:20px; border:1.5px solid var(--line); background:var(--bg); color:var(--tm); font-size:12px; font-weight:600; cursor:pointer; transition:all var(--tr); white-space:nowrap; position:relative; user-select:none; }
+.chip:hover { border-color:var(--blue); color:var(--blue); }
+.chip.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+.chip .dot { display:none; width:7px; height:7px; background:var(--orange); border-radius:50%; position:absolute; top:-2px; right:-2px; border:1.5px solid #fff; }
+.chip.has-sel .dot { display:block; }
+.leg-row { max-width:1200px; margin:0 auto; padding:5px 24px 8px; display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line); align-items:center; }
+.leg-item { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--tm); }
+.leg-dot { width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+.rc { margin-left:auto; display:flex; gap:10px; align-items:center; }
+#rcCount { font-size:11px; color:var(--tm); }
+.rc button { font-size:12px; color:var(--blue); background:none; border:none; cursor:pointer; padding:0 6px; font-family:inherit; }
+.rc button:hover { text-decoration:underline; }
+main { max-width:1200px; margin:0 auto; padding:18px 24px 120px; }
+.theme-sec { margin-bottom:22px; }
+.theme-hd { display:flex; align-items:center; gap:10px; padding:8px 14px 8px 10px; margin-bottom:6px; border-bottom:2px solid var(--line); }
+.t-icon { width:29px; height:29px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+.theme-hd h2 { margin:0; font-size:16px; font-weight:700; color:var(--db); flex:1; }
+.t-meta { font-size:11px; color:var(--tm); }
+.matrix-card { background:var(--bg); border:1px solid var(--line); border-radius:var(--rl); overflow:hidden; margin-bottom:7px; box-shadow:0 1px 3px rgba(0,0,0,.04); transition:box-shadow var(--tr),border-color var(--tr); }
+.matrix-card:hover { box-shadow:0 2px 10px rgba(41,150,204,.08); }
+.matrix-card.selected { border-color:var(--orange); box-shadow:0 0 0 2px rgba(239,124,0,.2); }
+.matrix-card.partial { border-color:rgba(239,124,0,.5); }
+.subtopic-bar { display:flex; align-items:center; gap:8px; padding:9px 12px; background:var(--bgl); border-bottom:1px solid var(--line); }
+.subtopic-bar:hover { background:rgba(41,150,204,.04); }
+.sub-chk-group { display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0; min-width:44px; }
+.sub-chk { width:15px; height:15px; accent-color:var(--orange); cursor:pointer; }
+.sub-chk-lbl { font-size:9px; font-weight:700; color:var(--tm); text-transform:uppercase; pointer-events:none; }
+.sub-divider { width:1px; height:28px; background:var(--line); flex-shrink:0; }
+.sub-expand { display:flex; align-items:center; gap:7px; flex:1; cursor:pointer; min-width:0; }
+.sub-lbl { font-size:12.5px; font-weight:700; color:var(--db); }
+.sub-meta { font-size:11px; color:var(--tm); white-space:nowrap; }
+.sel-bdg { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; background:var(--orange); color:#fff; flex-shrink:0; }
+.par-bdg { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; background:rgba(239,124,0,.14); color:#7d4800; flex-shrink:0; }
+.chev { font-size:10px; color:var(--tm); transition:transform .18s; margin-left:auto; flex-shrink:0; }
+.matrix-card.collapsed .chev { transform:rotate(-90deg); }
+.matrix-card.collapsed .mx-body { display:none; }
+.mx-body { overflow-x:auto; }
+table.mx { width:100%; border-collapse:collapse; font-size:12.5px; }
+table.mx thead th { background:var(--db); color:#fff; padding:8px 11px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; text-align:left; border-right:1px solid rgba(255,255,255,.12); }
+table.mx thead th:nth-child(2) { background:#1a6fa5; }
+table.mx thead th:nth-child(3) { background:#2c3e50; }
+table.mx thead th:nth-child(4) { background:#bf6200; }
+table.mx thead th:nth-child(5) { background:var(--dg); }
+table.mx thead th:last-child { border-right:none; }
+.asp-row { border-bottom:1px solid var(--line); }
+.asp-row:last-child { border-bottom:none; }
+.asp-row:nth-child(even) td { background:rgba(248,249,250,.7); }
+.asp-row:hover td { background:var(--bbg); }
+.asp-row.desel { opacity:.3; }
+.asp-row.desel td { background:#fafafa !important; }
+table.mx td { padding:9px 11px; vertical-align:top; color:var(--tl); line-height:1.5; border-right:1px solid var(--line); font-size:12.5px; }
+table.mx td:last-child { border-right:none; }
+.asp-td { display:flex; align-items:flex-start; gap:7px; background:rgba(41,150,204,.035) !important; }
+.row-chk { width:13px; height:13px; accent-color:var(--orange); cursor:pointer; margin-top:3px; flex-shrink:0; }
+.asp-name { font-weight:700; color:var(--db); font-size:12px; line-height:1.45; }
+.td-col6 { color:#7d4800; background:rgba(239,124,0,.035); }
+.td-fb { background:#fafafa; }
+textarea.fb { display:block; width:100%; min-height:50px; border:1px dashed var(--line); border-radius:4px; background:var(--bg); color:var(--tm); font-size:11.5px; padding:5px 6px; font-family:inherit; resize:vertical; }
+textarea.fb:focus { outline:none; border-color:var(--blue); }
+textarea.fb::placeholder { color:#ccc; }
+.sel-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(100px); z-index:8000; background:var(--db); color:#fff; border-radius:40px; padding:10px 18px; display:flex; align-items:center; gap:12px; box-shadow:0 8px 28px rgba(5,97,141,.4); transition:transform .28s ease,opacity .28s ease; opacity:0; pointer-events:none; }
+.sel-bar.show { transform:translateX(-50%) translateY(0); opacity:1; pointer-events:all; }
+.sb-count { font-size:13px; font-weight:700; }
+.sb-names { font-size:11px; opacity:.72; max-width:340px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.btn-export { background:var(--orange); color:#fff; border:none; border-radius:20px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; }
+.btn-export:hover { background:#d46d00; }
+.btn-desel { background:rgba(255,255,255,.18); color:#fff; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; }
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:9000; display:none; align-items:center; justify-content:center; padding:16px; }
+.overlay.open { display:flex; }
+.modal { background:var(--bg); border-radius:14px; width:100%; max-width:660px; max-height:94vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,.28); }
+.modal-head { padding:18px 22px 14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; }
+.modal-head h3 { margin:0; font-size:16px; font-weight:700; color:var(--db); }
+.modal-head p { margin:3px 0 0; font-size:12px; color:var(--tm); }
+.modal-close { background:none; border:none; font-size:20px; color:var(--tm); cursor:pointer; padding:0; line-height:1; }
+.modal-body { padding:18px 22px; }
+.ms { margin-bottom:16px; }
+.ms > label { display:block; font-size:11px; font-weight:700; color:var(--db); text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+.sel-list { background:var(--bgl); border:1px solid var(--line); border-radius:var(--r); max-height:130px; overflow-y:auto; }
+.sli { display:flex; align-items:center; gap:7px; padding:6px 11px; border-bottom:1px solid var(--line); font-size:12px; }
+.sli:last-child { border-bottom:none; }
+.sli-theme { font-size:10px; font-weight:700; padding:2px 6px; border-radius:8px; background:var(--bbg); color:var(--db); white-space:nowrap; flex-shrink:0; }
+.sli-name { color:var(--tl); flex:1; }
+.sli-count { font-size:11px; color:var(--tm); white-space:nowrap; }
+.col-picker { display:flex; gap:8px; flex-wrap:wrap; }
+.col-btn { flex:1; min-width:130px; padding:10px 12px; border-radius:var(--r); border:2px solid var(--line); background:var(--bg); cursor:pointer; display:flex; align-items:center; gap:8px; font-family:inherit; text-align:left; }
+.col-btn.on.col-pub { background:#1a6fa5; color:#fff; border-color:#1a6fa5; }
+.col-btn.on.col-priv { background:#2c3e50; color:#fff; border-color:#2c3e50; }
+.col-btn.on.col-sch { background:#bf6200; color:#fff; border-color:#bf6200; }
+.col-icon { font-size:16px; flex-shrink:0; }
+.col-label { font-size:12px; font-weight:700; display:block; }
+.col-sub { font-size:11px; opacity:.75; display:block; margin-top:1px; }
+.col-chk { margin-left:auto; font-size:14px; flex-shrink:0; }
+.fmt-row { display:flex; gap:6px; flex-wrap:wrap; }
+.fmt-btn { flex:1; min-width:110px; padding:8px; border-radius:var(--r); border:2px solid var(--line); background:var(--bg); color:var(--tm); font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; text-align:center; }
+.fmt-btn.on,.fmt-btn:hover { border-color:var(--orange); color:var(--orange); background:rgba(239,124,0,.05); }
+.m-input { width:100%; padding:8px 10px; border:2px solid var(--bdr); border-radius:var(--r); font-size:13px; font-family:inherit; color:var(--text); }
+.m-input:focus { outline:none; border-color:var(--orange); }
+.m-ta { width:100%; min-height:80px; padding:8px 10px; border:2px solid var(--bdr); border-radius:var(--r); font-size:13px; font-family:inherit; color:var(--text); resize:vertical; }
+.m-ta:focus { outline:none; border-color:var(--orange); }
+.modal-foot { padding:12px 22px 18px; display:flex; gap:8px; justify-content:flex-end; border-top:1px solid var(--line); align-items:center; }
+.modal-hint { font-size:11px; color:var(--tm); margin-right:auto; }
+.btn-ok { padding:9px 22px; background:var(--orange); color:#fff; border:none; border-radius:var(--r); font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; }
+.btn-ok:hover { background:#d46d00; }
+.btn-cancel { padding:9px 16px; background:var(--bgl); color:var(--tm); border:1px solid var(--line); border-radius:var(--r); font-size:13px; cursor:pointer; font-family:inherit; }
+footer { padding:20px 24px; background:var(--dg); }
+footer .fw { max-width:1200px; margin:0 auto; }
+.ft-title { color:var(--orange); font-size:13px; font-weight:600; margin-bottom:4px; }
+.ft-copy { color:rgba(255,255,255,.45); font-size:11px; margin-top:6px; }
+@media(max-width:768px) {
+ header h1 { font-size:18px; }
+ table.mx { font-size:11px; }
+ .sel-bar { width:96%; flex-wrap:wrap; border-radius:14px; bottom:10px; }
 }
+
 </style>
+<link rel="stylesheet" href="../shared/playbook.css">
 </head>
 <body>
 <!-- Scheer Playbook Header -->
 <div class="pb-header">
   <a href="../../index.html" class="pb-header-back"><- Back to Playbooks</a>
-  <span class="pb-header-title">Public versus Private Facts CheatSheet</span>
+  <span class="pb-header-title">Public versus Private Cheat</span>
 </div>
 
 <div class="nav">
- <a href="#" class="nav-back"><- Terug naar Playbooks</a>
+ <a href="#" class="nav-back">&larr; Terug naar Playbooks</a>
  <span class="nav-title">SAP S/4HANA Cloud: Public Edition vs. Private Edition | Scheer IDS</span>
 </div>
 
@@ -1007,10 +169,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="hero-inner">
  <div>
  <h1>SAP S/4HANA Cloud: Public Edition vs. Private Edition</h1>
- <p>Vergelijk op 7 thema's · 110 vergelijkingspunten.
- Selecteer onderwerpen &amp; aspecten, kies kolommen, exporteer naar Excel / Word / Clipboard / PDF.</p>
+ <p>7 thema&apos;s &middot; 110 vergelijkingspunten &middot; Selecteer, kies kolommen, exporteer naar Excel / Word / Clipboard / PDF.</p>
  </div>
- <button class="btn-sel-all" id="btnSelAll" onclick="toggleSelectAll()">☑ Selecteer alle thema's</button>
+ <button class="btn-sel-all" id="btnSelAll" onclick="toggleSelectAll()">Selecteer alles</button>
  </div>
 </header>
 
@@ -1018,27 +179,26 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="usage-strip">
  <div class="usage-inner">
  <strong>Gebruik:</strong>
- ① Zoek of toggle thema's &nbsp;·&nbsp;
- ② <strong>Vink sub-onderwerpen aan</strong> - deselecteer individuele aspecten per rij &nbsp;·&nbsp;
- ③ Klik <strong style="color:var(--orange)">Exporteer selectie</strong> → kies kolommen → download
+ &#9312; Zoek of toggle thema&apos;s &nbsp;&middot;&nbsp;
+ &#9313; <strong>Vink sub-onderwerpen aan</strong> &mdash; deselecteer individuele rijen &nbsp;&middot;&nbsp;
+ &#9314; Klik <strong style="color:var(--orange)">Exporteer selectie</strong> &rarr; kies kolommen &rarr; download
  </div>
  </div>
  <div class="sf-row">
  <div class="sw">
- <span class="sw-icon"></span>
+ <span class="sw-icon">&#128269;</span>
  <input type="text" id="searchInput" placeholder="Zoek op trefwoord..." oninput="doSearch(this.value)">
  </div>
  <div class="chips">
  <span class="chip-label">Thema:</span>
- <button class="chip on" data-t="all" onclick="chipAll(this)">Alle</button>
-<button class="chip on" data-t="infrastructuur" onclick="chipToggle(this)"><span class="dot"></span> Infrastructuur</button>
-<button class="chip on" data-t="licentiemodel" onclick="chipToggle(this)"><span class="dot"></span> Licentiemodel</button>
-<button class="chip on" data-t="implementatie_deployment" onclick="chipToggle(this)"><span class="dot"></span> Implementatie &amp; Deployment</button>
-<button class="chip on" data-t="btp_integratie" onclick="chipToggle(this)"><span class="dot"></span> BTP / Integratie</button>
-<button class="chip on" data-t="compliance_security" onclick="chipToggle(this)"><span class="dot"></span> Compliance &amp; Security</button>
-<button class="chip on" data-t="tco_pricing" onclick="chipToggle(this)"><span class="dot"></span> TCO / Pricing</button>
-<button class="chip on" data-t="support_onderhoud" onclick="chipToggle(this)"><span class="dot"></span> Support &amp; Onderhoud</button>
-
+<button class="chip on" data-t="all" onclick="chipAll(this)">Alle</button>
+<button class="chip on" data-t="infrastructuur" onclick="chipToggle(this)"><span class="dot"></span>[INF] Infrastructuur</button>
+<button class="chip on" data-t="licentiemodel" onclick="chipToggle(this)"><span class="dot"></span>[LIC] Licentiemodel</button>
+<button class="chip on" data-t="implementatie_deployment" onclick="chipToggle(this)"><span class="dot"></span>[IMP] Implementatie &amp; Deployment</button>
+<button class="chip on" data-t="btp_integratie" onclick="chipToggle(this)"><span class="dot"></span>[BTP] BTP / Integratie</button>
+<button class="chip on" data-t="compliance_security" onclick="chipToggle(this)"><span class="dot"></span>[SEC] Compliance &amp; Security</button>
+<button class="chip on" data-t="tco_pricing" onclick="chipToggle(this)"><span class="dot"></span>[TCO] TCO / Pricing</button>
+<button class="chip on" data-t="support_onderhoud" onclick="chipToggle(this)"><span class="dot"></span>[AMS] Support &amp; Onderhoud</button>
  </div>
  </div>
  <div class="leg-row">
@@ -1057,7 +217,7 @@ footer .fw{max-width:1200px;margin:0 auto;}
 <main>
 <div class="theme-sec" data-theme="infrastructuur">
  <div class="theme-hd">
- <div class="t-icon" style="background:#e8f4f8;color:#0d7a9b;"></div>
+ <div class="t-icon" style="background:#e8f4f8;color:#0d7a9b;">[INF]</div>
  <h2>1. Infrastructuur</h2>
  <span class="t-meta">4 sub-onderwerpen · 12 vergelijkingspunten</span>
  </div>
@@ -1072,9 +232,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('infrastructuur_hosting_cloud_provider')">
  <span class="sub-lbl">Hosting &amp; Cloud Provider</span>
  <span class="sub-meta">· 3 aspecten</span>
- <span class="sel-bdg" id="sbd_infrastructuur_hosting_cloud_provider" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_infrastructuur_hosting_cloud_provider" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_infrastructuur_hosting_cloud_provider" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1082,10 +242,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="infrastructuur_hosting_cloud_provider" data-idx="0">
  <td class="asp-td">
@@ -1130,9 +290,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('infrastructuur_infrastructuurbeheer_toegang')">
  <span class="sub-lbl">Infrastructuurbeheer &amp; Toegang</span>
  <span class="sub-meta">· 3 aspecten</span>
- <span class="sel-bdg" id="sbd_infrastructuur_infrastructuurbeheer_toegang" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_infrastructuur_infrastructuurbeheer_toegang" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_infrastructuur_infrastructuurbeheer_toegang" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1140,10 +300,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="infrastructuur_infrastructuurbeheer_toegang" data-idx="0">
  <td class="asp-td">
@@ -1188,9 +348,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('infrastructuur_high_availability_dr_data_residency')">
  <span class="sub-lbl">High Availability, DR &amp; Data Residency</span>
  <span class="sub-meta">· 3 aspecten</span>
- <span class="sel-bdg" id="sbd_infrastructuur_high_availability_dr_data_residency" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_infrastructuur_high_availability_dr_data_residency" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_infrastructuur_high_availability_dr_data_residency" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1198,10 +358,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="infrastructuur_high_availability_dr_data_residency" data-idx="0">
  <td class="asp-td">
@@ -1246,9 +406,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('infrastructuur_security_certificeringen_compliance')">
  <span class="sub-lbl">Security Certificeringen &amp; Compliance</span>
  <span class="sub-meta">· 3 aspecten</span>
- <span class="sel-bdg" id="sbd_infrastructuur_security_certificeringen_compliance" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_infrastructuur_security_certificeringen_compliance" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_infrastructuur_security_certificeringen_compliance" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1256,10 +416,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="infrastructuur_security_certificeringen_compliance" data-idx="0">
  <td class="asp-td">
@@ -1295,10 +455,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
 <div class="theme-sec" data-theme="licentiemodel">
  <div class="theme-hd">
- <div class="t-icon" style="background:#f3edf8;color:#7b3fa0;"></div>
+ <div class="t-icon" style="background:#f3edf8;color:#7b3fa0;">[LIC]</div>
  <h2>2. Licentiemodel</h2>
  <span class="t-meta">3 sub-onderwerpen · 11 vergelijkingspunten</span>
  </div>
@@ -1313,9 +472,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('licentiemodel_licentiestructuur_model')">
  <span class="sub-lbl">Licentiestructuur &amp; Model</span>
  <span class="sub-meta">· 3 aspecten</span>
- <span class="sel-bdg" id="sbd_licentiemodel_licentiestructuur_model" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_licentiemodel_licentiestructuur_model" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_licentiemodel_licentiestructuur_model" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1323,10 +482,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="licentiemodel_licentiestructuur_model" data-idx="0">
  <td class="asp-td">
@@ -1371,9 +530,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('licentiemodel_gebruikerslicenties_basis_pakket')">
  <span class="sub-lbl">Gebruikerslicenties &amp; Basis Pakket</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_licentiemodel_gebruikerslicenties_basis_pakket" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_licentiemodel_gebruikerslicenties_basis_pakket" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_licentiemodel_gebruikerslicenties_basis_pakket" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1381,10 +540,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="licentiemodel_gebruikerslicenties_basis_pakket" data-idx="0">
  <td class="asp-td">
@@ -1439,9 +598,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('licentiemodel_premium_modules_add_ons')">
  <span class="sub-lbl">Premium Modules &amp; Add-ons</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_licentiemodel_premium_modules_add_ons" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_licentiemodel_premium_modules_add_ons" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_licentiemodel_premium_modules_add_ons" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1449,10 +608,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="licentiemodel_premium_modules_add_ons" data-idx="0">
  <td class="asp-td">
@@ -1498,10 +657,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
 <div class="theme-sec" data-theme="implementatie_deployment">
  <div class="theme-hd">
- <div class="t-icon" style="background:#e8f0f8;color:#1a6fa5;"></div>
+ <div class="t-icon" style="background:#e8f0f8;color:#1a6fa5;">[IMP]</div>
  <h2>3. Implementatie &amp; Deployment</h2>
  <span class="t-meta">4 sub-onderwerpen · 20 vergelijkingspunten</span>
  </div>
@@ -1516,9 +674,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('implementatie_deployment_implementatie_aanpak_methodologie')">
  <span class="sub-lbl">Implementatie Aanpak &amp; Methodologie</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_implementatie_deployment_implementatie_aanpak_methodologie" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_implementatie_deployment_implementatie_aanpak_methodologie" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_implementatie_deployment_implementatie_aanpak_methodologie" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1526,10 +684,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="implementatie_deployment_implementatie_aanpak_methodologie" data-idx="0">
  <td class="asp-td">
@@ -1584,9 +742,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('implementatie_deployment_enkele_entiteit_nederland')">
  <span class="sub-lbl">Enkele Entiteit - Nederland</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_implementatie_deployment_enkele_entiteit_nederland" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_implementatie_deployment_enkele_entiteit_nederland" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_implementatie_deployment_enkele_entiteit_nederland" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1594,10 +752,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="implementatie_deployment_enkele_entiteit_nederland" data-idx="0">
  <td class="asp-td">
@@ -1652,9 +810,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('implementatie_deployment_meerdere_entiteiten_nederland')">
  <span class="sub-lbl">Meerdere Entiteiten - Nederland</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_implementatie_deployment_meerdere_entiteiten_nederland" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_implementatie_deployment_meerdere_entiteiten_nederland" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_implementatie_deployment_meerdere_entiteiten_nederland" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1662,10 +820,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="implementatie_deployment_meerdere_entiteiten_nederland" data-idx="0">
  <td class="asp-td">
@@ -1720,9 +878,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('implementatie_deployment_internationale_uitrol_dach_uk_us_apac')">
  <span class="sub-lbl">Internationale Uitrol - DACH / UK / US / APAC</span>
  <span class="sub-meta">· 8 aspecten</span>
- <span class="sel-bdg" id="sbd_implementatie_deployment_internationale_uitrol_dach_uk_us_apac" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_implementatie_deployment_internationale_uitrol_dach_uk_us_apac" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_implementatie_deployment_internationale_uitrol_dach_uk_us_apac" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1730,10 +888,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="implementatie_deployment_internationale_uitrol_dach_uk_us_apac" data-idx="0">
  <td class="asp-td">
@@ -1819,10 +977,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
 <div class="theme-sec" data-theme="btp_integratie">
  <div class="theme-hd">
- <div class="t-icon" style="background:#e6f4f1;color:#138f75;"></div>
+ <div class="t-icon" style="background:#e6f4f1;color:#138f75;">[BTP]</div>
  <h2>4. BTP / Integratie</h2>
  <span class="t-meta">4 sub-onderwerpen · 16 vergelijkingspunten</span>
  </div>
@@ -1837,9 +994,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('btp_integratie_btp_fundament_clean_core')">
  <span class="sub-lbl">BTP Fundament &amp; Clean Core</span>
  <span class="sub-meta">· 3 aspecten</span>
- <span class="sel-bdg" id="sbd_btp_integratie_btp_fundament_clean_core" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_btp_integratie_btp_fundament_clean_core" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_btp_integratie_btp_fundament_clean_core" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1847,10 +1004,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="btp_integratie_btp_fundament_clean_core" data-idx="0">
  <td class="asp-td">
@@ -1895,9 +1052,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('btp_integratie_sap_integration_suite_koppelingen')">
  <span class="sub-lbl">SAP Integration Suite - Koppelingen</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_btp_integratie_sap_integration_suite_koppelingen" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_btp_integratie_sap_integration_suite_koppelingen" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_btp_integratie_sap_integration_suite_koppelingen" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1905,10 +1062,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="btp_integratie_sap_integration_suite_koppelingen" data-idx="0">
  <td class="asp-td">
@@ -1963,9 +1120,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('btp_integratie_retail_specifieke_integraties')">
  <span class="sub-lbl">Retail-specifieke Integraties</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_btp_integratie_retail_specifieke_integraties" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_btp_integratie_retail_specifieke_integraties" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_btp_integratie_retail_specifieke_integraties" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -1973,10 +1130,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="btp_integratie_retail_specifieke_integraties" data-idx="0">
  <td class="asp-td">
@@ -2041,9 +1198,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('btp_integratie_ai_analytics_sap_joule')">
  <span class="sub-lbl">AI, Analytics &amp; SAP Joule</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_btp_integratie_ai_analytics_sap_joule" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_btp_integratie_ai_analytics_sap_joule" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_btp_integratie_ai_analytics_sap_joule" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2051,10 +1208,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="btp_integratie_ai_analytics_sap_joule" data-idx="0">
  <td class="asp-td">
@@ -2100,10 +1257,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
 <div class="theme-sec" data-theme="compliance_security">
  <div class="theme-hd">
- <div class="t-icon" style="background:#f8ecec;color:#b03030;"></div>
+ <div class="t-icon" style="background:#f8ecec;color:#b03030;">[SEC]</div>
  <h2>5. Compliance &amp; Security</h2>
  <span class="t-meta">4 sub-onderwerpen · 17 vergelijkingspunten</span>
  </div>
@@ -2118,9 +1274,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('compliance_security_infra_security_certificeringen')">
  <span class="sub-lbl">Infra Security Certificeringen</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_compliance_security_infra_security_certificeringen" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_compliance_security_infra_security_certificeringen" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_compliance_security_infra_security_certificeringen" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2128,10 +1284,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="compliance_security_infra_security_certificeringen" data-idx="0">
  <td class="asp-td">
@@ -2186,9 +1342,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('compliance_security_avg_gdpr_privacy')">
  <span class="sub-lbl">AVG / GDPR &amp; Privacy</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_compliance_security_avg_gdpr_privacy" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_compliance_security_avg_gdpr_privacy" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_compliance_security_avg_gdpr_privacy" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2196,10 +1352,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="compliance_security_avg_gdpr_privacy" data-idx="0">
  <td class="asp-td">
@@ -2254,9 +1410,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('compliance_security_financi_le_compliance_rapportage')">
  <span class="sub-lbl">Financiële Compliance &amp; Rapportage</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_compliance_security_financi_le_compliance_rapportage" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_compliance_security_financi_le_compliance_rapportage" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_compliance_security_financi_le_compliance_rapportage" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2264,10 +1420,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="compliance_security_financi_le_compliance_rapportage" data-idx="0">
  <td class="asp-td">
@@ -2332,9 +1488,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('compliance_security_technische_security_audit')">
  <span class="sub-lbl">Technische Security &amp; Audit</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_compliance_security_technische_security_audit" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_compliance_security_technische_security_audit" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_compliance_security_technische_security_audit" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2342,10 +1498,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="compliance_security_technische_security_audit" data-idx="0">
  <td class="asp-td">
@@ -2391,10 +1547,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
 <div class="theme-sec" data-theme="tco_pricing">
  <div class="theme-hd">
- <div class="t-icon" style="background:#e8f4ed;color:#208f55;"></div>
+ <div class="t-icon" style="background:#e8f4ed;color:#208f55;">[TCO]</div>
  <h2>6. TCO / Pricing</h2>
  <span class="t-meta">4 sub-onderwerpen · 19 vergelijkingspunten</span>
  </div>
@@ -2409,9 +1564,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('tco_pricing_licentie_en_implementatiekosten')">
  <span class="sub-lbl">Licentie- en Implementatiekosten</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_tco_pricing_licentie_en_implementatiekosten" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_tco_pricing_licentie_en_implementatiekosten" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_tco_pricing_licentie_en_implementatiekosten" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2419,10 +1574,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="tco_pricing_licentie_en_implementatiekosten" data-idx="0">
  <td class="asp-td">
@@ -2487,9 +1642,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('tco_pricing_beheerkosten_na_go_live_run')">
  <span class="sub-lbl">Beheerkosten na Go-live (Run)</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_tco_pricing_beheerkosten_na_go_live_run" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_tco_pricing_beheerkosten_na_go_live_run" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_tco_pricing_beheerkosten_na_go_live_run" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2497,10 +1652,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="tco_pricing_beheerkosten_na_go_live_run" data-idx="0">
  <td class="asp-td">
@@ -2565,9 +1720,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('tco_pricing_tco_overzicht_5_jaar_indicatief_model')">
  <span class="sub-lbl">TCO Overzicht 5-jaar (Indicatief Model)</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_tco_pricing_tco_overzicht_5_jaar_indicatief_model" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_tco_pricing_tco_overzicht_5_jaar_indicatief_model" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_tco_pricing_tco_overzicht_5_jaar_indicatief_model" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2575,10 +1730,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="tco_pricing_tco_overzicht_5_jaar_indicatief_model" data-idx="0">
  <td class="asp-td">
@@ -2643,9 +1798,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('tco_pricing_verborgen_kosten_risicokosten')">
  <span class="sub-lbl">Verborgen Kosten &amp; Risicokosten</span>
  <span class="sub-meta">· 4 aspecten</span>
- <span class="sel-bdg" id="sbd_tco_pricing_verborgen_kosten_risicokosten" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_tco_pricing_verborgen_kosten_risicokosten" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_tco_pricing_verborgen_kosten_risicokosten" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2653,10 +1808,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="tco_pricing_verborgen_kosten_risicokosten" data-idx="0">
  <td class="asp-td">
@@ -2702,10 +1857,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
 <div class="theme-sec" data-theme="support_onderhoud">
  <div class="theme-hd">
- <div class="t-icon" style="background:#fdf0e6;color:#d06a00;"></div>
+ <div class="t-icon" style="background:#fdf0e6;color:#d06a00;">[AMS]</div>
  <h2>7. Support &amp; Onderhoud</h2>
  <span class="t-meta">3 sub-onderwerpen · 15 vergelijkingspunten</span>
  </div>
@@ -2720,9 +1874,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('support_onderhoud_sap_enterprise_support')">
  <span class="sub-lbl">SAP Enterprise Support</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_support_onderhoud_sap_enterprise_support" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_support_onderhoud_sap_enterprise_support" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_support_onderhoud_sap_enterprise_support" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2730,10 +1884,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="support_onderhoud_sap_enterprise_support" data-idx="0">
  <td class="asp-td">
@@ -2798,9 +1952,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('support_onderhoud_updates_innovatiestrategie')">
  <span class="sub-lbl">Updates &amp; Innovatiestrategie</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_support_onderhoud_updates_innovatiestrategie" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_support_onderhoud_updates_innovatiestrategie" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_support_onderhoud_updates_innovatiestrategie" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2808,10 +1962,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="support_onderhoud_updates_innovatiestrategie" data-idx="0">
  <td class="asp-td">
@@ -2876,9 +2030,9 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sub-expand" onclick="toggleCard('support_onderhoud_scheer_ams_applicatiebeheer')">
  <span class="sub-lbl">Scheer AMS &amp; Applicatiebeheer</span>
  <span class="sub-meta">· 5 aspecten</span>
- <span class="sel-bdg" id="sbd_support_onderhoud_scheer_ams_applicatiebeheer" style="display:none">* Geselecteerd</span>
+ <span class="sel-bdg" id="sbd_support_onderhoud_scheer_ams_applicatiebeheer" style="display:none">Geselecteerd</span>
  <span class="par-bdg" id="pbd_support_onderhoud_scheer_ams_applicatiebeheer" style="display:none"></span>
- <span class="chev">▼</span>
+ <span class="chev">&#9660;</span>
  </div>
  </div>
  <div class="mx-body">
@@ -2886,10 +2040,10 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
  <thead><tr>
  <th>Aspect</th>
- <th> S/4HANA Cloud Public Edition</th>
- <th>⚫ S/4HANA Cloud Private Edition</th>
- <th> Scheer Perspective</th>
- <th>✏️ Personal Notes</th>
+ <th>S/4HANA Cloud Public Edition</th>
+ <th>S/4HANA Cloud Private Edition</th>
+ <th>Scheer Perspective</th>
+ <th>Jouw feedback</th>
  </tr></thead>
  <tbody><tr class="asp-row" data-card="support_onderhoud_scheer_ams_applicatiebeheer" data-idx="0">
  <td class="asp-td">
@@ -2945,27 +2099,27 @@ footer .fw{max-width:1200px;margin:0 auto;}
  </div>
 </div>
 </div>
-
-
 </main>
 
+<!-- FLOATING SELECTION BAR -->
 <div class="sel-bar" id="selBar">
  <div>
  <div class="sb-count" id="sbCount"></div>
  <div class="sb-names" id="sbNames"></div>
  </div>
- <button class="btn-export" onclick="openModal()"> Exporteer selectie</button>
- <button class="btn-desel" onclick="deselectAll()">✕ Wis selectie</button>
+ <button class="btn-export" onclick="openModal()">&#128229; Exporteer selectie</button>
+ <button class="btn-desel" onclick="deselectAll()">&#10005; Wis selectie</button>
 </div>
 
+<!-- EXPORT MODAL -->
 <div class="overlay" id="expModal">
  <div class="modal">
  <div class="modal-head">
  <div>
- <h3> Exporteer geselecteerde onderwerpen</h3>
- <p>Kies kolommen · Voeg context toe · Kies exportformaat</p>
+ <h3>&#128229; Exporteer geselecteerde onderwerpen</h3>
+ <p>Kies kolommen &middot; Voeg context toe &middot; Kies exportformaat</p>
  </div>
- <button class="modal-close" onclick="closeModal()">✕</button>
+ <button class="modal-close" onclick="closeModal()">&#10005;</button>
  </div>
  <div class="modal-body">
  <div class="ms">
@@ -2973,433 +2127,588 @@ footer .fw{max-width:1200px;margin:0 auto;}
  <div class="sel-list" id="selList"></div>
  </div>
  <div class="ms">
- <label>Kies welke kolommen je exporteert</label>
+ <label>Exporteer kolommen</label>
  <div class="col-picker">
  <button class="col-btn col-pub on" data-col="col4" onclick="toggleCol(this)">
- <span class="col-icon"></span>
+ <span class="col-icon">&#128309;</span>
  <span><span class="col-label">S/4HANA Cloud Public Edition</span><span class="col-sub">Feiten &amp; specificaties</span></span>
- <span class="col-chk" id="cc_col4">*</span>
+ <span class="col-chk" id="cc_col4">&#10003;</span>
  </button>
  <button class="col-btn col-priv on" data-col="col5" onclick="toggleCol(this)">
- <span class="col-icon">⚫</span>
+ <span class="col-icon">&#9899;</span>
  <span><span class="col-label">S/4HANA Cloud Private Edition</span><span class="col-sub">Feiten &amp; vergelijking</span></span>
- <span class="col-chk" id="cc_col5">*</span>
+ <span class="col-chk" id="cc_col5">&#10003;</span>
  </button>
  <button class="col-btn col-sch on" data-col="col6" onclick="toggleCol(this)">
- <span class="col-icon"></span>
+ <span class="col-icon">&#128992;</span>
  <span><span class="col-label">Scheer Perspective</span><span class="col-sub">Positionering &amp; advies</span></span>
- <span class="col-chk" id="cc_col6">*</span>
+ <span class="col-chk" id="cc_col6">&#10003;</span>
  </button>
  </div>
- <p style="font-size:11.5px;color:var(--tm);margin:6px 0 0;">Jouw feedback-kolom wordt altijd meegenomen.</p>
+ <p style="font-size:11.5px;color:var(--tm);margin:6px 0 0;">Feedback-kolom wordt altijd meegenomen.</p>
  </div>
  <div class="ms">
  <label>Projectnaam / Klantnaam</label>
- <input type="text" class="m-input" id="projName" placeholder="bijv. Presales XYZ B.V. - april 2025">
+ <input type="text" class="m-input" id="projName" placeholder="bijv. Presales XYZ B.V.">
  </div>
  <div class="ms">
  <label>Context &amp; toelichting</label>
- <textarea class="m-ta" id="expCtx" placeholder="Beschrijf de context van jouw selectie..."></textarea>
+ <textarea class="m-ta" id="expCtx" placeholder="Beschrijf de context..."></textarea>
  </div>
  <div class="ms">
  <label>Exportformaat</label>
- <div class="fmt-row"><button class="fmt-btn on" data-fmt="word" onclick="setFmt(this)"> Word</button>
-<button class="fmt-btn" data-fmt="excel" onclick="setFmt(this)"> Excel</button>
-<button class="fmt-btn" data-fmt="clipboard" onclick="setFmt(this)"> Clipboard</button>
-<button class="fmt-btn" data-fmt="print" onclick="setFmt(this)"> Print/PDF</button>
-</div>
+ <div class="fmt-row">
+<button class="fmt-btn on" data-fmt="word" onclick="setFmt(this)">Word (.doc)</button>
+<button class="fmt-btn" data-fmt="excel" onclick="setFmt(this)">Excel (.xlsx)</button>
+<button class="fmt-btn" data-fmt="clipboard" onclick="setFmt(this)">Clipboard</button>
+<button class="fmt-btn" data-fmt="print" onclick="setFmt(this)">Print / PDF</button>
+ </div>
  </div>
  </div>
  <div class="modal-foot">
- <span class="modal-hint" id="mhint">Excel: 2 tabbladen - Samenvatting + Vergelijkingspunten</span>
+ <span class="modal-hint" id="mhint">Excel: 2 tabbladen &mdash; Samenvatting + Vergelijkingspunten</span>
  <button class="btn-cancel" onclick="closeModal()">Annuleren</button>
- <button class="btn-ok" id="btnOk" onclick="doExport()"> Download Excel</button>
+ <button class="btn-ok" id="btnOk" onclick="doExport()">&#128229; Download Excel</button>
  </div>
  </div>
 </div>
 
 <footer>
  <div class="fw">
- <div class="ft-title">Scheer IDS Netherlands - SAP Expert Partner</div>
- <p style="color:rgba(255,255,255,.7);font-size:12.5px;margin:0 0 4px;">100% focus op SAP S/4HANA Cloud Public Edition · GROW with SAP · NL · DACH · APAC · US</p>
- <div class="ft-copy">© 2025 Scheer IDS Netherlands · Vertrouwelijk intern document</div>
+ <div class="ft-title">Scheer IDS Netherlands &mdash; SAP Expert Partner</div>
+ <p style="color:rgba(255,255,255,.7);font-size:12.5px;margin:0 0 4px;">100% focus op SAP S/4HANA Cloud Public Edition &middot; GROW with SAP &middot; NL &middot; DACH &middot; APAC &middot; US</p>
+ <div class="ft-copy">&copy; 2025 Scheer IDS Netherlands &middot; Vertrouwelijk intern document</div>
  </div>
 </footer>
 
 <script>
-// ════════════════════════════════════════════════════════
-// THEME/LABEL MAPS (auto-generated from Excel config)
-// ════════════════════════════════════════════════════════
-const TE = {"infrastructuur": "", "licentiemodel": "", "implementatie_deployment": "", "btp_integratie": "", "compliance_security": "", "tco_pricing": "", "support_onderhoud": ""};
+
+// ══════════════════════════════════════════
+// CONFIG (injected from Excel)
+// ══════════════════════════════════════════
+const TE = {"infrastructuur": "[INF]", "licentiemodel": "[LIC]", "implementatie_deployment": "[IMP]", "btp_integratie": "[BTP]", "compliance_security": "[SEC]", "tco_pricing": "[TCO]", "support_onderhoud": "[AMS]"};
 const TL = {"infrastructuur": "Infrastructuur", "licentiemodel": "Licentiemodel", "implementatie_deployment": "Implementatie & Deployment", "btp_integratie": "BTP / Integratie", "compliance_security": "Compliance & Security", "tco_pricing": "TCO / Pricing", "support_onderhoud": "Support & Onderhoud"};
+const COL_LABELS = {"col4": "S/4HANA Cloud Public Edition", "col5": "S/4HANA Cloud Private Edition", "col6": "Scheer Perspective"};
 
-// Column labels
-const COL_LABELS = {
- col4: "S/4HANA Cloud Public Edition",
- col5: "S/4HANA Cloud Private Edition",
- col6: "Scheer Perspective",
-};
-
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // STATE
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 const sel = Object.create(null);
-const colOn = {col4:true, col5:true, col6:true};
-let exportFmt = 'excel';
+const colOn = { col4: true, col5: true, col6: true };
+let exportFmt = "excel";
 let allSelActive = false;
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CHIP TOGGLES
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function chipToggle(btn) {
- btn.classList.toggle('on');
- var t = btn.getAttribute('data-t');
- var sec = document.querySelector('.theme-sec[data-theme="' + t + '"]');
- if (sec) sec.style.display = btn.classList.contains('on') ? '' : 'none';
+ btn.classList.toggle("on");
+ var t = btn.getAttribute("data-t");
+ var sec = document.querySelector(".theme-sec[data-theme=\"" + t + "\"]");
+ if (sec) sec.style.display = btn.classList.contains("on") ? "" : "none";
 }
 function chipAll(btn) {
- document.querySelectorAll('.chip:not([data-t="all"])').forEach(function(c) {
- c.classList.add('on');
- var sec = document.querySelector('.theme-sec[data-theme="' + c.getAttribute('data-t') + '"]');
- if (sec) sec.style.display = '';
+ document.querySelectorAll(".chip:not([data-t=\"all\"])").forEach(function(c) {
+ c.classList.add("on");
+ var sec = document.querySelector(".theme-sec[data-theme=\"" + c.getAttribute("data-t") + "\"]");
+ if (sec) sec.style.display = "";
  });
- btn.classList.add('on');
+ btn.classList.add("on");
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // COLLAPSE / EXPAND
-// ════════════════════════════════════════════════════════
-function toggleCard(id) { document.getElementById(id).classList.toggle('collapsed'); }
-function expandAll() { document.querySelectorAll('.matrix-card').forEach(function(c) { c.classList.remove('collapsed'); }); updateRcCount(); }
-function collapseAll(){ document.querySelectorAll('.matrix-card').forEach(function(c) { c.classList.add('collapsed'); }); updateRcCount(); }
+// ══════════════════════════════════════════
+function toggleCard(id) {
+ var card = document.getElementById(id);
+ if (card) card.classList.toggle("collapsed");
+}
+function expandAll() {
+ document.querySelectorAll(".matrix-card").forEach(function(c) { c.classList.remove("collapsed"); });
+ updateRcCount();
+}
+function collapseAll() {
+ document.querySelectorAll(".matrix-card").forEach(function(c) { c.classList.add("collapsed"); });
+ updateRcCount();
+}
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // SEARCH
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function doSearch(q) {
  q = q.toLowerCase().trim();
- document.querySelectorAll('.matrix-card').forEach(function(card) {
- if (!q) { card.style.display = ''; card.querySelectorAll('.asp-row').forEach(function(r) { r.style.display = ''; }); return; }
- var rows = card.querySelectorAll('.asp-row'); var any = false;
- rows.forEach(function(r) { var m = r.textContent.toLowerCase().indexOf(q) !== -1; r.style.display = m ? '' : 'none'; if (m) any = true; });
- card.style.display = any ? '' : 'none';
- if (any) card.classList.remove('collapsed');
+ document.querySelectorAll(".matrix-card").forEach(function(card) {
+ if (!q) {
+ card.style.display = "";
+ card.querySelectorAll(".asp-row").forEach(function(r) { r.style.display = ""; });
+ return;
+ }
+ var rows = card.querySelectorAll(".asp-row");
+ var any = false;
+ rows.forEach(function(r) {
+ var m = r.textContent.toLowerCase().indexOf(q) !== -1;
+ r.style.display = m ? "" : "none";
+ if (m) any = true;
+ });
+ card.style.display = any ? "" : "none";
+ if (any) card.classList.remove("collapsed");
  });
  updateRcCount();
 }
 function updateRcCount() {
  var v = 0;
- document.querySelectorAll('.asp-row').forEach(function(r) { if (r.style.display !== 'none') v++; });
- document.getElementById('rcCount').textContent = v + ' vergelijkingspunten';
+ document.querySelectorAll(".asp-row").forEach(function(r) {
+ if (r.style.display !== "none") v++;
+ });
+ var el = document.getElementById("rcCount");
+ if (el) el.textContent = v + " vergelijkingspunten";
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // SELECT ALL
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function toggleSelectAll() {
- var btn = document.getElementById('btnSelAll');
+ var btn = document.getElementById("btnSelAll");
  if (!allSelActive) {
- document.querySelectorAll('.sub-chk').forEach(function(cb) { if (!cb.checked) { cb.checked = true; applySubChk(cb, true); } });
- allSelActive = true; btn.textContent = '☐ Deselecteer alles'; btn.classList.add('active');
- } else { deselectAll(); }
+ document.querySelectorAll(".sub-chk").forEach(function(cb) {
+ if (!cb.checked) { cb.checked = true; applySubChk(cb, true); }
+ });
+ allSelActive = true;
+ btn.textContent = "Deselecteer alles";
+ } else {
+ deselectAll();
+ }
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // SUB-CHECKBOX
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function onSubChk(cb) { applySubChk(cb, cb.checked); }
 function applySubChk(cb, checked) {
- var cardId = cb.getAttribute('data-card');
- var theme = cb.getAttribute('data-theme');
- var name = cb.getAttribute('data-name');
- var card = document.getElementById(cardId);
- var rows = card.querySelectorAll('.asp-row');
- var n = rows.length;
- if (checked) {
- var rs = new Set(); for (var i = 0; i < n; i++) rs.add(i);
- sel[cardId] = {theme:theme, name:name, rows:rs};
- card.classList.add('selected'); card.classList.remove('partial');
- card.querySelectorAll('.row-chk').forEach(function(r) { r.checked = true; r.indeterminate = false; });
- rows.forEach(function(r) { r.classList.remove('desel'); });
- } else {
- delete sel[cardId]; card.classList.remove('selected','partial');
- card.querySelectorAll('.row-chk').forEach(function(r) { r.checked = false; r.indeterminate = false; });
- rows.forEach(function(r) { r.classList.add('desel'); });
- }
- updateDot(theme); updateSelBar(); refreshBadge(cardId);
-}
-
-// ════════════════════════════════════════════════════════
-// ROW-CHECKBOX
-// ════════════════════════════════════════════════════════
-function onRowChk(cb) {
- var cardId = cb.getAttribute('data-card');
- var idx = parseInt(cb.getAttribute('data-idx'), 10);
- var card = document.getElementById(cardId);
- var theme = card.getAttribute('data-theme');
- var name = card.querySelector('.sub-lbl').textContent;
- var rowEl = null;
- card.querySelectorAll('.asp-row').forEach(function(r) { if (parseInt(r.getAttribute('data-idx'),10) === idx) rowEl = r; });
- if (cb.checked) {
- if (rowEl) rowEl.classList.remove('desel');
- if (!sel[cardId]) sel[cardId] = {theme:theme, name:name, rows:new Set()};
- sel[cardId].rows.add(idx);
- } else {
- if (rowEl) rowEl.classList.add('desel');
- if (sel[cardId]) sel[cardId].rows.delete(idx);
- }
- var total = card.querySelectorAll('.row-chk').length;
- var nSel = sel[cardId] ? sel[cardId].rows.size : 0;
- var subCb = document.getElementById('subchk_' + cardId);
- if (nSel === 0) {
- delete sel[cardId]; card.classList.remove('selected','partial');
- if (subCb) { subCb.checked = false; subCb.indeterminate = false; }
- } else if (nSel === total) {
- card.classList.add('selected'); card.classList.remove('partial');
- if (subCb) { subCb.checked = true; subCb.indeterminate = false; }
- } else {
- card.classList.remove('selected'); card.classList.add('partial');
- if (subCb) { subCb.checked = false; subCb.indeterminate = true; }
- }
- updateDot(theme); updateSelBar(); refreshBadge(cardId);
-}
-function refreshBadge(cardId) {
- var s = sel[cardId]; var card = document.getElementById(cardId);
- var sbd = document.getElementById('sbd_' + cardId); var pbd = document.getElementById('pbd_' + cardId);
- if (!sbd || !pbd) return;
- if (s && s.rows.size > 0) {
- var tot = card.querySelectorAll('.row-chk').length;
- if (s.rows.size < tot) { pbd.textContent = s.rows.size+'/'+tot+' aspecten'; pbd.style.display='inline-block'; sbd.style.display='none'; }
- else { sbd.style.display='inline-block'; pbd.style.display='none'; }
- } else { sbd.style.display='none'; pbd.style.display='none'; }
-}
-function updateDot(theme) {
- var has = Object.values(sel).some(function(s) { return s.theme === theme; });
- var c = document.querySelector('.chip[data-t="' + theme + '"]');
- if (c) c.classList.toggle('has-sel', has);
-}
-function updateSelBar() {
- var items = Object.values(sel);
- var totalAsp = items.reduce(function(a,s) { return a + s.rows.size; }, 0);
- document.getElementById('selBar').classList.toggle('show', totalAsp > 0);
- document.getElementById('sbCount').textContent = items.length + ' sub-onderwerp' + (items.length!==1?'en':'') + ' · ' + totalAsp + ' aspecten geselecteerd';
- document.getElementById('sbNames').textContent = items.slice(0,5).map(function(s) { return TE[s.theme]+' '+s.name; }).join(' · ') + (items.length>5?' ...':'');
-}
-function deselectAll() {
- Object.keys(sel).forEach(function(id) {
- delete sel[id]; var card = document.getElementById(id); if (!card) return;
- card.classList.remove('selected','partial');
- card.querySelectorAll('.row-chk').forEach(function(r) { r.checked=false; r.indeterminate=false; });
- card.querySelectorAll('.asp-row').forEach(function(r) { r.classList.remove('desel'); });
- var cb = document.getElementById('subchk_'+id); if (cb) { cb.checked=false; cb.indeterminate=false; }
- var sbd = document.getElementById('sbd_'+id); if (sbd) sbd.style.display='none';
- var pbd = document.getElementById('pbd_'+id); if (pbd) pbd.style.display='none';
- });
- document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('has-sel'); });
- document.getElementById('btnSelAll').textContent = '☑ Selecteer alle thema's';
- document.getElementById('btnSelAll').classList.remove('active');
- allSelActive = false; updateSelBar();
-}
-
-// ════════════════════════════════════════════════════════
-// COLUMN TOGGLES
-// ════════════════════════════════════════════════════════
-function toggleCol(btn) {
- btn.classList.toggle('on');
- var col = btn.getAttribute('data-col');
- colOn[col] = btn.classList.contains('on');
- var cc = document.getElementById('cc_' + col);
- if (cc) cc.textContent = colOn[col] ? '*' : '○';
-}
-
-// ════════════════════════════════════════════════════════
-// MODAL
-// ════════════════════════════════════════════════════════
-function openModal() {
- var items = Object.values(sel);
- document.getElementById('mc').textContent = items.length;
- document.getElementById('selList').innerHTML = items.map(function(s) {
- var n = s.rows.size;
- return '<div class="sli"><span class="sli-theme">'+TE[s.theme]+' '+TL[s.theme]+'</span><span class="sli-name">'+s.name+'</span><span class="sli-count">'+n+' aspect'+(n!==1?'en':'')+'</span></div>';
- }).join('');
- document.getElementById('expModal').classList.add('open');
-}
-function closeModal() { document.getElementById('expModal').classList.remove('open'); }
-document.getElementById('expModal').addEventListener('click', function(e) { if (e.target === document.getElementById('expModal')) closeModal(); });
-
-var fmtLabels = {excel:' Download Excel', word:' Download Word', clipboard:' Kopieer naar clipboard', print:' Print / PDF'};
-var fmtHints = {excel:'Excel: 2 tabbladen - Samenvatting + Vergelijkingspunten', word:'Word-document met tabel per sub-onderwerp', clipboard:'Plak direct in e-mail of Teams', print:'Opent print-dialoog'};
-function setFmt(btn) {
- document.querySelectorAll('.fmt-btn').forEach(function(b) { b.classList.remove('on'); });
- btn.classList.add('on'); exportFmt = btn.getAttribute('data-fmt');
- document.getElementById('btnOk').textContent = fmtLabels[exportFmt];
- document.getElementById('mhint').textContent = fmtHints[exportFmt];
-}
-
-// ════════════════════════════════════════════════════════
-// HELPERS
-// ════════════════════════════════════════════════════════
-function clean(s) { return s ? s.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim() : ''; }
-function getFb(rowId) { var el = document.getElementById('fb_' + rowId); return el ? el.value : ''; }
-
-function buildSections() {
- var proj = document.getElementById('projName').value || 'Scheer IDS Playbook';
- var ctx = document.getElementById('expCtx').value;
- var sections = [];
- Object.entries(sel).forEach(function(entry) {
- var cardId = entry[0]; var s = entry[1];
+ var cardId = cb.getAttribute("data-card");
+ var theme = cb.getAttribute("data-theme");
+ var name = cb.getAttribute("data-name");
  var card = document.getElementById(cardId);
  if (!card) return;
- var allRows = card.querySelectorAll('.asp-row');
- var rows = [];
- allRows.forEach(function(r) {
- var idx = parseInt(r.getAttribute('data-idx'), 10);
- if (!s.rows.has(idx)) return;
- var cells = r.querySelectorAll('td');
- var rid = cardId + '_r' + idx;
- rows.push({
- aspect: cells[0] ? cells[0].querySelector('.asp-name').textContent : '',
- col4: cells[1] ? cells[1].textContent.trim() : '',
- col5: cells[2] ? cells[2].textContent.trim() : '',
- col6: cells[3] ? cells[3].textContent.trim() : '',
- fb: getFb(rid),
- idx: idx,
- });
- });
- sections.push({theme:s.theme, name:s.name, rows:rows, cardId:cardId});
- });
- return {proj:proj, ctx:ctx, sections:sections};
+ var rows = card.querySelectorAll(".asp-row");
+ var n = rows.length;
+ if (checked) {
+ var rs = new Set();
+ for (var i = 0; i < n; i++) rs.add(i);
+ sel[cardId] = { theme: theme, name: name, rows: rs };
+ card.classList.add("selected");
+ card.classList.remove("partial");
+ card.querySelectorAll(".row-chk").forEach(function(r) { r.checked = true; r.indeterminate = false; });
+ rows.forEach(function(r) { r.classList.remove("desel"); });
+ } else {
+ delete sel[cardId];
+ card.classList.remove("selected", "partial");
+ card.querySelectorAll(".row-chk").forEach(function(r) { r.checked = false; r.indeterminate = false; });
+ rows.forEach(function(r) { r.classList.add("desel"); });
+ }
+ updateDot(theme);
+ updateSelBar();
+ refreshBadge(cardId);
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// ROW CHECKBOX
+// ══════════════════════════════════════════
+function onRowChk(cb) {
+ var cardId = cb.getAttribute("data-card");
+ var idx = parseInt(cb.getAttribute("data-idx"), 10);
+ var card = document.getElementById(cardId);
+ if (!card) return;
+ var theme = card.getAttribute("data-theme");
+ var name = card.querySelector(".sub-lbl").textContent;
+ var rowEl = null;
+ card.querySelectorAll(".asp-row").forEach(function(r) {
+ if (parseInt(r.getAttribute("data-idx"), 10) === idx) rowEl = r;
+ });
+ if (cb.checked) {
+ if (rowEl) rowEl.classList.remove("desel");
+ if (!sel[cardId]) sel[cardId] = { theme: theme, name: name, rows: new Set() };
+ sel[cardId].rows.add(idx);
+ } else {
+ if (rowEl) rowEl.classList.add("desel");
+ if (sel[cardId]) sel[cardId].rows.delete(idx);
+ }
+ var total = card.querySelectorAll(".row-chk").length;
+ var nSel = sel[cardId] ? sel[cardId].rows.size : 0;
+ var subCb = document.getElementById("subchk_" + cardId);
+ if (nSel === 0) {
+ delete sel[cardId];
+ card.classList.remove("selected", "partial");
+ if (subCb) { subCb.checked = false; subCb.indeterminate = false; }
+ } else if (nSel === total) {
+ card.classList.add("selected");
+ card.classList.remove("partial");
+ if (subCb) { subCb.checked = true; subCb.indeterminate = false; }
+ } else {
+ card.classList.remove("selected");
+ card.classList.add("partial");
+ if (subCb) { subCb.checked = false; subCb.indeterminate = true; }
+ }
+ updateDot(theme);
+ updateSelBar();
+ refreshBadge(cardId);
+}
+
+function refreshBadge(cardId) {
+ var s = sel[cardId];
+ var card = document.getElementById(cardId);
+ var sbd = document.getElementById("sbd_" + cardId);
+ var pbd = document.getElementById("pbd_" + cardId);
+ if (!sbd || !pbd || !card) return;
+ if (s && s.rows.size > 0) {
+ var tot = card.querySelectorAll(".row-chk").length;
+ if (s.rows.size < tot) {
+ pbd.textContent = s.rows.size + "/" + tot + " aspecten";
+ pbd.style.display = "inline-block";
+ sbd.style.display = "none";
+ } else {
+ sbd.style.display = "inline-block";
+ pbd.style.display = "none";
+ }
+ } else {
+ sbd.style.display = "none";
+ pbd.style.display = "none";
+ }
+}
+
+function updateDot(theme) {
+ var has = Object.values(sel).some(function(s) { return s.theme === theme; });
+ var c = document.querySelector(".chip[data-t=\"" + theme + "\"]");
+ if (c) c.classList.toggle("has-sel", has);
+}
+
+function updateSelBar() {
+ var items = Object.values(sel);
+ var totalAsp = items.reduce(function(a, s) { return a + s.rows.size; }, 0);
+ var bar = document.getElementById("selBar");
+ if (bar) bar.classList.toggle("show", totalAsp > 0);
+ var cnt = document.getElementById("sbCount");
+ if (cnt) cnt.textContent = items.length + " sub-onderwerpen / " + totalAsp + " aspecten geselecteerd";
+ var nm = document.getElementById("sbNames");
+ if (nm) nm.textContent = items.slice(0, 5).map(function(s) {
+ return (TE[s.theme] || "") + " " + s.name;
+ }).join(" · ") + (items.length > 5 ? " ..." : "");
+}
+
+function deselectAll() {
+ Object.keys(sel).forEach(function(id) {
+ delete sel[id];
+ var card = document.getElementById(id);
+ if (!card) return;
+ card.classList.remove("selected", "partial");
+ card.querySelectorAll(".row-chk").forEach(function(r) { r.checked = false; r.indeterminate = false; });
+ card.querySelectorAll(".asp-row").forEach(function(r) { r.classList.remove("desel"); });
+ var cb = document.getElementById("subchk_" + id);
+ if (cb) { cb.checked = false; cb.indeterminate = false; }
+ var sbd = document.getElementById("sbd_" + id);
+ var pbd = document.getElementById("pbd_" + id);
+ if (sbd) sbd.style.display = "none";
+ if (pbd) pbd.style.display = "none";
+ });
+ document.querySelectorAll(".chip").forEach(function(c) { c.classList.remove("has-sel"); });
+ var btn = document.getElementById("btnSelAll");
+ if (btn) { btn.textContent = "Selecteer alles"; btn.classList.remove("active"); }
+ allSelActive = false;
+ updateSelBar();
+}
+
+// ══════════════════════════════════════════
+// COLUMN TOGGLES
+// ══════════════════════════════════════════
+function toggleCol(btn) {
+ btn.classList.toggle("on");
+ var col = btn.getAttribute("data-col");
+ colOn[col] = btn.classList.contains("on");
+ var cc = document.getElementById("cc_" + col);
+ if (cc) cc.textContent = colOn[col] ? "*" : "○";
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal() {
+ var items = Object.values(sel);
+ var mc = document.getElementById("mc");
+ if (mc) mc.textContent = items.length;
+ var list = document.getElementById("selList");
+ if (list) list.innerHTML = items.map(function(s) {
+ var n = s.rows.size;
+ return "<div class=\"sli\">" +
+ "<span class=\"sli-theme\">" + (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + "</span>" +
+ "<span class=\"sli-name\">" + s.name + "</span>" +
+ "<span class=\"sli-count\">" + n + " aspect" + (n !== 1 ? "en" : "") + "</span>" +
+ "</div>";
+ }).join("");
+ var modal = document.getElementById("expModal");
+ if (modal) modal.classList.add("open");
+}
+function closeModal() {
+ var modal = document.getElementById("expModal");
+ if (modal) modal.classList.remove("open");
+}
+document.addEventListener("DOMContentLoaded", function() {
+ var modal = document.getElementById("expModal");
+ if (modal) modal.addEventListener("click", function(e) {
+ if (e.target === modal) closeModal();
+ });
+});
+
+var fmtLabels = {
+ excel: "Download Excel",
+ word: "Download Word",
+ clipboard: "Kopieer naar Clipboard",
+ print: "Print / PDF"
+};
+var fmtHints = {
+ excel: "Excel: 2 tabbladen - Samenvatting + Vergelijkingspunten",
+ word: "Word-document met tabel per sub-onderwerp",
+ clipboard: "Plak direct in e-mail of Teams",
+ print: "Opent print-dialoog voor PDF of printer"
+};
+function setFmt(btn) {
+ document.querySelectorAll(".fmt-btn").forEach(function(b) { b.classList.remove("on"); });
+ btn.classList.add("on");
+ exportFmt = btn.getAttribute("data-fmt");
+ var ok = document.getElementById("btnOk");
+ var hint = document.getElementById("mhint");
+ if (ok) ok.textContent = fmtLabels[exportFmt] || exportFmt;
+ if (hint) hint.textContent = fmtHints[exportFmt] || "";
+}
+
+// ══════════════════════════════════════════
+// EXPORT HELPERS
+// ══════════════════════════════════════════
+function clean(s) {
+ return s ? s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "";
+}
+function getFb(rid) {
+ var el = document.getElementById("fb_" + rid);
+ return el ? el.value : "";
+}
+function buildSections() {
+ var proj = (document.getElementById("projName") || {}).value || "Scheer IDS Playbook";
+ var ctx = (document.getElementById("expCtx") || {}).value || "";
+ var sections = [];
+ Object.entries(sel).forEach(function(entry) {
+ var cardId = entry[0];
+ var s = entry[1];
+ var card = document.getElementById(cardId);
+ if (!card) return;
+ var rows = [];
+ card.querySelectorAll(".asp-row").forEach(function(r) {
+ var idx = parseInt(r.getAttribute("data-idx"), 10);
+ if (!s.rows.has(idx)) return;
+ var cells = r.querySelectorAll("td");
+ rows.push({
+ aspect: (cells[0] && cells[0].querySelector(".asp-name")) ? cells[0].querySelector(".asp-name").textContent : "",
+ col4: cells[1] ? cells[1].textContent.trim() : "",
+ col5: cells[2] ? cells[2].textContent.trim() : "",
+ col6: cells[3] ? cells[3].textContent.trim() : "",
+ fb: getFb(cardId + "_r" + idx),
+ idx: idx
+ });
+ });
+ sections.push({ theme: s.theme, name: s.name, rows: rows, cardId: cardId });
+ });
+ return { proj: proj, ctx: ctx, sections: sections };
+}
+
+// ══════════════════════════════════════════
 // EXCEL EXPORT
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function doExcel() {
- if (typeof XLSX === 'undefined') { alert('Excel bibliotheek niet geladen.'); return; }
- var d = buildSections(); var wb = XLSX.utils.book_new();
- var sum = [['Scheer IDS Netherlands - Playbook Export'],['Projectnaam:', d.proj],['Exportdatum:', new Date().toLocaleDateString('nl-NL')],[],['Context:', d.ctx||'(geen context)'],[]];
- sum.push(['Thema','Sub-onderwerp','Aspecten']);
- d.sections.forEach(function(s) { sum.push([TL[s.theme]||s.theme, s.name, s.rows.length+' aspecten']); });
+ if (typeof XLSX === "undefined") { alert("Excel bibliotheek niet geladen. Controleer internetverbinding."); return; }
+ var d = buildSections();
+ var wb = XLSX.utils.book_new();
+ var sum = [
+ ["Scheer IDS Netherlands - Playbook Export"],
+ ["Projectnaam:", d.proj],
+ ["Exportdatum:", new Date().toLocaleDateString("nl-NL")],
+ [],
+ ["Context:", d.ctx || "(geen context)"],
+ [],
+ ["Thema", "Sub-onderwerp", "Aspecten"]
+ ];
+ d.sections.forEach(function(s) {
+ sum.push([(TL[s.theme] || s.theme), s.name, s.rows.length + " aspecten"]);
+ });
  var ws1 = XLSX.utils.aoa_to_sheet(sum);
- ws1['!cols'] = [{wch:20},{wch:50},{wch:14}];
- XLSX.utils.book_append_sheet(wb, ws1, 'Samenvatting');
- var cols = ['Thema','Sub-onderwerp','Aspect'];
+ ws1["!cols"] = [{ wch: 20 }, { wch: 55 }, { wch: 14 }];
+ XLSX.utils.book_append_sheet(wb, ws1, "Samenvatting");
+
+ var cols = ["Thema", "Sub-onderwerp", "Aspect"];
  if (colOn.col4) cols.push(COL_LABELS.col4);
  if (colOn.col5) cols.push(COL_LABELS.col5);
  if (colOn.col6) cols.push(COL_LABELS.col6);
- cols.push('Jouw Feedback');
+ cols.push("Jouw Feedback");
  var rows = [cols];
  d.sections.forEach(function(s) {
  s.rows.forEach(function(r) {
- var row = [TL[s.theme]||s.theme, s.name, r.aspect];
+ var row = [(TL[s.theme] || s.theme), s.name, r.aspect];
  if (colOn.col4) row.push(clean(r.col4));
  if (colOn.col5) row.push(clean(r.col5));
  if (colOn.col6) row.push(clean(r.col6));
- row.push(r.fb); rows.push(row);
+ row.push(r.fb);
+ rows.push(row);
  });
  rows.push([]);
  });
  var ws2 = XLSX.utils.aoa_to_sheet(rows);
- ws2['!cols'] = [{wch:16},{wch:28},{wch:22},{wch:42},{wch:38},{wch:44},{wch:28}];
- XLSX.utils.book_append_sheet(wb, ws2, 'Vergelijkingspunten');
- var fn = d.proj.replace(/[^a-zA-Z0-9_\- ]/g,'').trim().replace(/\s+/g,'_') || 'Scheer_Playbook';
- XLSX.writeFile(wb, fn + '.xlsx'); closeModal();
+ ws2["!cols"] = [{ wch: 16 }, { wch: 28 }, { wch: 22 }, { wch: 44 }, { wch: 40 }, { wch: 46 }, { wch: 28 }];
+ XLSX.utils.book_append_sheet(wb, ws2, "Vergelijkingspunten");
+
+ var fn = d.proj.replace(/[^a-zA-Z0-9_ -]/g, "").trim().replace(/\s+/g, "_") || "Scheer_Playbook";
+ XLSX.writeFile(wb, fn + ".xlsx");
+ closeModal();
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // WORD EXPORT
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function doWord() {
  var d = buildSections();
- var h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="UTF-8"><style>body{font-family:Calibri,sans-serif;font-size:11pt;}h1{color:#05618d;font-size:16pt;}h2{color:#1a6fa5;font-size:12pt;border-bottom:1px solid #ccc;padding-bottom:4px;margin-top:20pt;}table{border-collapse:collapse;width:100%;}th{background:#05618d;color:white;padding:5pt 8pt;font-size:9pt;text-align:left;}td{padding:5pt 8pt;border:1pt solid #ddd;font-size:9pt;vertical-align:top;}tr:nth-child(even){background:#f8f9fa;}</style></head><body>';
- h += '<h1>'+d.proj+'</h1><p style="color:#888;font-size:10pt;">Scheer IDS &bull; '+new Date().toLocaleDateString('nl-NL')+'</p>';
- if (d.ctx) h += '<p style="font-style:italic;border-left:3pt solid #ef7c00;padding-left:10pt;">'+d.ctx.replace(/\n/g,'<br>')+'</p>';
+ var h = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\">"
+ + "<head><meta charset=\"UTF-8\"><style>"
+ + "body{font-family:Calibri,sans-serif;font-size:11pt;}"
+ + "h1{color:#05618d;font-size:16pt;}h2{color:#1a6fa5;font-size:12pt;border-bottom:1px solid #ccc;margin-top:20pt;}"
+ + "table{border-collapse:collapse;width:100%;margin-bottom:8pt;}"
+ + "th{background:#05618d;color:white;padding:5pt 8pt;font-size:9pt;text-align:left;}"
+ + "td{padding:5pt 8pt;border:1pt solid #ddd;font-size:9pt;vertical-align:top;}"
+ + "tr:nth-child(even){background:#f8f9fa;}"
+ + "</style></head><body>";
+ h += "<h1>" + d.proj + "</h1><p style=\"color:#888;font-size:10pt;\">Scheer IDS &bull; " + new Date().toLocaleDateString("nl-NL") + "</p>";
+ if (d.ctx) h += "<p style=\"font-style:italic;border-left:3pt solid #ef7c00;padding-left:10pt;\">" + d.ctx.replace(/\n/g, "<br>") + "</p>";
  d.sections.forEach(function(s) {
- h += '<h2>'+(TE[s.theme]||'')+' '+(TL[s.theme]||s.theme)+' &bull; '+s.name+'</h2><table><thead><tr><th>Aspect</th>';
- if (colOn.col4) h += '<th>'+COL_LABELS.col4+'</th>';
- if (colOn.col5) h += '<th>'+COL_LABELS.col5+'</th>';
- if (colOn.col6) h += '<th>'+COL_LABELS.col6+'</th>';
- h += '<th>Feedback</th></tr></thead><tbody>';
+ h += "<h2>" + (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + " &bull; " + s.name + "</h2>";
+ h += "<table><thead><tr><th>Aspect</th>";
+ if (colOn.col4) h += "<th>" + COL_LABELS.col4 + "</th>";
+ if (colOn.col5) h += "<th>" + COL_LABELS.col5 + "</th>";
+ if (colOn.col6) h += "<th>" + COL_LABELS.col6 + "</th>";
+ h += "<th>Feedback</th></tr></thead><tbody>";
  s.rows.forEach(function(r) {
- h += '<tr><td><strong>'+r.aspect+'</strong></td>';
- if (colOn.col4) h += '<td>'+clean(r.col4)+'</td>';
- if (colOn.col5) h += '<td>'+clean(r.col5)+'</td>';
- if (colOn.col6) h += '<td>'+clean(r.col6)+'</td>';
- h += '<td>'+r.fb+'</td></tr>';
+ h += "<tr><td><strong>" + r.aspect + "</strong></td>";
+ if (colOn.col4) h += "<td>" + clean(r.col4) + "</td>";
+ if (colOn.col5) h += "<td>" + clean(r.col5) + "</td>";
+ if (colOn.col6) h += "<td>" + clean(r.col6) + "</td>";
+ h += "<td>" + r.fb + "</td></tr>";
  });
- h += '</tbody></table>';
+ h += "</tbody></table>";
  });
- h += '</body></html>';
- var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([h], {type:'application/msword'}));
- a.download = (d.proj.replace(/[^a-zA-Z0-9_\- ]/g,'').trim().replace(/\s+/g,'_')||'Scheer_Playbook')+'.doc';
- a.click(); closeModal();
+ h += "</body></html>";
+ var a = document.createElement("a");
+ a.href = URL.createObjectURL(new Blob([h], { type: "application/msword" }));
+ a.download = (d.proj.replace(/[^a-zA-Z0-9_ -]/g, "").trim().replace(/\s+/g, "_") || "Scheer_Playbook") + ".doc";
+ a.click();
+ closeModal();
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CLIPBOARD
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function doClipboard() {
- var d = buildSections(); var t = d.proj+'\n'+new Date().toLocaleDateString('nl-NL')+'\n\n';
- if (d.ctx) t += d.ctx+'\n\n---\n\n';
+ var d = buildSections();
+ var t = d.proj + "\n" + new Date().toLocaleDateString("nl-NL") + "\n\n";
+ if (d.ctx) t += d.ctx + "\n\n---\n\n";
  d.sections.forEach(function(s) {
- t += (TE[s.theme]||'')+' '+(TL[s.theme]||s.theme)+' - '+s.name+'\n'+'─'.repeat(60)+'\n';
+ t += (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + " - " + s.name + "\n";
+ t += "─".repeat(60) + "\n";
  s.rows.forEach(function(r) {
- t += '\n- '+r.aspect+'\n';
- if (colOn.col4) t += ' '+COL_LABELS.col4+': '+clean(r.col4)+'\n';
- if (colOn.col5) t += ' '+COL_LABELS.col5+': '+clean(r.col5)+'\n';
- if (colOn.col6) t += ' '+COL_LABELS.col6+': '+clean(r.col6)+'\n';
- if (r.fb) t += ' FEEDBACK: '+r.fb+'\n';
+ t += "\n- " + r.aspect + "\n";
+ if (colOn.col4) t += " " + COL_LABELS.col4 + ": " + clean(r.col4) + "\n";
+ if (colOn.col5) t += " " + COL_LABELS.col5 + ": " + clean(r.col5) + "\n";
+ if (colOn.col6) t += " " + COL_LABELS.col6 + ": " + clean(r.col6) + "\n";
+ if (r.fb) t += " Feedback: " + r.fb + "\n";
  });
- t += '\n';
+ t += "\n";
  });
  navigator.clipboard.writeText(t).then(function() {
- var b = document.getElementById('btnOk'); b.textContent = '* Gekopieerd!'; b.style.background = '#27ae60';
- setTimeout(function() { b.textContent = fmtLabels[exportFmt]; b.style.background = ''; closeModal(); }, 1800);
- }).catch(function() { alert('Clipboard niet beschikbaar.'); });
+ var b = document.getElementById("btnOk");
+ if (b) { b.textContent = "Gekopieerd!"; b.style.background = "#27ae60"; }
+ setTimeout(function() {
+ if (b) { b.textContent = fmtLabels[exportFmt]; b.style.background = ""; }
+ closeModal();
+ }, 1800);
+ }).catch(function() { alert("Clipboard niet beschikbaar in deze browser."); });
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // PRINT
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function doPrint() {
- var d = buildSections(); var win = window.open('','_blank');
- var h = '<!DOCTYPE html><html><head><title>'+d.proj+'</title><style>body{font-family:Segoe UI,sans-serif;padding:20px;font-size:11px;}h1{color:#05618d;}h2{color:#1a6fa5;font-size:12px;border-bottom:1px solid #ccc;}table{border-collapse:collapse;width:100%;font-size:10px;}th{background:#05618d;color:#fff;padding:5px 7px;text-align:left;}td{padding:5px 7px;border:1px solid #ddd;vertical-align:top;}tr:nth-child(even){background:#f8f9fa;}@media print{h2{page-break-after:avoid;}table{page-break-inside:avoid;}}</style></head><body>';
- h += '<h1>'+d.proj+'</h1><p style="color:#888;">Scheer IDS &bull; '+new Date().toLocaleDateString('nl-NL')+'</p>';
- if (d.ctx) h += '<p style="font-style:italic;border-left:3px solid #ef7c00;padding-left:10px;">'+d.ctx.replace(/\n/g,'<br>')+'</p>';
+ var d = buildSections();
+ var win = window.open("", "_blank");
+ if (!win) { alert("Pop-up geblokkeerd. Sta pop-ups toe voor deze pagina."); return; }
+ var h = "<!DOCTYPE html><html><head><title>" + d.proj + "</title>"
+ + "<style>body{font-family:Segoe UI,sans-serif;padding:20px;font-size:11px;}"
+ + "h1{color:#05618d;}h2{color:#1a6fa5;font-size:12px;border-bottom:1px solid #ccc;}"
+ + "table{border-collapse:collapse;width:100%;font-size:10px;}"
+ + "th{background:#05618d;color:#fff;padding:5px 7px;text-align:left;}"
+ + "td{padding:5px 7px;border:1px solid #ddd;vertical-align:top;}"
+ + "tr:nth-child(even){background:#f8f9fa;}"
+ + "@media print{h2{page-break-after:avoid;}table{page-break-inside:avoid;}}"
+ + "</style></head><body>";
+ h += "<h1>" + d.proj + "</h1><p style=\"color:#888;\">Scheer IDS &bull; " + new Date().toLocaleDateString("nl-NL") + "</p>";
+ if (d.ctx) h += "<p style=\"font-style:italic;border-left:3px solid #ef7c00;padding-left:10px;\">" + d.ctx.replace(/\n/g, "<br>") + "</p>";
  d.sections.forEach(function(s) {
- h += '<h2>'+(TE[s.theme]||'')+' '+(TL[s.theme]||s.theme)+' &bull; '+s.name+'</h2><table><thead><tr><th>Aspect</th>';
- if (colOn.col4) h += '<th>'+COL_LABELS.col4+'</th>';
- if (colOn.col5) h += '<th>'+COL_LABELS.col5+'</th>';
- if (colOn.col6) h += '<th>'+COL_LABELS.col6+'</th>';
- h += '<th>Feedback</th></tr></thead><tbody>';
+ h += "<h2>" + (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + " &bull; " + s.name + "</h2>";
+ h += "<table><thead><tr><th>Aspect</th>";
+ if (colOn.col4) h += "<th>" + COL_LABELS.col4 + "</th>";
+ if (colOn.col5) h += "<th>" + COL_LABELS.col5 + "</th>";
+ if (colOn.col6) h += "<th>" + COL_LABELS.col6 + "</th>";
+ h += "<th>Feedback</th></tr></thead><tbody>";
  s.rows.forEach(function(r) {
- h += '<tr><td><strong>'+r.aspect+'</strong></td>';
- if (colOn.col4) h += '<td>'+clean(r.col4)+'</td>';
- if (colOn.col5) h += '<td>'+clean(r.col5)+'</td>';
- if (colOn.col6) h += '<td>'+clean(r.col6)+'</td>';
- h += '<td>'+r.fb+'</td></tr>';
+ h += "<tr><td><strong>" + r.aspect + "</strong></td>";
+ if (colOn.col4) h += "<td>" + clean(r.col4) + "</td>";
+ if (colOn.col5) h += "<td>" + clean(r.col5) + "</td>";
+ if (colOn.col6) h += "<td>" + clean(r.col6) + "</td>";
+ h += "<td>" + r.fb + "</td></tr>";
  });
- h += '</tbody></table>';
+ h += "</tbody></table>";
  });
- h += '</body></html>';
- win.document.write(h); win.document.close(); setTimeout(function() { win.print(); }, 400); closeModal();
+ h += "</body></html>";
+ win.document.write(h);
+ win.document.close();
+ setTimeout(function() { win.print(); }, 400);
+ closeModal();
 }
 
 function doExport() {
- if (exportFmt==='excel') doExcel();
- else if (exportFmt==='word') doWord();
- else if (exportFmt==='clipboard') doClipboard();
+ var items = Object.values(sel);
+ if (items.length === 0) { alert("Selecteer eerst sub-onderwerpen via de checkboxes."); return; }
+ if (exportFmt === "excel") doExcel();
+ else if (exportFmt === "word") doWord();
+ else if (exportFmt === "clipboard") doClipboard();
  else doPrint();
 }
 
-// ════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // FEEDBACK PERSISTENCE
-// ════════════════════════════════════════════════════════
-function saveFb(id) { try { localStorage.setItem('sfb_'+id, document.getElementById('fb_'+id).value); } catch(e) {} }
-function loadFeedback() {
- try { for (var k in localStorage) { if (k.indexOf('sfb_')===0) { var el=document.getElementById('fb_'+k.substring(4)); if(el) el.value=localStorage.getItem(k)||''; } } } catch(e) {}
+// ══════════════════════════════════════════
+function saveFb(id) {
+ try { localStorage.setItem("sfb_" + id, document.getElementById("fb_" + id).value); } catch(e) {}
 }
-loadFeedback(); updateRcCount();
+function loadFeedback() {
+ try {
+ for (var k in localStorage) {
+ if (k.indexOf("sfb_") === 0) {
+ var el = document.getElementById("fb_" + k.substring(4));
+ if (el) el.value = localStorage.getItem(k) || "";
+ }
+ }
+ } catch(e) {}
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+loadFeedback();
+updateRcCount();
+
 </script>
 </body>
 </html>

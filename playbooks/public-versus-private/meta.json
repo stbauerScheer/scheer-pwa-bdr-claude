@@ -1,8 +1,0 @@
-{
-  "id": "public-versus-private",
-  "title": "SAP S/4HANA Cloud: Public Edition vs. Private Edition | Scheer IDS",
-  "description": "Overview of all asspects of Public and Private Edition to explain to prosects",
-  "categories": ["bdr", "product"],
-  "status": "active",
-  "path": "playbooks/public-versus-private/index.html"
-}
