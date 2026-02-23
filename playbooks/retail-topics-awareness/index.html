@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Retail Awareness | Scheer IDS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+
+/* ── Playbook Matrix — component styles (generated) ── */
+:root {
+  --db:#05618d; --blue:#2996cc; --orange:#ef7c00; --dg:#6a747f;
+  --bg:#fff; --bgl:#f8f9fa; --text:#212529; --tm:#6c757d; --tl:#555;
+  --line:#dee2e6; --bdr:#e0e0e0; --bbg:rgba(41,150,204,.1);
+  --r:6px; --rl:12px; --tr:.18s ease;
+}
+*,*::before,*::after { box-sizing:border-box; }
+body { margin:0; font-family:"Segoe UI",Tahoma,sans-serif; background:#eff1f4; color:var(--text); line-height:1.6; font-size:14px; }
+.nav { background:var(--bg); border-bottom:1px solid var(--line); padding:10px 24px; position:sticky; top:0; z-index:9999; display:flex; align-items:center; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+.nav-back { color:var(--blue); text-decoration:none; font-size:13px; font-weight:600; }
+.nav-title { font-size:12px; color:var(--tm); }
+header { padding:26px 24px 22px; background:linear-gradient(135deg,var(--blue) 0%,var(--db) 100%); }
+.hero-inner { max-width:1200px; margin:0 auto; display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+header h1 { margin:0 0 5px; font-size:22px; font-weight:700; color:#fff; }
+header p { margin:0; color:rgba(255,255,255,.88); font-size:13px; max-width:680px; }
+.btn-sel-all { background:rgba(255,255,255,.16); color:#fff; border:1.5px solid rgba(255,255,255,.4); border-radius:8px; padding:8px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; flex-shrink:0; align-self:center; }
+.btn-sel-all:hover { background:rgba(255,255,255,.28); }
+.btn-sel-all.active { background:rgba(239,124,0,.75); border-color:var(--orange); }
+.ctrl { background:var(--bg); border-bottom:1px solid var(--line); position:sticky; top:44px; z-index:100; box-shadow:0 2px 7px rgba(0,0,0,.06); }
+.usage-strip { background:rgba(41,150,204,.07); border-bottom:1px solid rgba(41,150,204,.14); padding:6px 24px; font-size:12.5px; color:var(--db); }
+.usage-inner { max-width:1200px; margin:0 auto; }
+.sf-row { max-width:1200px; margin:0 auto; padding:9px 24px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.sw { flex:1; min-width:200px; position:relative; }
+.sw input { width:100%; padding:7px 12px 7px 32px; border:2px solid var(--bdr); border-radius:var(--r); font-size:13px; font-family:inherit; background:var(--bg); color:var(--text); }
+.sw input:focus { outline:none; border-color:var(--blue); }
+.sw-icon { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--tm); pointer-events:none; }
+.chips { display:flex; flex-wrap:wrap; gap:4px; align-items:center; }
+.chip-label { font-size:11px; font-weight:700; color:var(--tm); text-transform:uppercase; letter-spacing:.04em; }
+.chip { padding:4px 11px; border-radius:20px; border:1.5px solid var(--line); background:var(--bg); color:var(--tm); font-size:12px; font-weight:600; cursor:pointer; transition:all var(--tr); white-space:nowrap; position:relative; user-select:none; }
+.chip:hover { border-color:var(--blue); color:var(--blue); }
+.chip.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+.chip .dot { display:none; width:7px; height:7px; background:var(--orange); border-radius:50%; position:absolute; top:-2px; right:-2px; border:1.5px solid #fff; }
+.chip.has-sel .dot { display:block; }
+.leg-row { max-width:1200px; margin:0 auto; padding:5px 24px 8px; display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line); align-items:center; }
+.leg-item { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--tm); }
+.leg-dot { width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+.rc { margin-left:auto; display:flex; gap:10px; align-items:center; }
+#rcCount { font-size:11px; color:var(--tm); }
+.rc button { font-size:12px; color:var(--blue); background:none; border:none; cursor:pointer; padding:0 6px; font-family:inherit; }
+.rc button:hover { text-decoration:underline; }
+main { max-width:1200px; margin:0 auto; padding:18px 24px 120px; }
+.theme-sec { margin-bottom:22px; }
+.theme-hd { display:flex; align-items:center; gap:10px; padding:8px 14px 8px 10px; margin-bottom:6px; border-bottom:2px solid var(--line); }
+.t-icon { width:29px; height:29px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+.theme-hd h2 { margin:0; font-size:16px; font-weight:700; color:var(--db); flex:1; }
+.t-meta { font-size:11px; color:var(--tm); }
+.matrix-card { background:var(--bg); border:1px solid var(--line); border-radius:var(--rl); overflow:hidden; margin-bottom:7px; box-shadow:0 1px 3px rgba(0,0,0,.04); transition:box-shadow var(--tr),border-color var(--tr); }
+.matrix-card:hover { box-shadow:0 2px 10px rgba(41,150,204,.08); }
+.matrix-card.selected { border-color:var(--orange); box-shadow:0 0 0 2px rgba(239,124,0,.2); }
+.matrix-card.partial { border-color:rgba(239,124,0,.5); }
+.subtopic-bar { display:flex; align-items:center; gap:8px; padding:9px 12px; background:var(--bgl); border-bottom:1px solid var(--line); }
+.subtopic-bar:hover { background:rgba(41,150,204,.04); }
+.sub-chk-group { display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0; min-width:44px; }
+.sub-chk { width:15px; height:15px; accent-color:var(--orange); cursor:pointer; }
+.sub-chk-lbl { font-size:9px; font-weight:700; color:var(--tm); text-transform:uppercase; pointer-events:none; }
+.sub-divider { width:1px; height:28px; background:var(--line); flex-shrink:0; }
+.sub-expand { display:flex; align-items:center; gap:7px; flex:1; cursor:pointer; min-width:0; }
+.sub-lbl { font-size:12.5px; font-weight:700; color:var(--db); }
+.sub-meta { font-size:11px; color:var(--tm); white-space:nowrap; }
+.sel-bdg { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; background:var(--orange); color:#fff; flex-shrink:0; }
+.par-bdg { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; background:rgba(239,124,0,.14); color:#7d4800; flex-shrink:0; }
+.chev { font-size:10px; color:var(--tm); transition:transform .18s; margin-left:auto; flex-shrink:0; }
+.matrix-card.collapsed .chev { transform:rotate(-90deg); }
+.matrix-card.collapsed .mx-body { display:none; }
+.mx-body { overflow-x:auto; }
+table.mx { width:100%; border-collapse:collapse; font-size:12.5px; }
+table.mx thead th { background:var(--db); color:#fff; padding:8px 11px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; text-align:left; border-right:1px solid rgba(255,255,255,.12); }
+table.mx thead th:nth-child(2) { background:#1a6fa5; }
+table.mx thead th:nth-child(3) { background:#2c3e50; }
+table.mx thead th:nth-child(4) { background:#bf6200; }
+table.mx thead th:nth-child(5) { background:var(--dg); }
+table.mx thead th:last-child { border-right:none; }
+.asp-row { border-bottom:1px solid var(--line); }
+.asp-row:last-child { border-bottom:none; }
+.asp-row:nth-child(even) td { background:rgba(248,249,250,.7); }
+.asp-row:hover td { background:var(--bbg); }
+.asp-row.desel { opacity:.3; }
+.asp-row.desel td { background:#fafafa !important; }
+table.mx td { padding:9px 11px; vertical-align:top; color:var(--tl); line-height:1.5; border-right:1px solid var(--line); font-size:12.5px; }
+table.mx td:last-child { border-right:none; }
+.asp-td { display:flex; align-items:flex-start; gap:7px; background:rgba(41,150,204,.035) !important; }
+.row-chk { width:13px; height:13px; accent-color:var(--orange); cursor:pointer; margin-top:3px; flex-shrink:0; }
+.asp-name { font-weight:700; color:var(--db); font-size:12px; line-height:1.45; }
+.td-col6 { color:#7d4800; background:rgba(239,124,0,.035); }
+.td-fb { background:#fafafa; }
+textarea.fb { display:block; width:100%; min-height:50px; border:1px dashed var(--line); border-radius:4px; background:var(--bg); color:var(--tm); font-size:11.5px; padding:5px 6px; font-family:inherit; resize:vertical; }
+textarea.fb:focus { outline:none; border-color:var(--blue); }
+textarea.fb::placeholder { color:#ccc; }
+.sel-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(100px); z-index:8000; background:var(--db); color:#fff; border-radius:40px; padding:10px 18px; display:flex; align-items:center; gap:12px; box-shadow:0 8px 28px rgba(5,97,141,.4); transition:transform .28s ease,opacity .28s ease; opacity:0; pointer-events:none; }
+.sel-bar.show { transform:translateX(-50%) translateY(0); opacity:1; pointer-events:all; }
+.sb-count { font-size:13px; font-weight:700; }
+.sb-names { font-size:11px; opacity:.72; max-width:340px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.btn-export { background:var(--orange); color:#fff; border:none; border-radius:20px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; }
+.btn-export:hover { background:#d46d00; }
+.btn-desel { background:rgba(255,255,255,.18); color:#fff; border:none; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; }
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:9000; display:none; align-items:center; justify-content:center; padding:16px; }
+.overlay.open { display:flex; }
+.modal { background:var(--bg); border-radius:14px; width:100%; max-width:660px; max-height:94vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,.28); }
+.modal-head { padding:18px 22px 14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; }
+.modal-head h3 { margin:0; font-size:16px; font-weight:700; color:var(--db); }
+.modal-head p { margin:3px 0 0; font-size:12px; color:var(--tm); }
+.modal-close { background:none; border:none; font-size:20px; color:var(--tm); cursor:pointer; padding:0; line-height:1; }
+.modal-body { padding:18px 22px; }
+.ms { margin-bottom:16px; }
+.ms > label { display:block; font-size:11px; font-weight:700; color:var(--db); text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+.sel-list { background:var(--bgl); border:1px solid var(--line); border-radius:var(--r); max-height:130px; overflow-y:auto; }
+.sli { display:flex; align-items:center; gap:7px; padding:6px 11px; border-bottom:1px solid var(--line); font-size:12px; }
+.sli:last-child { border-bottom:none; }
+.sli-theme { font-size:10px; font-weight:700; padding:2px 6px; border-radius:8px; background:var(--bbg); color:var(--db); white-space:nowrap; flex-shrink:0; }
+.sli-name { color:var(--tl); flex:1; }
+.sli-count { font-size:11px; color:var(--tm); white-space:nowrap; }
+.col-picker { display:flex; gap:8px; flex-wrap:wrap; }
+.col-all-btn { margin-left:8px; padding:2px 10px; border-radius:12px; border:1.5px solid var(--orange); background:transparent; color:var(--orange); font-size:10px; font-weight:700; cursor:pointer; font-family:inherit; vertical-align:middle; }
+.col-all-btn:hover { background:rgba(239,124,0,.1); }
+.col-btn { flex:1; min-width:130px; padding:10px 12px; border-radius:var(--r); border:2px solid var(--line); background:var(--bg); cursor:pointer; display:flex; align-items:center; gap:8px; font-family:inherit; text-align:left; }
+.col-btn.on.col-pub  { background:#1a6fa5; color:#fff; border-color:#1a6fa5; }
+.col-btn.on.col-priv { background:#2c3e50; color:#fff; border-color:#2c3e50; }
+.col-btn.on.col-sch  { background:#bf6200; color:#fff; border-color:#bf6200; }
+.col-btn.on.col-fb   { background:#4a7c59; color:#fff; border-color:#4a7c59; }
+.col-icon { font-size:16px; flex-shrink:0; }
+.col-label { font-size:12px; font-weight:700; display:block; }
+.col-sub { font-size:11px; opacity:.75; display:block; margin-top:1px; }
+.col-chk { margin-left:auto; font-size:14px; flex-shrink:0; }
+.fmt-row { display:flex; gap:6px; flex-wrap:wrap; }
+.fmt-btn { flex:1; min-width:110px; padding:8px; border-radius:var(--r); border:2px solid var(--line); background:var(--bg); color:var(--tm); font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; text-align:center; }
+.fmt-btn.on,.fmt-btn:hover { border-color:var(--orange); color:var(--orange); background:rgba(239,124,0,.05); }
+.m-input { width:100%; padding:8px 10px; border:2px solid var(--bdr); border-radius:var(--r); font-size:13px; font-family:inherit; color:var(--text); }
+.m-input:focus { outline:none; border-color:var(--orange); }
+.m-ta { width:100%; min-height:80px; padding:8px 10px; border:2px solid var(--bdr); border-radius:var(--r); font-size:13px; font-family:inherit; color:var(--text); resize:vertical; }
+.m-ta:focus { outline:none; border-color:var(--orange); }
+.modal-foot { padding:12px 22px 18px; display:flex; gap:8px; justify-content:flex-end; border-top:1px solid var(--line); align-items:center; }
+.modal-hint { font-size:11px; color:var(--tm); margin-right:auto; }
+.btn-ok { padding:9px 22px; background:var(--orange); color:#fff; border:none; border-radius:var(--r); font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; }
+.btn-ok:hover { background:#d46d00; }
+.btn-cancel { padding:9px 16px; background:var(--bgl); color:var(--tm); border:1px solid var(--line); border-radius:var(--r); font-size:13px; cursor:pointer; font-family:inherit; }
+footer { padding:20px 24px; background:var(--dg); }
+footer .fw { max-width:1200px; margin:0 auto; }
+.ft-title { color:var(--orange); font-size:13px; font-weight:600; margin-bottom:4px; }
+.ft-copy { color:rgba(255,255,255,.45); font-size:11px; margin-top:6px; }
+@media(max-width:768px) {
+  header h1 { font-size:18px; }
+  table.mx { font-size:11px; }
+  .sel-bar { width:96%; flex-wrap:wrap; border-radius:14px; bottom:10px; }
+}
+
+</style>
+<link rel="stylesheet" href="../shared/playbook.css">
+</head>
+<body>
+<!-- Scheer Playbook Header -->
+<div class="pb-header">
+  <a href="../../index.html" class="pb-header-back"><- Back to Playbooks</a>
+  <span class="pb-header-title">Retail Topics Awareness</span>
+</div>
+
+<div class="nav">
+  <a href="#" class="nav-back">&larr; Terug naar Playbooks</a>
+  <span class="nav-title">Retail Awareness | Scheer IDS</span>
+</div>
+
+<header>
+  <div class="hero-inner">
+    <div>
+      <h1>Retail Awareness</h1>
+      <p>6 thema&apos;s &middot; 18 vergelijkingspunten &middot; Selecteer, kies kolommen, exporteer naar Excel / Word / Clipboard / PDF.</p>
+    </div>
+    <button class="btn-sel-all" id="btnSelAll" onclick="toggleSelectAll()">Selecteer alles</button>
+  </div>
+</header>
+
+<div class="ctrl">
+  <div class="usage-strip">
+    <div class="usage-inner">
+      <strong>Gebruik:</strong>
+      &#9312; Zoek of toggle thema&apos;s &nbsp;&middot;&nbsp;
+      &#9313; <strong>Vink sub-onderwerpen aan</strong> &mdash; deselecteer individuele rijen &nbsp;&middot;&nbsp;
+      &#9314; Klik <strong style="color:var(--orange)">Exporteer selectie</strong> &rarr; kies kolommen &rarr; download
+    </div>
+  </div>
+  <div class="sf-row">
+    <div class="sw">
+      <span class="sw-icon">&#128269;</span>
+      <input type="text" id="searchInput" placeholder="Zoek op trefwoord..." oninput="doSearch(this.value)">
+    </div>
+    <div class="chips">
+      <span class="chip-label">Thema:</span>
+<button class="chip on" data-t="all" onclick="chipAll(this)">Alle</button>
+<button class="chip on" data-t="fase_1_frictie_zichtbaar_maken" onclick="chipToggle(this)"><span class="dot"></span>Fase 1 - Frictie zichtbaar maken</button>
+<button class="chip on" data-t="fase_2_van_symptoom_naar_fundering" onclick="chipToggle(this)"><span class="dot"></span>Fase 2 - Van symptoom naar fundering</button>
+<button class="chip on" data-t="fase_3_best_practices_boven_maatwerk" onclick="chipToggle(this)"><span class="dot"></span>Fase 3 - Best practices boven maatwerk</button>
+<button class="chip on" data-t="fase_4_business_ai_als_ingebouwde_versneller" onclick="chipToggle(this)"><span class="dot"></span>Fase 4 - Business AI als ingebouwde versneller</button>
+<button class="chip on" data-t="fase_5_complexiteitsreductie_als_strategische_keuze" onclick="chipToggle(this)"><span class="dot"></span>Fase 5 - Complexiteitsreductie als strategische keuze</button>
+<button class="chip on" data-t="fase_6_micro_commitment" onclick="chipToggle(this)"><span class="dot"></span>Fase 6 - Micro commitment</button>
+    </div>
+  </div>
+  <div class="leg-row">
+    <div class="leg-item"><div class="leg-dot" style="background:#1a6fa5"></div>SAP S/4HANA Cloud Public Edition</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#2c3e50"></div>Message</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#bf6200"></div>Prompt Instruction</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#6c757d"></div>Jouw feedback</div>
+    <div class="rc">
+      <span id="rcCount">18 vergelijkingspunten</span>
+      <button onclick="expandAll()">Alles uitklappen</button>
+      <button onclick="collapseAll()">Alles inklappen</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<div class="theme-sec" data-theme="fase_1_frictie_zichtbaar_maken">
+  <div class="theme-hd">
+    <div class="t-icon" style="background:#f8f9fa;color:#05618d;">[?]</div>
+    <h2>1. Fase 1 - Frictie zichtbaar maken</h2>
+    <span class="t-meta">3 sub-onderwerpen · 3 vergelijkingspunten</span>
+  </div>
+  <div class="matrix-card" id="fase_1_frictie_zichtbaar_maken_ceo_coo" data-theme="fase_1_frictie_zichtbaar_maken" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_1_frictie_zichtbaar_maken_ceo_coo"
+             data-card="fase_1_frictie_zichtbaar_maken_ceo_coo" data-theme="fase_1_frictie_zichtbaar_maken" data-name="CEO/COO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_1_frictie_zichtbaar_maken_ceo_coo')">
+      <span class="sub-lbl">CEO/COO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_1_frictie_zichtbaar_maken_ceo_coo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_1_frictie_zichtbaar_maken_ceo_coo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_1_frictie_zichtbaar_maken_ceo_coo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_1_frictie_zichtbaar_maken_ceo_coo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Herkenning creeren; status quo onder druk zetten; geen oplossing pushen; positionering als sectorinsider (zonder ERP/SAP/Cloud te noemen).</span>
+  </td>
+  <td>Geeft direct inzicht in marges, voorraad en ketenprestaties. Retail ziet sneller waar processen vastlopen, zodat groei niet afhankelijk blijft van brandjes blussen.</td>
+  <td>Groei wordt geremd door interne complexiteit. Nieuwe kanalen voegen disproportioneel overhead toe. Data-inzicht loopt achter op commerciele ambities. Narratief: Groei is niet hetzelfde als schaalbaarheid.</td>
+  <td class="td-col6">Analyseer {{bedrijf}} (omzet, groei, aantal winkels, e-commerce aanwezigheid, internationale activiteiten). Identificeer 3 waarschijnlijke fricties bij groeiende retailers in deze fase. Vertaal dit naar een korte observatie voor een CEO/COO in maximaal 5 zinnen, zonder ERP/SAP/Cloud te noemen. Eindig met een zachte vraag om herkenning (geen pitch).</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_1_frictie_zichtbaar_maken_ceo_coo_r0" placeholder="Typ hier..." oninput="saveFb('fase_1_frictie_zichtbaar_maken_ceo_coo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_1_frictie_zichtbaar_maken_cfo" data-theme="fase_1_frictie_zichtbaar_maken" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_1_frictie_zichtbaar_maken_cfo"
+             data-card="fase_1_frictie_zichtbaar_maken_cfo" data-theme="fase_1_frictie_zichtbaar_maken" data-name="CFO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_1_frictie_zichtbaar_maken_cfo')">
+      <span class="sub-lbl">CFO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_1_frictie_zichtbaar_maken_cfo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_1_frictie_zichtbaar_maken_cfo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_1_frictie_zichtbaar_maken_cfo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_1_frictie_zichtbaar_maken_cfo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Herkenning creeren; status quo onder druk zetten; geen oplossing pushen; positionering als sectorinsider (zonder ERP/SAP/Cloud te noemen).</span>
+  </td>
+  <td>Biedt één waarheid voor financiële en operationele cijfers. Realtime zicht op voorraadwaardes, marges en cashflow maakt afwijkingen snel zichtbaar.</td>
+  <td>Margedruk door inefficiente processen. Verborgen kosten in maatwerk en integraties. Rapportage kost veel handwerk. Narratief: Complexiteit is een stille kostenpost.</td>
+  <td class="td-col6">Analyseer {{bedrijf}} (omzet, groei, aantal winkels, e-commerce aanwezigheid, internationale activiteiten). Identificeer 3 waarschijnlijke fricties bij groeiende retailers in deze fase. Vertaal dit naar een korte observatie voor een CFO in maximaal 5 zinnen, zonder ERP/SAP/Cloud te noemen. Eindig met een zachte vraag om herkenning (geen pitch).</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_1_frictie_zichtbaar_maken_cfo_r0" placeholder="Typ hier..." oninput="saveFb('fase_1_frictie_zichtbaar_maken_cfo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_1_frictie_zichtbaar_maken_cto_it" data-theme="fase_1_frictie_zichtbaar_maken" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_1_frictie_zichtbaar_maken_cto_it"
+             data-card="fase_1_frictie_zichtbaar_maken_cto_it" data-theme="fase_1_frictie_zichtbaar_maken" data-name="CTO/IT" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_1_frictie_zichtbaar_maken_cto_it')">
+      <span class="sub-lbl">CTO/IT</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_1_frictie_zichtbaar_maken_cto_it" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_1_frictie_zichtbaar_maken_cto_it" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_1_frictie_zichtbaar_maken_cto_it" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_1_frictie_zichtbaar_maken_cto_it" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Herkenning creeren; status quo onder druk zetten; geen oplossing pushen; positionering als sectorinsider (zonder ERP/SAP/Cloud te noemen).</span>
+  </td>
+  <td>Vervangt versnipperde systemen door één stabiel cloudplatform. Minder IT-last, minder verstoringen, continu up-to-date zonder eigen beheer.</td>
+  <td>Integraties stapelen zich op. Key-user afhankelijkheid neemt toe. Landschap groeit organisch zonder richting. Narratief: IT wordt brandjesblusser in plaats van versneller.</td>
+  <td class="td-col6">Analyseer {{bedrijf}} (omzet, groei, aantal winkels, e-commerce aanwezigheid, internationale activiteiten). Identificeer 3 waarschijnlijke fricties bij groeiende retailers in deze fase. Vertaal dit naar een korte observatie voor een CTO/IT in maximaal 5 zinnen, zonder ERP/SAP/Cloud te noemen. Eindig met een zachte vraag om herkenning (geen pitch).</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_1_frictie_zichtbaar_maken_cto_it_r0" placeholder="Typ hier..." oninput="saveFb('fase_1_frictie_zichtbaar_maken_cto_it_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="theme-sec" data-theme="fase_2_van_symptoom_naar_fundering">
+  <div class="theme-hd">
+    <div class="t-icon" style="background:#f8f9fa;color:#05618d;">[?]</div>
+    <h2>2. Fase 2 - Van symptoom naar fundering</h2>
+    <span class="t-meta">3 sub-onderwerpen · 3 vergelijkingspunten</span>
+  </div>
+  <div class="matrix-card" id="fase_2_van_symptoom_naar_fundering_ceo_coo" data-theme="fase_2_van_symptoom_naar_fundering" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_2_van_symptoom_naar_fundering_ceo_coo"
+             data-card="fase_2_van_symptoom_naar_fundering_ceo_coo" data-theme="fase_2_van_symptoom_naar_fundering" data-name="CEO/COO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_2_van_symptoom_naar_fundering_ceo_coo')">
+      <span class="sub-lbl">CEO/COO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_2_van_symptoom_naar_fundering_ceo_coo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_2_van_symptoom_naar_fundering_ceo_coo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_2_van_symptoom_naar_fundering_ceo_coo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_2_van_symptoom_naar_fundering_ceo_coo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Shift van operationele irritatie naar architectuurvraag: ligt het aan het proces of aan het fundament?</span>
+  </td>
+  <td>Maakt duidelijk of knelpunten komen door slechte data, processen of systeemarchitectuur. Biedt een transparant fundament dat retailprocessen écht ondersteunt.</td>
+  <td>Best-of-breed werkt tot een bepaalde schaal; daarna vertraagt het innovatie en executie.</td>
+  <td class="td-col6">Onderzoek welke systemen {{bedrijf}} waarschijnlijk gebruikt (bijv. POS, e-commerce, WMS, reporting, finance). Beschrijf hoe best-of-breed complexiteit en overdrachtsfouten kan verhogen bij hun schaal. Formuleer 1 prikkelende architectuurvraag gericht aan een CEO/COO. Gebruik concrete symptomen en geen vendor-taal.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_2_van_symptoom_naar_fundering_ceo_coo_r0" placeholder="Typ hier..." oninput="saveFb('fase_2_van_symptoom_naar_fundering_ceo_coo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_2_van_symptoom_naar_fundering_cfo" data-theme="fase_2_van_symptoom_naar_fundering" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_2_van_symptoom_naar_fundering_cfo"
+             data-card="fase_2_van_symptoom_naar_fundering_cfo" data-theme="fase_2_van_symptoom_naar_fundering" data-name="CFO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_2_van_symptoom_naar_fundering_cfo')">
+      <span class="sub-lbl">CFO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_2_van_symptoom_naar_fundering_cfo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_2_van_symptoom_naar_fundering_cfo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_2_van_symptoom_naar_fundering_cfo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_2_van_symptoom_naar_fundering_cfo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Shift van operationele irritatie naar architectuurvraag: ligt het aan het proces of aan het fundament?</span>
+  </td>
+  <td>Onjuiste posten, foutieve marges en vertraging in closing worden herleidbaar. Helpt sturen op structurele verbetering in plaats van symptoombestrijding.</td>
+  <td>Elke extra tool is een extra kostenlaag; integraties zijn terugkerende kosten en risico.</td>
+  <td class="td-col6">Onderzoek welke systemen {{bedrijf}} waarschijnlijk gebruikt (bijv. POS, e-commerce, WMS, reporting, finance). Beschrijf hoe best-of-breed complexiteit en overdrachtsfouten kan verhogen bij hun schaal. Formuleer 1 prikkelende architectuurvraag gericht aan een CFO. Gebruik concrete symptomen en geen vendor-taal.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_2_van_symptoom_naar_fundering_cfo_r0" placeholder="Typ hier..." oninput="saveFb('fase_2_van_symptoom_naar_fundering_cfo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_2_van_symptoom_naar_fundering_cto_it" data-theme="fase_2_van_symptoom_naar_fundering" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_2_van_symptoom_naar_fundering_cto_it"
+             data-card="fase_2_van_symptoom_naar_fundering_cto_it" data-theme="fase_2_van_symptoom_naar_fundering" data-name="CTO/IT" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_2_van_symptoom_naar_fundering_cto_it')">
+      <span class="sub-lbl">CTO/IT</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_2_van_symptoom_naar_fundering_cto_it" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_2_van_symptoom_naar_fundering_cto_it" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_2_van_symptoom_naar_fundering_cto_it" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_2_van_symptoom_naar_fundering_cto_it" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Shift van operationele irritatie naar architectuurvraag: ligt het aan het proces of aan het fundament?</span>
+  </td>
+  <td>Cloud-standaarden verwijderen verouderde workarounds. Processen worden herkenbaar en beheersbaar, waardoor duidelijk wordt waar bottlenecks écht ontstaan.</td>
+  <td>Meer tools betekent exponentieel meer afhankelijkheden; architectuur wordt fragiel en moeilijk te beheren.</td>
+  <td class="td-col6">Onderzoek welke systemen {{bedrijf}} waarschijnlijk gebruikt (bijv. POS, e-commerce, WMS, reporting, finance). Beschrijf hoe best-of-breed complexiteit en overdrachtsfouten kan verhogen bij hun schaal. Formuleer 1 prikkelende architectuurvraag gericht aan een CTO/IT. Gebruik concrete symptomen en geen vendor-taal.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_2_van_symptoom_naar_fundering_cto_it_r0" placeholder="Typ hier..." oninput="saveFb('fase_2_van_symptoom_naar_fundering_cto_it_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="theme-sec" data-theme="fase_3_best_practices_boven_maatwerk">
+  <div class="theme-hd">
+    <div class="t-icon" style="background:#f8f9fa;color:#05618d;">[?]</div>
+    <h2>3. Fase 3 - Best practices boven maatwerk</h2>
+    <span class="t-meta">3 sub-onderwerpen · 3 vergelijkingspunten</span>
+  </div>
+  <div class="matrix-card" id="fase_3_best_practices_boven_maatwerk_ceo_coo" data-theme="fase_3_best_practices_boven_maatwerk" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_3_best_practices_boven_maatwerk_ceo_coo"
+             data-card="fase_3_best_practices_boven_maatwerk_ceo_coo" data-theme="fase_3_best_practices_boven_maatwerk" data-name="CEO/COO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_3_best_practices_boven_maatwerk_ceo_coo')">
+      <span class="sub-lbl">CEO/COO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_3_best_practices_boven_maatwerk_ceo_coo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_3_best_practices_boven_maatwerk_ceo_coo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_3_best_practices_boven_maatwerk_ceo_coo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_3_best_practices_boven_maatwerk_ceo_coo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Mythe ontkrachten dat processen uniek zijn; standaardisatie positioneren als strategisch voordeel (minder maatwerk, minder complexiteit, minder afhankelijkheid).</span>
+  </td>
+  <td>Retail-best practices staan klaar: replenishment, pricing, promotions, voorraadbeheer, POS-integratie. Minder maatwerk betekent sneller verbeteren en minder afhankelijkheid.</td>
+  <td>Uniek is je merk, niet je voorraadproces. Standaardisatie versnelt expansie en reduceert frictie.</td>
+  <td class="td-col6">Identificeer generieke retailprocessen (order-to-cash, procure-to-pay, replenishment, returns). Leg uit waarom deze zelden onderscheidend zijn en waar best practices versnellen. Vertaal dit naar een boodschap voor een CEO/COO die sceptisch is. Benoem winst: minder maatwerk, minder complexiteit, minder afhankelijkheid.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_3_best_practices_boven_maatwerk_ceo_coo_r0" placeholder="Typ hier..." oninput="saveFb('fase_3_best_practices_boven_maatwerk_ceo_coo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_3_best_practices_boven_maatwerk_cfo" data-theme="fase_3_best_practices_boven_maatwerk" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_3_best_practices_boven_maatwerk_cfo"
+             data-card="fase_3_best_practices_boven_maatwerk_cfo" data-theme="fase_3_best_practices_boven_maatwerk" data-name="CFO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_3_best_practices_boven_maatwerk_cfo')">
+      <span class="sub-lbl">CFO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_3_best_practices_boven_maatwerk_cfo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_3_best_practices_boven_maatwerk_cfo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_3_best_practices_boven_maatwerk_cfo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_3_best_practices_boven_maatwerk_cfo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Mythe ontkrachten dat processen uniek zijn; standaardisatie positioneren als strategisch voordeel (minder maatwerk, minder complexiteit, minder afhankelijkheid).</span>
+  </td>
+  <td>Gestandaardiseerde processen geven voorspelbare kosten en duidelijke margerapportages. Minder maatwerk = minder financiële risico’s.</td>
+  <td>Minder maatwerk betekent voorspelbare kosten en lagere TCO; minder consultants en minder verrassingen.</td>
+  <td class="td-col6">Identificeer generieke retailprocessen (order-to-cash, procure-to-pay, replenishment, returns). Leg uit waarom deze zelden onderscheidend zijn en waar best practices versnellen. Vertaal dit naar een boodschap voor een CFO die sceptisch is. Benoem winst: minder maatwerk, minder complexiteit, minder afhankelijkheid.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_3_best_practices_boven_maatwerk_cfo_r0" placeholder="Typ hier..." oninput="saveFb('fase_3_best_practices_boven_maatwerk_cfo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_3_best_practices_boven_maatwerk_cto_it" data-theme="fase_3_best_practices_boven_maatwerk" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_3_best_practices_boven_maatwerk_cto_it"
+             data-card="fase_3_best_practices_boven_maatwerk_cto_it" data-theme="fase_3_best_practices_boven_maatwerk" data-name="CTO/IT" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_3_best_practices_boven_maatwerk_cto_it')">
+      <span class="sub-lbl">CTO/IT</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_3_best_practices_boven_maatwerk_cto_it" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_3_best_practices_boven_maatwerk_cto_it" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_3_best_practices_boven_maatwerk_cto_it" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_3_best_practices_boven_maatwerk_cto_it" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Mythe ontkrachten dat processen uniek zijn; standaardisatie positioneren als strategisch voordeel (minder maatwerk, minder complexiteit, minder afhankelijkheid).</span>
+  </td>
+  <td>Standaard retailprocesflows verminderen integratierisico’s. POS, e-commerce en warehouses blijven stabiel binnen SAP’s retailframework.</td>
+  <td>Minder custom code betekent minder technische schuld; upgrades stabieler; landschap beheersbaar.</td>
+  <td class="td-col6">Identificeer generieke retailprocessen (order-to-cash, procure-to-pay, replenishment, returns). Leg uit waarom deze zelden onderscheidend zijn en waar best practices versnellen. Vertaal dit naar een boodschap voor een CTO/IT die sceptisch is. Benoem winst: minder maatwerk, minder complexiteit, minder afhankelijkheid.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_3_best_practices_boven_maatwerk_cto_it_r0" placeholder="Typ hier..." oninput="saveFb('fase_3_best_practices_boven_maatwerk_cto_it_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="theme-sec" data-theme="fase_4_business_ai_als_ingebouwde_versneller">
+  <div class="theme-hd">
+    <div class="t-icon" style="background:#f8f9fa;color:#05618d;">[?]</div>
+    <h2>4. Fase 4 - Business AI als ingebouwde versneller</h2>
+    <span class="t-meta">3 sub-onderwerpen · 3 vergelijkingspunten</span>
+  </div>
+  <div class="matrix-card" id="fase_4_business_ai_als_ingebouwde_versneller_ceo_coo" data-theme="fase_4_business_ai_als_ingebouwde_versneller" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_4_business_ai_als_ingebouwde_versneller_ceo_coo"
+             data-card="fase_4_business_ai_als_ingebouwde_versneller_ceo_coo" data-theme="fase_4_business_ai_als_ingebouwde_versneller" data-name="CEO/COO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_4_business_ai_als_ingebouwde_versneller_ceo_coo')">
+      <span class="sub-lbl">CEO/COO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_4_business_ai_als_ingebouwde_versneller_ceo_coo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_4_business_ai_als_ingebouwde_versneller_ceo_coo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_4_business_ai_als_ingebouwde_versneller_ceo_coo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_4_business_ai_als_ingebouwde_versneller_ceo_coo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">AI positioneren als logisch gevolg van een goede fundering: geen experiment, maar onderdeel van end-to-end processen. Focus op hoe in jouw omgeving.</span>
+  </td>
+  <td>AI ondersteunt demand forecasting, replenishment en voorraadoptimalisatie. Geen experimenten maar geïntegreerde verbeteringen in de retailketen.</td>
+  <td>AI-forecasting voorkomt oversupply en ondersteunt assortimentsbeslissingen; betere voorspelbaarheid.</td>
+  <td class="td-col6">Analyseer de retailactiviteiten van {{bedrijf}}. Identificeer 3 Business AI use cases die direct waarde toevoegen. Leg uit waarom dit alleen betrouwbaar werkt met consistente data en gestandaardiseerde processen. Schrijf dit voor een CEO/COO en eindig met: waar zou AI het meeste verschil maken?</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_4_business_ai_als_ingebouwde_versneller_ceo_coo_r0" placeholder="Typ hier..." oninput="saveFb('fase_4_business_ai_als_ingebouwde_versneller_ceo_coo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_4_business_ai_als_ingebouwde_versneller_cfo" data-theme="fase_4_business_ai_als_ingebouwde_versneller" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_4_business_ai_als_ingebouwde_versneller_cfo"
+             data-card="fase_4_business_ai_als_ingebouwde_versneller_cfo" data-theme="fase_4_business_ai_als_ingebouwde_versneller" data-name="CFO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_4_business_ai_als_ingebouwde_versneller_cfo')">
+      <span class="sub-lbl">CFO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_4_business_ai_als_ingebouwde_versneller_cfo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_4_business_ai_als_ingebouwde_versneller_cfo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_4_business_ai_als_ingebouwde_versneller_cfo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_4_business_ai_als_ingebouwde_versneller_cfo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">AI positioneren als logisch gevolg van een goede fundering: geen experiment, maar onderdeel van end-to-end processen. Focus op hoe in jouw omgeving.</span>
+  </td>
+  <td>AI signaleert afwijkingen in marges, detecteert fraude, verbetert cashflow-prognoses en verhoogt financiële stuurkracht.</td>
+  <td>Automatische factuurmatching en predictieve cashflow forecasting; minder handwerk en sneller inzicht.</td>
+  <td class="td-col6">Analyseer de retailactiviteiten van {{bedrijf}}. Identificeer 3 Business AI use cases die direct waarde toevoegen. Leg uit waarom dit alleen betrouwbaar werkt met consistente data en gestandaardiseerde processen. Schrijf dit voor een CFO en eindig met: waar zou AI het meeste verschil maken?</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_4_business_ai_als_ingebouwde_versneller_cfo_r0" placeholder="Typ hier..." oninput="saveFb('fase_4_business_ai_als_ingebouwde_versneller_cfo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_4_business_ai_als_ingebouwde_versneller_cto_it" data-theme="fase_4_business_ai_als_ingebouwde_versneller" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_4_business_ai_als_ingebouwde_versneller_cto_it"
+             data-card="fase_4_business_ai_als_ingebouwde_versneller_cto_it" data-theme="fase_4_business_ai_als_ingebouwde_versneller" data-name="CTO/IT" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_4_business_ai_als_ingebouwde_versneller_cto_it')">
+      <span class="sub-lbl">CTO/IT</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_4_business_ai_als_ingebouwde_versneller_cto_it" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_4_business_ai_als_ingebouwde_versneller_cto_it" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_4_business_ai_als_ingebouwde_versneller_cto_it" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_4_business_ai_als_ingebouwde_versneller_cto_it" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">AI positioneren als logisch gevolg van een goede fundering: geen experiment, maar onderdeel van end-to-end processen. Focus op hoe in jouw omgeving.</span>
+  </td>
+  <td>AI is standaard inbegrepen: veilig, onderhoudsvrij en direct toepasbaar binnen retailprocessen. Geen losse tools of maatwerkmodellen nodig.</td>
+  <td>AI werkt alleen goed met consistente data; minder point solutions, meer geintegreerde intelligentie.</td>
+  <td class="td-col6">Analyseer de retailactiviteiten van {{bedrijf}}. Identificeer 3 Business AI use cases die direct waarde toevoegen. Leg uit waarom dit alleen betrouwbaar werkt met consistente data en gestandaardiseerde processen. Schrijf dit voor een CTO/IT en eindig met: waar zou AI het meeste verschil maken?</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_4_business_ai_als_ingebouwde_versneller_cto_it_r0" placeholder="Typ hier..." oninput="saveFb('fase_4_business_ai_als_ingebouwde_versneller_cto_it_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="theme-sec" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze">
+  <div class="theme-hd">
+    <div class="t-icon" style="background:#f8f9fa;color:#05618d;">[?]</div>
+    <h2>5. Fase 5 - Complexiteitsreductie als strategische keuze</h2>
+    <span class="t-meta">3 sub-onderwerpen · 3 vergelijkingspunten</span>
+  </div>
+  <div class="matrix-card" id="fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo"
+             data-card="fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze" data-name="CEO/COO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo')">
+      <span class="sub-lbl">CEO/COO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Complexiteit framen als structurele margedrainer; Cloud + best practices + AI als route naar minder complexiteit en minder afhankelijkheid.</span>
+  </td>
+  <td>Reduceert systeemlandschappen tot één platform voor finance, supply chain en stores. Minder chaos, meer schaalbare groei.</td>
+  <td>Minder complexiteit betekent sneller schalen en minder afhankelijkheid; meer executiekracht.</td>
+  <td class="td-col6">Breng de verborgen kosten van complexiteit bij {{bedrijf}} in kaart (integraties, handwerk, upgrades, key-person risk, partnerafhankelijkheid). Vertaal dit naar risico voor een CEO/COO. Sluit af met reflectievraag en suggestie om complexiteitsprofiel te inventariseren.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo_r0" placeholder="Typ hier..." oninput="saveFb('fase_5_complexiteitsreductie_als_strategische_keuze_ceo_coo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_5_complexiteitsreductie_als_strategische_keuze_cfo" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_5_complexiteitsreductie_als_strategische_keuze_cfo"
+             data-card="fase_5_complexiteitsreductie_als_strategische_keuze_cfo" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze" data-name="CFO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_5_complexiteitsreductie_als_strategische_keuze_cfo')">
+      <span class="sub-lbl">CFO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_5_complexiteitsreductie_als_strategische_keuze_cfo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_5_complexiteitsreductie_als_strategische_keuze_cfo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_5_complexiteitsreductie_als_strategische_keuze_cfo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_5_complexiteitsreductie_als_strategische_keuze_cfo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Complexiteit framen als structurele margedrainer; Cloud + best practices + AI als route naar minder complexiteit en minder afhankelijkheid.</span>
+  </td>
+  <td>Clean Core verlaagt beheerkosten, foutkosten en compliance-risico’s. Financiële processen worden eenvoudiger, sneller en voorspelbaarder.</td>
+  <td>Minder verborgen IT-kosten en minder escalatierisico; meer voorspelbaarheid in kosten en planning.</td>
+  <td class="td-col6">Breng de verborgen kosten van complexiteit bij {{bedrijf}} in kaart (integraties, handwerk, upgrades, key-person risk, partnerafhankelijkheid). Vertaal dit naar risico voor een CFO. Sluit af met reflectievraag en suggestie om complexiteitsprofiel te inventariseren.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_5_complexiteitsreductie_als_strategische_keuze_cfo_r0" placeholder="Typ hier..." oninput="saveFb('fase_5_complexiteitsreductie_als_strategische_keuze_cfo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_5_complexiteitsreductie_als_strategische_keuze_cto_it" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_5_complexiteitsreductie_als_strategische_keuze_cto_it"
+             data-card="fase_5_complexiteitsreductie_als_strategische_keuze_cto_it" data-theme="fase_5_complexiteitsreductie_als_strategische_keuze" data-name="CTO/IT" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_5_complexiteitsreductie_als_strategische_keuze_cto_it')">
+      <span class="sub-lbl">CTO/IT</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_5_complexiteitsreductie_als_strategische_keuze_cto_it" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_5_complexiteitsreductie_als_strategische_keuze_cto_it" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_5_complexiteitsreductie_als_strategische_keuze_cto_it" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_5_complexiteitsreductie_als_strategische_keuze_cto_it" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Complexiteit framen als structurele margedrainer; Cloud + best practices + AI als route naar minder complexiteit en minder afhankelijkheid.</span>
+  </td>
+  <td>Geen upgrades meer, geen technische schuld. Maandelijkse innovaties houden retailprocessen automatisch up-to-date.</td>
+  <td>Minder integraties, minder beheerlast, minder partnerafhankelijkheid; eenvoudiger en veiliger landschap.</td>
+  <td class="td-col6">Breng de verborgen kosten van complexiteit bij {{bedrijf}} in kaart (integraties, handwerk, upgrades, key-person risk, partnerafhankelijkheid). Vertaal dit naar risico voor een CTO/IT. Sluit af met reflectievraag en suggestie om complexiteitsprofiel te inventariseren.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_5_complexiteitsreductie_als_strategische_keuze_cto_it_r0" placeholder="Typ hier..." oninput="saveFb('fase_5_complexiteitsreductie_als_strategische_keuze_cto_it_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="theme-sec" data-theme="fase_6_micro_commitment">
+  <div class="theme-hd">
+    <div class="t-icon" style="background:#f8f9fa;color:#05618d;">[?]</div>
+    <h2>6. Fase 6 - Micro commitment</h2>
+    <span class="t-meta">3 sub-onderwerpen · 3 vergelijkingspunten</span>
+  </div>
+  <div class="matrix-card" id="fase_6_micro_commitment_ceo_coo" data-theme="fase_6_micro_commitment" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_6_micro_commitment_ceo_coo"
+             data-card="fase_6_micro_commitment_ceo_coo" data-theme="fase_6_micro_commitment" data-name="CEO/COO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_6_micro_commitment_ceo_coo')">
+      <span class="sub-lbl">CEO/COO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_6_micro_commitment_ceo_coo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_6_micro_commitment_ceo_coo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_6_micro_commitment_ceo_coo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_6_micro_commitment_ceo_coo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Laagdrempelige eerste stap zonder salesdruk: strategische sparring met concrete observaties als opening.</span>
+  </td>
+  <td>Een Retail Scan geeft in 30 minuten inzicht in verbeterkansen in voorraad, marges en ketensturing—volledig vrijblijvend.</td>
+  <td>Strategische architectuursparring gericht op schaalbaarheid en executiesnelheid.</td>
+  <td class="td-col6">Gebruik alle eerdere inzichten over {{bedrijf}}. Formuleer voorstel voor 20-min gesprek met 3 concrete observaties. Laagdrempelig, geen salesdruk. Pas insteek aan op CEO/COO: architectuursparring.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_6_micro_commitment_ceo_coo_r0" placeholder="Typ hier..." oninput="saveFb('fase_6_micro_commitment_ceo_coo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_6_micro_commitment_cfo" data-theme="fase_6_micro_commitment" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_6_micro_commitment_cfo"
+             data-card="fase_6_micro_commitment_cfo" data-theme="fase_6_micro_commitment" data-name="CFO" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_6_micro_commitment_cfo')">
+      <span class="sub-lbl">CFO</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_6_micro_commitment_cfo" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_6_micro_commitment_cfo" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_6_micro_commitment_cfo" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_6_micro_commitment_cfo" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Laagdrempelige eerste stap zonder salesdruk: strategische sparring met concrete observaties als opening.</span>
+  </td>
+  <td>Een Cloud Fit-check toont direct de financiële impact: marges, voorraaddruk, closing-efficiëntie. Concreet en risicoloos.</td>
+  <td>TCO en complexiteitsanalyse: waar lekt geld door versnippering en handwerk?</td>
+  <td class="td-col6">Gebruik alle eerdere inzichten over {{bedrijf}}. Formuleer voorstel voor 20-min gesprek met 3 concrete observaties. Laagdrempelig, geen salesdruk. Pas insteek aan op CFO: TCO/complexiteit.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_6_micro_commitment_cfo_r0" placeholder="Typ hier..." oninput="saveFb('fase_6_micro_commitment_cfo_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div><div class="matrix-card collapsed" id="fase_6_micro_commitment_cto_it" data-theme="fase_6_micro_commitment" data-n="1">
+  <div class="subtopic-bar">
+    <div class="sub-chk-group">
+      <input type="checkbox" class="sub-chk" id="subchk_fase_6_micro_commitment_cto_it"
+             data-card="fase_6_micro_commitment_cto_it" data-theme="fase_6_micro_commitment" data-name="CTO/IT" onchange="onSubChk(this)">
+      <span class="sub-chk-lbl">Selecteer</span>
+    </div>
+    <div class="sub-divider"></div>
+    <div class="sub-expand" onclick="toggleCard('fase_6_micro_commitment_cto_it')">
+      <span class="sub-lbl">CTO/IT</span>
+      <span class="sub-meta">· 1 aspect</span>
+      <span class="sel-bdg" id="sbd_fase_6_micro_commitment_cto_it" style="display:none">Geselecteerd</span>
+      <span class="par-bdg" id="pbd_fase_6_micro_commitment_cto_it" style="display:none"></span>
+      <span class="chev">&#9660;</span>
+    </div>
+  </div>
+  <div class="mx-body">
+    <table class="mx">
+      <col style="width:17%"><col style="width:21%"><col style="width:20%"><col style="width:24%"><col style="width:18%">
+      <thead><tr>
+        <th>Aspect</th>
+        <th>SAP S/4HANA Cloud Public Edition</th>
+        <th>Message</th>
+        <th>Prompt Instruction</th>
+        <th>Jouw feedback</th>
+      </tr></thead>
+      <tbody><tr class="asp-row" data-card="fase_6_micro_commitment_cto_it" data-idx="0">
+  <td class="asp-td">
+    <input type="checkbox" class="row-chk" data-card="fase_6_micro_commitment_cto_it" data-idx="0" onchange="onRowChk(this)">
+    <span class="asp-name">Laagdrempelige eerste stap zonder salesdruk: strategische sparring met concrete observaties als opening.</span>
+  </td>
+  <td>Korte IT-impactscan maakt duidelijk hoe Public Edition integreert met POS, e-commerce en bestaande architectuur—zonder verplichtingen.</td>
+  <td>Architectuur quick scan: afhankelijkheden, integraties en data-consistentie in kaart.</td>
+  <td class="td-col6">Gebruik alle eerdere inzichten over {{bedrijf}}. Formuleer voorstel voor 20-min gesprek met 3 concrete observaties. Laagdrempelig, geen salesdruk. Pas insteek aan op CTO/IT: quick scan.</td>
+  <td class="td-fb"><textarea class="fb" id="fb_fase_6_micro_commitment_cto_it_r0" placeholder="Typ hier..." oninput="saveFb('fase_6_micro_commitment_cto_it_r0')"></textarea></td>
+</tr></tbody>
+    </table>
+  </div>
+</div>
+</div>
+</main>
+
+<!-- FLOATING SELECTION BAR -->
+<div class="sel-bar" id="selBar">
+  <div>
+    <div class="sb-count" id="sbCount"></div>
+    <div class="sb-names" id="sbNames"></div>
+  </div>
+  <button class="btn-export" onclick="openModal()">&#128229; Exporteer selectie</button>
+  <button class="btn-desel"  onclick="deselectAll()">&#10005; Wis selectie</button>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="overlay" id="expModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3>&#128229; Exporteer geselecteerde onderwerpen</h3>
+        <p>Kies kolommen &middot; Voeg context toe &middot; Kies exportformaat</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="ms">
+        <label>Geselecteerde sub-onderwerpen (<span id="mc">0</span>)</label>
+        <div class="sel-list" id="selList"></div>
+      </div>
+      <div class="ms">
+        <label>Exporteer kolommen <button class="col-all-btn" id="btnColAll" onclick="toggleAllCols()">Alles aan</button></label>
+        <div class="col-picker">
+          <button class="col-btn col-pub on" data-col="col4" onclick="toggleCol(this)">
+            <span class="col-icon">&#128309;</span>
+           <span><span class="col-label">SAP S/4HANA Cloud Public Edition</span><span class="col-sub">Feiten &amp; specificaties</span></span>
+            <span class="col-chk" id="cc_col4">&#10003;</span>
+          </button>
+          <button class="col-btn col-priv on" data-col="col5" onclick="toggleCol(this)">
+            <span class="col-icon">&#9899;</span>
+           <span><span class="col-label">Message</span><span class="col-sub">Feiten &amp; vergelijking</span></span>
+            <span class="col-chk" id="cc_col5">&#10003;</span>
+          </button>
+          <button class="col-btn col-sch on" data-col="col6" onclick="toggleCol(this)">
+            <span class="col-icon">&#128992;</span>
+           <span><span class="col-label">Prompt Instruction</span><span class="col-sub">Positionering &amp; advies</span></span>
+            <span class="col-chk" id="cc_col6">&#10003;</span>
+          </button>
+          <button class="col-btn col-fb on" data-col="col7" onclick="toggleCol(this)">
+            <span class="col-icon">&#9997;</span>
+           <span><span class="col-label">Jouw Feedback / Personal Notes</span><span class="col-sub">Notities &amp; feedback</span></span>
+            <span class="col-chk" id="cc_col7">&#10003;</span>
+          </button>
+        </div>
+      </div>
+      <div class="ms">
+        <label>Projectnaam / Klantnaam</label>
+        <input type="text" class="m-input" id="projName" placeholder="bijv. Presales XYZ B.V.">
+      </div>
+      <div class="ms">
+        <label>Context &amp; toelichting</label>
+        <textarea class="m-ta" id="expCtx" placeholder="Beschrijf de context..."></textarea>
+      </div>
+      <div class="ms">
+        <label>Exportformaat</label>
+        <div class="fmt-row">
+<button class="fmt-btn on" data-fmt="word" onclick="setFmt(this)">Word (.doc)</button>
+<button class="fmt-btn" data-fmt="excel" onclick="setFmt(this)">Excel (.xlsx)</button>
+<button class="fmt-btn" data-fmt="clipboard" onclick="setFmt(this)">Clipboard</button>
+<button class="fmt-btn" data-fmt="print" onclick="setFmt(this)">Print / PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <span class="modal-hint" id="mhint">Excel: 2 tabbladen &mdash; Samenvatting + Vergelijkingspunten</span>
+      <button class="btn-cancel" onclick="closeModal()">Annuleren</button>
+      <button class="btn-ok" id="btnOk" onclick="doExport()">&#128229; Download Excel</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fw">
+    <div class="ft-title">Scheer IDS Netherlands &mdash; SAP Expert Partner</div>
+    <p style="color:rgba(255,255,255,.7);font-size:12.5px;margin:0 0 4px;">100% focus op SAP S/4HANA Cloud Public Edition &middot; GROW with SAP &middot; NL &middot; DACH &middot; APAC &middot; US</p>
+    <div class="ft-copy">&copy; 2025 Scheer IDS Netherlands &middot; Vertrouwelijk intern document</div>
+  </div>
+</footer>
+
+<script>
+
+// ══════════════════════════════════════════
+// CONFIG  (injected from Excel)
+// ══════════════════════════════════════════
+const TE = {"fase_1_frictie_zichtbaar_maken": "[?]", "fase_2_van_symptoom_naar_fundering": "[?]", "fase_3_best_practices_boven_maatwerk": "[?]", "fase_4_business_ai_als_ingebouwde_versneller": "[?]", "fase_5_complexiteitsreductie_als_strategische_keuze": "[?]", "fase_6_micro_commitment": "[?]"};
+const TL = {"fase_1_frictie_zichtbaar_maken": "Fase 1 - Frictie zichtbaar maken", "fase_2_van_symptoom_naar_fundering": "Fase 2 - Van symptoom naar fundering", "fase_3_best_practices_boven_maatwerk": "Fase 3 - Best practices boven maatwerk", "fase_4_business_ai_als_ingebouwde_versneller": "Fase 4 - Business AI als ingebouwde versneller", "fase_5_complexiteitsreductie_als_strategische_keuze": "Fase 5 - Complexiteitsreductie als strategische keuze", "fase_6_micro_commitment": "Fase 6 - Micro commitment"};
+const COL_LABELS = {"col4": "SAP S/4HANA Cloud Public Edition", "col5": "Message", "col6": "Prompt Instruction", "col7": "Jouw Feedback / Personal Notes"};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+const sel = Object.create(null);
+const colOn = { col4: true, col5: true, col6: true, col7: true };
+let exportFmt = "excel";
+let allSelActive = false;
+
+// ══════════════════════════════════════════
+// CHIP TOGGLES
+// ══════════════════════════════════════════
+function chipToggle(btn) {
+  btn.classList.toggle("on");
+  var t = btn.getAttribute("data-t");
+  var sec = document.querySelector(".theme-sec[data-theme=\"" + t + "\"]");
+  if (sec) sec.style.display = btn.classList.contains("on") ? "" : "none";
+}
+var allChipsOn = true;
+function chipAll(btn) {
+  allChipsOn = !allChipsOn;
+  document.querySelectorAll(".chip:not([data-t=\"all\"])").forEach(function(c) {
+    var sec = document.querySelector(".theme-sec[data-theme=\"" + c.getAttribute("data-t") + "\"]");
+    if (allChipsOn) {
+      c.classList.add("on");
+      if (sec) sec.style.display = "";
+    } else {
+      c.classList.remove("on");
+      if (sec) sec.style.display = "none";
+    }
+  });
+  btn.textContent = allChipsOn ? "Alle" : "Geen";
+  btn.classList.toggle("on", allChipsOn);
+  updateRcCount();
+}
+
+// ══════════════════════════════════════════
+// COLLAPSE / EXPAND
+// ══════════════════════════════════════════
+function toggleCard(id) {
+  var card = document.getElementById(id);
+  if (card) card.classList.toggle("collapsed");
+}
+function expandAll() {
+  document.querySelectorAll(".matrix-card").forEach(function(c) { c.classList.remove("collapsed"); });
+  updateRcCount();
+}
+function collapseAll() {
+  document.querySelectorAll(".matrix-card").forEach(function(c) { c.classList.add("collapsed"); });
+  updateRcCount();
+}
+
+// ══════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════
+function doSearch(q) {
+  q = q.toLowerCase().trim();
+  document.querySelectorAll(".matrix-card").forEach(function(card) {
+    if (!q) {
+      card.style.display = "";
+      card.querySelectorAll(".asp-row").forEach(function(r) { r.style.display = ""; });
+      return;
+    }
+    var rows = card.querySelectorAll(".asp-row");
+    var any = false;
+    rows.forEach(function(r) {
+      var m = r.textContent.toLowerCase().indexOf(q) !== -1;
+      r.style.display = m ? "" : "none";
+      if (m) any = true;
+    });
+    card.style.display = any ? "" : "none";
+    if (any) card.classList.remove("collapsed");
+  });
+  updateRcCount();
+}
+function updateRcCount() {
+  var v = 0;
+  document.querySelectorAll(".asp-row").forEach(function(r) {
+    if (r.style.display !== "none") v++;
+  });
+  var el = document.getElementById("rcCount");
+  if (el) el.textContent = v + " vergelijkingspunten";
+}
+
+// ══════════════════════════════════════════
+// SELECT ALL
+// ══════════════════════════════════════════
+function toggleSelectAll() {
+  var btn = document.getElementById("btnSelAll");
+  if (!allSelActive) {
+    document.querySelectorAll(".sub-chk").forEach(function(cb) {
+      if (!cb.checked) { cb.checked = true; applySubChk(cb, true); }
+    });
+    allSelActive = true;
+    btn.textContent = "Deselecteer alles";
+  } else {
+    deselectAll();
+  }
+}
+
+// ══════════════════════════════════════════
+// SUB-CHECKBOX
+// ══════════════════════════════════════════
+function onSubChk(cb) { applySubChk(cb, cb.checked); }
+function applySubChk(cb, checked) {
+  var cardId = cb.getAttribute("data-card");
+  var theme  = cb.getAttribute("data-theme");
+  var name   = cb.getAttribute("data-name");
+  var card   = document.getElementById(cardId);
+  if (!card) return;
+  var rows = card.querySelectorAll(".asp-row");
+  var n    = rows.length;
+  if (checked) {
+    var rs = new Set();
+    for (var i = 0; i < n; i++) rs.add(i);
+    sel[cardId] = { theme: theme, name: name, rows: rs };
+    card.classList.add("selected");
+    card.classList.remove("partial");
+    card.querySelectorAll(".row-chk").forEach(function(r) { r.checked = true; r.indeterminate = false; });
+    rows.forEach(function(r) { r.classList.remove("desel"); });
+  } else {
+    delete sel[cardId];
+    card.classList.remove("selected", "partial");
+    card.querySelectorAll(".row-chk").forEach(function(r) { r.checked = false; r.indeterminate = false; });
+    rows.forEach(function(r) { r.classList.add("desel"); });
+  }
+  updateDot(theme);
+  updateSelBar();
+  refreshBadge(cardId);
+}
+
+// ══════════════════════════════════════════
+// ROW CHECKBOX
+// ══════════════════════════════════════════
+function onRowChk(cb) {
+  var cardId = cb.getAttribute("data-card");
+  var idx    = parseInt(cb.getAttribute("data-idx"), 10);
+  var card   = document.getElementById(cardId);
+  if (!card) return;
+  var theme = card.getAttribute("data-theme");
+  var name  = card.querySelector(".sub-lbl").textContent;
+  var rowEl = null;
+  card.querySelectorAll(".asp-row").forEach(function(r) {
+    if (parseInt(r.getAttribute("data-idx"), 10) === idx) rowEl = r;
+  });
+  if (cb.checked) {
+    if (rowEl) rowEl.classList.remove("desel");
+    if (!sel[cardId]) sel[cardId] = { theme: theme, name: name, rows: new Set() };
+    sel[cardId].rows.add(idx);
+  } else {
+    if (rowEl) rowEl.classList.add("desel");
+    if (sel[cardId]) sel[cardId].rows.delete(idx);
+  }
+  var total = card.querySelectorAll(".row-chk").length;
+  var nSel  = sel[cardId] ? sel[cardId].rows.size : 0;
+  var subCb = document.getElementById("subchk_" + cardId);
+  if (nSel === 0) {
+    delete sel[cardId];
+    card.classList.remove("selected", "partial");
+    if (subCb) { subCb.checked = false; subCb.indeterminate = false; }
+  } else if (nSel === total) {
+    card.classList.add("selected");
+    card.classList.remove("partial");
+    if (subCb) { subCb.checked = true; subCb.indeterminate = false; }
+  } else {
+    card.classList.remove("selected");
+    card.classList.add("partial");
+    if (subCb) { subCb.checked = false; subCb.indeterminate = true; }
+  }
+  updateDot(theme);
+  updateSelBar();
+  refreshBadge(cardId);
+}
+
+function refreshBadge(cardId) {
+  var s    = sel[cardId];
+  var card = document.getElementById(cardId);
+  var sbd  = document.getElementById("sbd_" + cardId);
+  var pbd  = document.getElementById("pbd_" + cardId);
+  if (!sbd || !pbd || !card) return;
+  if (s && s.rows.size > 0) {
+    var tot = card.querySelectorAll(".row-chk").length;
+    if (s.rows.size < tot) {
+      pbd.textContent = s.rows.size + "/" + tot + " aspecten";
+      pbd.style.display = "inline-block";
+      sbd.style.display = "none";
+    } else {
+      sbd.style.display = "inline-block";
+      pbd.style.display = "none";
+    }
+  } else {
+    sbd.style.display = "none";
+    pbd.style.display = "none";
+  }
+}
+
+function updateDot(theme) {
+  var has = Object.values(sel).some(function(s) { return s.theme === theme; });
+  var c   = document.querySelector(".chip[data-t=\"" + theme + "\"]");
+  if (c) c.classList.toggle("has-sel", has);
+}
+
+function updateSelBar() {
+  var items    = Object.values(sel);
+  var totalAsp = items.reduce(function(a, s) { return a + s.rows.size; }, 0);
+  var bar = document.getElementById("selBar");
+  if (bar) bar.classList.toggle("show", totalAsp > 0);
+  var cnt = document.getElementById("sbCount");
+  if (cnt) cnt.textContent = items.length + " sub-onderwerpen / " + totalAsp + " aspecten geselecteerd";
+  var nm = document.getElementById("sbNames");
+  if (nm) nm.textContent = items.slice(0, 5).map(function(s) {
+    return (TE[s.theme] || "") + " " + s.name;
+  }).join(" · ") + (items.length > 5 ? " ..." : "");
+}
+
+function deselectAll() {
+  Object.keys(sel).forEach(function(id) {
+    delete sel[id];
+    var card = document.getElementById(id);
+    if (!card) return;
+    card.classList.remove("selected", "partial");
+    card.querySelectorAll(".row-chk").forEach(function(r) { r.checked = false; r.indeterminate = false; });
+    card.querySelectorAll(".asp-row").forEach(function(r) { r.classList.remove("desel"); });
+    var cb  = document.getElementById("subchk_" + id);
+    if (cb) { cb.checked = false; cb.indeterminate = false; }
+    var sbd = document.getElementById("sbd_" + id);
+    var pbd = document.getElementById("pbd_" + id);
+    if (sbd) sbd.style.display = "none";
+    if (pbd) pbd.style.display = "none";
+  });
+  document.querySelectorAll(".chip").forEach(function(c) { c.classList.remove("has-sel"); });
+  var btn = document.getElementById("btnSelAll");
+  if (btn) { btn.textContent = "Selecteer alles"; btn.classList.remove("active"); }
+  allSelActive = false;
+  updateSelBar();
+}
+
+// ══════════════════════════════════════════
+// COLUMN TOGGLES
+// ══════════════════════════════════════════
+var allColsOn = true;
+function toggleAllCols() {
+  allColsOn = !allColsOn;
+  document.querySelectorAll(".col-btn").forEach(function(btn) {
+    var col = btn.getAttribute("data-col");
+    if (allColsOn) {
+      btn.classList.add("on");
+      colOn[col] = true;
+    } else {
+      btn.classList.remove("on");
+      colOn[col] = false;
+    }
+    var cc = document.getElementById("cc_" + col);
+    if (cc) cc.textContent = allColsOn ? "✓" : "○";
+  });
+  var b = document.getElementById("btnColAll");
+  if (b) b.textContent = allColsOn ? "Alles aan" : "Alles uit";
+}
+function toggleCol(btn) {
+  btn.classList.toggle("on");
+  var col = btn.getAttribute("data-col");
+  colOn[col] = btn.classList.contains("on");
+  var cc = document.getElementById("cc_" + col);
+  if (cc) cc.textContent = colOn[col] ? "✓" : "○";
+  // sync all-toggle label
+  var anyOff = Object.values(colOn).some(function(v) { return !v; });
+  allColsOn = !anyOff;
+  var b = document.getElementById("btnColAll");
+  if (b) b.textContent = allColsOn ? "Alles aan" : "Alles uit";
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal() {
+  var items = Object.values(sel);
+  var mc = document.getElementById("mc");
+  if (mc) mc.textContent = items.length;
+  var list = document.getElementById("selList");
+  if (list) list.innerHTML = items.map(function(s) {
+    var n = s.rows.size;
+    return "<div class=\"sli\">" +
+      "<span class=\"sli-theme\">" + (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + "</span>" +
+      "<span class=\"sli-name\">" + s.name + "</span>" +
+      "<span class=\"sli-count\">" + n + " aspect" + (n !== 1 ? "en" : "") + "</span>" +
+      "</div>";
+  }).join("");
+  var modal = document.getElementById("expModal");
+  if (modal) modal.classList.add("open");
+}
+function closeModal() {
+  var modal = document.getElementById("expModal");
+  if (modal) modal.classList.remove("open");
+}
+document.addEventListener("DOMContentLoaded", function() {
+  var modal = document.getElementById("expModal");
+  if (modal) modal.addEventListener("click", function(e) {
+    if (e.target === modal) closeModal();
+  });
+});
+
+var fmtLabels = {
+  excel:     "Download Excel",
+  word:      "Download Word",
+  clipboard: "Kopieer naar Clipboard",
+  print:     "Print / PDF"
+};
+var fmtHints = {
+  excel:     "Excel: 2 tabbladen — Samenvatting + Vergelijkingspunten",
+  word:      "Word-document met tabel per sub-onderwerp",
+  clipboard: "Plak direct in e-mail of Teams",
+  print:     "Opent print-dialoog voor PDF of printer"
+};
+function setFmt(btn) {
+  document.querySelectorAll(".fmt-btn").forEach(function(b) { b.classList.remove("on"); });
+  btn.classList.add("on");
+  exportFmt = btn.getAttribute("data-fmt");
+  var ok   = document.getElementById("btnOk");
+  var hint = document.getElementById("mhint");
+  if (ok)   ok.textContent   = fmtLabels[exportFmt] || exportFmt;
+  if (hint) hint.textContent = fmtHints[exportFmt]  || "";
+}
+
+// ══════════════════════════════════════════
+// EXPORT HELPERS
+// ══════════════════════════════════════════
+function clean(s) {
+  return s ? s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "";
+}
+function getFb(rid) {
+  var el = document.getElementById("fb_" + rid);
+  return el ? el.value : "";
+}
+function buildSections() {
+  var proj = (document.getElementById("projName") || {}).value || "Scheer IDS Playbook";
+  var ctx  = (document.getElementById("expCtx")   || {}).value || "";
+  var sections = [];
+  Object.entries(sel).forEach(function(entry) {
+    var cardId = entry[0];
+    var s      = entry[1];
+    var card   = document.getElementById(cardId);
+    if (!card) return;
+    var rows = [];
+    card.querySelectorAll(".asp-row").forEach(function(r) {
+      var idx = parseInt(r.getAttribute("data-idx"), 10);
+      if (!s.rows.has(idx)) return;
+      var cells = r.querySelectorAll("td");
+      rows.push({
+        aspect: (cells[0] && cells[0].querySelector(".asp-name")) ? cells[0].querySelector(".asp-name").textContent : "",
+        col4:   cells[1] ? cells[1].textContent.trim() : "",
+        col5:   cells[2] ? cells[2].textContent.trim() : "",
+        col6:   cells[3] ? cells[3].textContent.trim() : "",
+        fb:     getFb(cardId + "_r" + idx),
+        idx:    idx
+      });
+    });
+    sections.push({ theme: s.theme, name: s.name, rows: rows, cardId: cardId });
+  });
+  return { proj: proj, ctx: ctx, sections: sections };
+}
+
+// ══════════════════════════════════════════
+// EXCEL EXPORT
+// ══════════════════════════════════════════
+function doExcel() {
+  if (typeof XLSX === "undefined") { alert("Excel bibliotheek niet geladen. Controleer internetverbinding."); return; }
+  var d  = buildSections();
+  var wb = XLSX.utils.book_new();
+  var sum = [
+    ["Scheer IDS Netherlands — Playbook Export"],
+    ["Projectnaam:", d.proj],
+    ["Exportdatum:", new Date().toLocaleDateString("nl-NL")],
+    [],
+    ["Context:", d.ctx || "(geen context)"],
+    [],
+    ["Thema", "Sub-onderwerp", "Aspecten"]
+  ];
+  d.sections.forEach(function(s) {
+    sum.push([(TL[s.theme] || s.theme), s.name, s.rows.length + " aspecten"]);
+  });
+  var ws1 = XLSX.utils.aoa_to_sheet(sum);
+  ws1["!cols"] = [{ wch: 20 }, { wch: 55 }, { wch: 14 }];
+  XLSX.utils.book_append_sheet(wb, ws1, "Samenvatting");
+
+  var cols = ["Thema", "Sub-onderwerp", "Aspect"];
+  if (colOn.col4) cols.push(COL_LABELS.col4);
+  if (colOn.col5) cols.push(COL_LABELS.col5);
+  if (colOn.col6) cols.push(COL_LABELS.col6);
+  if (colOn.col7) cols.push(COL_LABELS.col7);
+  var rows = [cols];
+  d.sections.forEach(function(s) {
+    s.rows.forEach(function(r) {
+      var row = [(TL[s.theme] || s.theme), s.name, r.aspect];
+      if (colOn.col4) row.push(clean(r.col4));
+      if (colOn.col5) row.push(clean(r.col5));
+      if (colOn.col6) row.push(clean(r.col6));
+      if (colOn.col7) row.push(r.fb);
+      rows.push(row);
+    });
+    rows.push([]);
+  });
+  var ws2 = XLSX.utils.aoa_to_sheet(rows);
+  ws2["!cols"] = [{ wch: 16 }, { wch: 28 }, { wch: 22 }, { wch: 44 }, { wch: 40 }, { wch: 46 }, { wch: 28 }];
+  XLSX.utils.book_append_sheet(wb, ws2, "Vergelijkingspunten");
+
+  var fn = d.proj.replace(/[^a-zA-Z0-9_ -]/g, "").trim().replace(/\s+/g, "_") || "Scheer_Playbook";
+  XLSX.writeFile(wb, fn + ".xlsx");
+  closeModal();
+}
+
+// ══════════════════════════════════════════
+// WORD EXPORT
+// ══════════════════════════════════════════
+function doWord() {
+  var d = buildSections();
+  var h = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\">"
+        + "<head><meta charset=\"UTF-8\"><style>"
+        + "body{font-family:Calibri,sans-serif;font-size:11pt;}"
+        + "h1{color:#05618d;font-size:16pt;}h2{color:#1a6fa5;font-size:12pt;border-bottom:1px solid #ccc;margin-top:20pt;}"
+        + "table{border-collapse:collapse;width:100%;margin-bottom:8pt;}"
+        + "th{background:#05618d;color:white;padding:5pt 8pt;font-size:9pt;text-align:left;}"
+        + "td{padding:5pt 8pt;border:1pt solid #ddd;font-size:9pt;vertical-align:top;}"
+        + "tr:nth-child(even){background:#f8f9fa;}"
+        + "</style></head><body>";
+  h += "<h1>" + d.proj + "</h1><p style=\"color:#888;font-size:10pt;\">Scheer IDS &bull; " + new Date().toLocaleDateString("nl-NL") + "</p>";
+  if (d.ctx) h += "<p style=\"font-style:italic;border-left:3pt solid #ef7c00;padding-left:10pt;\">" + d.ctx.replace(/\n/g, "<br>") + "</p>";
+  d.sections.forEach(function(s) {
+    h += "<h2>" + (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + " &bull; " + s.name + "</h2>";
+    h += "<table><thead><tr><th>Aspect</th>";
+    if (colOn.col4) h += "<th>" + COL_LABELS.col4 + "</th>";
+    if (colOn.col5) h += "<th>" + COL_LABELS.col5 + "</th>";
+    if (colOn.col6) h += "<th>" + COL_LABELS.col6 + "</th>";
+    if (colOn.col7) h += "<th>" + COL_LABELS.col7 + "</th>";
+    h += "</tr></thead><tbody>";
+    s.rows.forEach(function(r) {
+      h += "<tr><td><strong>" + r.aspect + "</strong></td>";
+      if (colOn.col4) h += "<td>" + clean(r.col4) + "</td>";
+      if (colOn.col5) h += "<td>" + clean(r.col5) + "</td>";
+      if (colOn.col6) h += "<td>" + clean(r.col6) + "</td>";
+      if (colOn.col7) h += "<td>" + r.fb + "</td>";
+      h += "</tr>";
+    });
+    h += "</tbody></table>";
+  });
+  h += "</body></html>";
+  var a    = document.createElement("a");
+  a.href   = URL.createObjectURL(new Blob([h], { type: "application/msword" }));
+  a.download = (d.proj.replace(/[^a-zA-Z0-9_ -]/g, "").trim().replace(/\s+/g, "_") || "Scheer_Playbook") + ".doc";
+  a.click();
+  closeModal();
+}
+
+// ══════════════════════════════════════════
+// CLIPBOARD
+// ══════════════════════════════════════════
+function doClipboard() {
+  var d = buildSections();
+  var t = d.proj + "\n" + new Date().toLocaleDateString("nl-NL") + "\n\n";
+  if (d.ctx) t += d.ctx + "\n\n---\n\n";
+  d.sections.forEach(function(s) {
+    t += (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + " — " + s.name + "\n";
+    t += "─".repeat(60) + "\n";
+    s.rows.forEach(function(r) {
+      t += "\n• " + r.aspect + "\n";
+      if (colOn.col4) t += "  " + COL_LABELS.col4 + ": " + clean(r.col4) + "\n";
+      if (colOn.col5) t += "  " + COL_LABELS.col5 + ": " + clean(r.col5) + "\n";
+      if (colOn.col6) t += "  " + COL_LABELS.col6 + ": " + clean(r.col6) + "\n";
+      if (colOn.col7 && r.fb) t += "  " + COL_LABELS.col7 + ": " + r.fb + "\n";
+    });
+    t += "\n";
+  });
+  navigator.clipboard.writeText(t).then(function() {
+    var b = document.getElementById("btnOk");
+    if (b) { b.textContent = "Gekopieerd!"; b.style.background = "#27ae60"; }
+    setTimeout(function() {
+      if (b) { b.textContent = fmtLabels[exportFmt]; b.style.background = ""; }
+      closeModal();
+    }, 1800);
+  }).catch(function() { alert("Clipboard niet beschikbaar in deze browser."); });
+}
+
+// ══════════════════════════════════════════
+// PRINT
+// ══════════════════════════════════════════
+function doPrint() {
+  var d   = buildSections();
+  var win = window.open("", "_blank");
+  if (!win) { alert("Pop-up geblokkeerd. Sta pop-ups toe voor deze pagina."); return; }
+  var h = "<!DOCTYPE html><html><head><title>" + d.proj + "</title>"
+        + "<style>body{font-family:Segoe UI,sans-serif;padding:20px;font-size:11px;}"
+        + "h1{color:#05618d;}h2{color:#1a6fa5;font-size:12px;border-bottom:1px solid #ccc;}"
+        + "table{border-collapse:collapse;width:100%;font-size:10px;}"
+        + "th{background:#05618d;color:#fff;padding:5px 7px;text-align:left;}"
+        + "td{padding:5px 7px;border:1px solid #ddd;vertical-align:top;}"
+        + "tr:nth-child(even){background:#f8f9fa;}"
+        + "@media print{h2{page-break-after:avoid;}table{page-break-inside:avoid;}}"
+        + "</style></head><body>";
+  h += "<h1>" + d.proj + "</h1><p style=\"color:#888;\">Scheer IDS &bull; " + new Date().toLocaleDateString("nl-NL") + "</p>";
+  if (d.ctx) h += "<p style=\"font-style:italic;border-left:3px solid #ef7c00;padding-left:10px;\">" + d.ctx.replace(/\n/g, "<br>") + "</p>";
+  d.sections.forEach(function(s) {
+    h += "<h2>" + (TE[s.theme] || "") + " " + (TL[s.theme] || s.theme) + " &bull; " + s.name + "</h2>";
+    h += "<table><thead><tr><th>Aspect</th>";
+    if (colOn.col4) h += "<th>" + COL_LABELS.col4 + "</th>";
+    if (colOn.col5) h += "<th>" + COL_LABELS.col5 + "</th>";
+    if (colOn.col6) h += "<th>" + COL_LABELS.col6 + "</th>";
+    if (colOn.col7) h += "<th>" + COL_LABELS.col7 + "</th>";
+    h += "</tr></thead><tbody>";
+    s.rows.forEach(function(r) {
+      h += "<tr><td><strong>" + r.aspect + "</strong></td>";
+      if (colOn.col4) h += "<td>" + clean(r.col4) + "</td>";
+      if (colOn.col5) h += "<td>" + clean(r.col5) + "</td>";
+      if (colOn.col6) h += "<td>" + clean(r.col6) + "</td>";
+      if (colOn.col7) h += "<td>" + r.fb + "</td>";
+      h += "</tr>";
+    });
+    h += "</tbody></table>";
+  });
+  h += "</body></html>";
+  win.document.write(h);
+  win.document.close();
+  setTimeout(function() { win.print(); }, 400);
+  closeModal();
+}
+
+function doExport() {
+  var items = Object.values(sel);
+  if (items.length === 0) { alert("Selecteer eerst sub-onderwerpen via de checkboxes."); return; }
+  if (exportFmt === "excel")          doExcel();
+  else if (exportFmt === "word")      doWord();
+  else if (exportFmt === "clipboard") doClipboard();
+  else                                doPrint();
+}
+
+// ══════════════════════════════════════════
+// FEEDBACK PERSISTENCE
+// ══════════════════════════════════════════
+function saveFb(id) {
+  try { localStorage.setItem("sfb_" + id, document.getElementById("fb_" + id).value); } catch(e) {}
+}
+function loadFeedback() {
+  try {
+    for (var k in localStorage) {
+      if (k.indexOf("sfb_") === 0) {
+        var el = document.getElementById("fb_" + k.substring(4));
+        if (el) el.value = localStorage.getItem(k) || "";
+      }
+    }
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+loadFeedback();
+updateRcCount();
+
+</script>
+</body>
+</html>

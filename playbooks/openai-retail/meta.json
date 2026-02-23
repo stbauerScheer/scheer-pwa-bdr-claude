@@ -1,8 +1,0 @@
-{
-  "id": "openai-retail",
-  "title": "OpenAI-Retail",
-  "description": "OpenAI-Retail",
-  "categories": ["test"],
-  "status": "active",
-  "path": "playbooks/openai-retail/index.html"
-}

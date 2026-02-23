@@ -1,0 +1,8 @@
+{
+  "id": "retail-topics-awareness",
+  "title": "Retail Topics Awareness",
+  "description": "Overview of trending Retail Topics",
+  "categories": ["bdr", "retail"],
+  "status": "active",
+  "path": "playbooks/retail-topics-awareness/index.html"
+}
